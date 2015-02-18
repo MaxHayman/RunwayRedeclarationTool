@@ -11,6 +11,7 @@ public class Display2D extends JPanel implements KeyListener {
 	
 	private BufferedImage image = new BufferedImage(720, 450, BufferedImage.TYPE_INT_RGB);
 	private Vector camera = new Vector(300, 200, 1000);
+	private int cameraAngle = 0;
 	private World map = new World();
 	private int height = 450;
 	private int width = 720;
@@ -31,24 +32,29 @@ public class Display2D extends JPanel implements KeyListener {
 		int starty = (int) (camera.y - Math.floor(height / 2));
 
 		int theColor = 0;
-		System.out.println("Camera X: " + camera.x + "\t Y: " + camera.y);
+		System.out.println("Camera X: " + camera.x + "\t Y: " + camera.y + "\t O: " + cameraAngle);
 			
-			for (int i=0; i < width; ++i){
-				for (int j=0; j < height; ++j){
+			for (int i=0; i < width; i++){
+				for (int j=0; j < height; j++){
+					
+					int newi = (int) ((startx + i)*Math.cos(Math.toRadians((cameraAngle))) + (starty + j)*Math.sin(Math.toRadians((cameraAngle))));
+					int newj = (int) (-(startx + i)*Math.sin(Math.toRadians((cameraAngle))) + (starty + j)*Math.cos(Math.toRadians((cameraAngle))));
 
-					if((startx + i) < 0 || (starty + j) < 0 || (startx + i) >= map.size || (starty + j) >= map.size) // || (endx - map.size - (map.size - i)) >= 0 || (endy - map.size - (map.size - j)) >= 0)
+					if(newi < 0 || (newj) < 0 || (newi) >= map.size || (newj) >= map.size)
 						theColor = Color.BLACK.getRGB();
 					else
-						theColor = map.map[(startx + i)][(starty + j)];
+						theColor = map.map[newi][newj];
 					
 					image.setRGB(i, j, theColor);
 				}
 			}
+
 	}
 	
 	private final Set<Integer> pressed = new HashSet<Integer>();
 	public synchronized void keyReleased(KeyEvent e) {
         pressed.remove(e.getKeyCode());
+        repaint();
     }
     public void keyTyped(KeyEvent e) { }
     public void keyPressed(KeyEvent e) {
@@ -57,10 +63,12 @@ public class Display2D extends JPanel implements KeyListener {
             if (pressed.contains(KeyEvent.VK_UP)) {
             	//System.out.println("UP");
             	camera.y -= 4;
+            	
             }
             if (pressed.contains(KeyEvent.VK_DOWN)) {
             	//System.out.println("DOWN");
             	camera.y += 4;
+             	
             }
             if (pressed.contains(KeyEvent.VK_RIGHT)) {
             	//System.out.println("RIGHT");
@@ -70,11 +78,18 @@ public class Display2D extends JPanel implements KeyListener {
             	//System.out.println("LEFT");
             	camera.x -= 4;
             }
+            if (pressed.contains(KeyEvent.VK_Z)) {
+            	//System.out.println("RIGHT");
+            	cameraAngle =  (cameraAngle + 2);
+            
+            }
+            if (pressed.contains(KeyEvent.VK_X)) {
+            	//System.out.println("LEFT");
+            	cameraAngle = (cameraAngle - 2);
+            }
+
         }
     	
-    	
-        int key = e.getKeyCode();
- 
         repaint();
     }
 }
