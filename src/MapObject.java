@@ -13,10 +13,9 @@ public class MapObject {
 	
 	void draw(int[][] map) {
 		System.out.println("Drawing: " + name);
-		for(int i = 0; i < map.length; i++) {
-			for(int j = 0; j < map.length; j++) {
-				if(i >= x && i <= (x + width) && j >= y && j <= (y + height))
-					map[i][j] = color.getRGB();
+		for(int i = x; i < (x + width); i++) {
+			for(int j = y; j < (y + height); j++) {
+				map[i][j] = color.getRGB();
 			}
 		}
 		
