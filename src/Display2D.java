@@ -56,19 +56,19 @@ public class Display2D extends JPanel implements KeyListener {
         if (pressed.size() > 0) {
             if (pressed.contains(KeyEvent.VK_UP)) {
             	//System.out.println("UP");
-            	camera.y -= 1;
+            	camera.y -= 4;
             }
             if (pressed.contains(KeyEvent.VK_DOWN)) {
             	//System.out.println("DOWN");
-            	camera.y += 1;
+            	camera.y += 4;
             }
             if (pressed.contains(KeyEvent.VK_RIGHT)) {
             	//System.out.println("RIGHT");
-            	camera.x += 1;
+            	camera.x += 4;
             }
             if (pressed.contains(KeyEvent.VK_LEFT)) {
             	//System.out.println("LEFT");
-            	camera.x -= 1;
+            	camera.x -= 4;
             }
         }
     	
