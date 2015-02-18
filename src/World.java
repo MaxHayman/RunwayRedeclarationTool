@@ -7,7 +7,7 @@ import javax.naming.spi.ObjectFactory;
 public class World {
 
 	public int[][] map = null;
-	public int size = 600;
+	public int size = 1000;
 	public ArrayList<MapObject> objects = new ArrayList<MapObject>();
 	
 	public World() {
@@ -16,7 +16,7 @@ public class World {
 			map[i] = new int[size];
 		}
 		
-		objects.add(ObjectBuilder.buildRunway(20, 20, 300, 80));
+		objects.add(MapObjectFactory.buildRunway(20, 20, 600, 20));
 		draw();
 	}
 	

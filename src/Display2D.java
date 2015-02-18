@@ -9,11 +9,11 @@ import javax.swing.JPanel;
 
 public class Display2D extends JPanel implements KeyListener {
 	
-	private BufferedImage image = new BufferedImage(400, 400, BufferedImage.TYPE_INT_RGB);
-	private Vector camera = new Vector(100, 100, 1000);
+	private BufferedImage image = new BufferedImage(720, 450, BufferedImage.TYPE_INT_RGB);
+	private Vector camera = new Vector(300, 200, 1000);
 	private World map = new World();
-	private int height = 400;
-	private int width = 400;
+	private int height = 450;
+	private int width = 720;
 	
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
@@ -25,36 +25,21 @@ public class Display2D extends JPanel implements KeyListener {
 		redrawImage();
 		
 	}
-
-	
 	 
 	public void redrawImage() {
-		int startx = (int) (camera.x - Math.floor(map.size / 2));
-		int starty = (int) (camera.y - Math.floor(map.size / 2));
-		int endx = (int) (camera.x + Math.floor(map.size / 2));
-		int endy = (int) (camera.y + Math.floor(map.size / 2));
-		int[][] drawnMap = map.map;
-		int theColor = 0;
+		int startx = (int) (camera.x - Math.floor(width / 2));
+		int starty = (int) (camera.y - Math.floor(height / 2));
 
+		int theColor = 0;
+		System.out.println("Camera X: " + camera.x + "\t Y: " + camera.y);
 			
 			for (int i=0; i < width; ++i){
 				for (int j=0; j < height; ++j){
 
-					
-					
-					if(i == 350 && j == 350)
-					{
-						System.out.println(startx + "\t" + (startx + i));
-					
-					}
-					
-					if((startx + i) < 0 || (starty + j) < 0 || (endx - map.size - (map.size - i)) >= 0 || (endy - map.size - (map.size - j)) >= 0)
-							theColor = Color.BLACK.getRGB();
+					if((startx + i) < 0 || (starty + j) < 0 || (startx + i) >= map.size || (starty + j) >= map.size) // || (endx - map.size - (map.size - i)) >= 0 || (endy - map.size - (map.size - j)) >= 0)
+						theColor = Color.BLACK.getRGB();
 					else
-						/*if(i + camera.x < 0 || i + camera.x >= map.size ||  j + camera.y >= map.size || j + camera.y <0)
-							theColor = Color.BLACK.getRGB();
-						else*/
-							theColor = drawnMap[(int) (i - (Math.floor(map.size / 2) - camera.x))][(int) (j - (Math.floor(map.size / 2) - camera.y))];
+						theColor = map.map[(startx + i)][(starty + j)];
 					
 					image.setRGB(i, j, theColor);
 				}

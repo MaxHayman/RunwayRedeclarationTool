@@ -8,7 +8,7 @@ public class Frame2D extends JFrame {
 		this.setContentPane(d);
 		this.addKeyListener(d);
 		this.show();
-		this.setSize(400, 400);
+		this.setSize(720, 450);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
 }
