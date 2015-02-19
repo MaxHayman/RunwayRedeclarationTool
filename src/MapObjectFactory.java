@@ -17,45 +17,65 @@ public class MapObjectFactory {
 		{
 			for(int i = (int) (width * 0.05); i < (width * 0.95); i += 100 ) {
 				
-				if(i == (width * 0.05) || ((i - 20) % 600) == 0) {
-					for(int j = (int) (height * 0.1); j < height - (int) (height * 0.1); j += 4 ) {
+				/* Fixed Distance Marks */
+				if(i == (width * 0.05) || ((i / 100) % 6) == 0) {
+					for(int j = (int) (height * 0.1); j < height * 0.45; j += 4 ) {
 
-						if(Math.abs(j - Math.floor(height/2)) < 5)
-							continue;
-							
-						MapObject s = new MapObject();
-						s.color = Color.white;
-						s.x = (int) (x + i) + 10;
-						s.y = (int) (y + j);
-						s.width = (int) (width * 0.02);
-						s.height = 1;
-						s.name = "Big Runway Line";
-						o.objects.add(s);
+						{
+							MapObject s = new MapObject();
+							s.color = Color.white;
+							s.x = (int) (x + i) + 10;
+							s.y = (int) (y + j);
+							s.width = (int) (width * 0.02);
+							s.height = 1;
+							s.name = "Big Runway Line";
+							o.objects.add(s);
+						}
+						{
+							MapObject s = new MapObject();
+							s.color = Color.white;
+							s.x = (int) (x + i) + 10;
+							s.y = (int)  (y + height - j) - 1;
+							s.width = (int) (width * 0.02);
+							s.height = 1;
+							s.name = "Small Runway Line";
+							o.objects.add(s);
+						}
 					}
 				}
-				else if(((i - 20) % 300) == 0){
-					for(int j = (int) (height * 0.3); j < height - (int) (height * 0.3); j += 4 ) {
-
-						if(Math.abs(j - Math.floor(height/2)) < 5)
-							continue;
-							
-						MapObject s = new MapObject();
-						s.color = Color.white;
-						s.x = (int) (x + i) + 10;
-						s.y = (int) (y + j);
-						s.width = (int) (width * 0.02);
-						s.height = 1;
-						s.name = "Small Runway Line";
-						o.objects.add(s);
+				else if(((i / 100) % 3) == 0){
+					for(int j = (int) (height * 0.3); j < height * 0.45; j += 4 ) {
+						
+						{
+							MapObject s = new MapObject();
+							s.color = Color.white;
+							s.x = (int) (x + i) + 10;
+							s.y = (int) (y + j);
+							s.width = (int) (width * 0.02);
+							s.height = 1;
+							s.name = "Small Runway Line";
+							o.objects.add(s);
+						}
+						{
+							MapObject s = new MapObject();
+							s.color = Color.white;
+							s.x = (int) (x + i) + 10;
+							s.y = (int)  (y + height - j) - 1;
+							s.width = (int) (width * 0.02);
+							s.height = 1;
+							s.name = "Small Runway Line";
+							o.objects.add(s);
+						}
 					}
 				}
-
+				
+				/* Center Line */
 				{
 					MapObject s = new MapObject();
 					s.color = Color.white;
 					s.x = (int) (x + i);
 					s.y = (int) (y + Math.floor(height/2));
-					s.width = (int) ((x + i) > (width * 0.95) ? (width * 0.95) - (x + i) : 80);
+					s.width = (int) (((x + i + 80) > (width/* * 0.95*/)) ? ((width/* * 0.95*/) - i) : 80);
 					s.height = 1;
 					s.name = "Center Runway Line";
 					o.objects.add(s);
@@ -82,22 +102,45 @@ public class MapObjectFactory {
 				o.objects.add(s);
 			}
 			
+			/* Threshold */
 			{
-				for(int j = 4; j < height; j += 4 ) {
-					if(Math.abs(j - Math.floor(height/2)) < 5)
-						continue;
-							
-					MapObject s = new MapObject();
-					s.color = Color.white;
-					s.x = (int) (x + 2);
-					s.y = (int) (y + j);
-					s.width = (int) (width * 0.02);
-					s.height = 1;
-					s.name = "Start Runway Line";
-					o.objects.add(s);
+				for(int j = 4; j < height * 0.45; j += 4 ) {
+					{
+						MapObject s = new MapObject();
+						s.color = Color.white;
+						s.x = (int) (x + 2);
+						s.y = (int) (y + j);
+						s.width = (int) (width * 0.02);
+						s.height = 1;
+						s.name = "Start Runway Line";
+						o.objects.add(s);
+					}
+					{
+						MapObject s = new MapObject();
+						s.color = Color.white;
+						s.x = (int) (x + 2);
+						s.y = (int) (y + height - j - 1);
+						s.width = (int) (width * 0.02);
+						s.height = 1;
+						s.name = "Start Runway Line";
+						o.objects.add(s);
+					}
 				}
 			}
 		}
+		
+		return o;
+	}
+
+	public static MapObject buildBadArea(int x, int y, int width, int height) {
+		/* Tarmac */
+		MapObject o = new MapObjectBad();
+		o.color = Color.red;
+		o.x = x;
+		o.y = y;
+		o.width = width;
+		o.height = height;
+		o.name = "Bad";
 		
 		return o;
 	}

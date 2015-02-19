@@ -19,6 +19,9 @@ public class World {
 		objects.add(MapObjectFactory.buildRunway(20, 20, 2400, 160));
 		objects.add(MapObjectFactory.buildRunway(20, 200, 2400, 160));
 		objects.add(MapObjectFactory.buildRunway(20, 400, 800, 80));
+		
+		objects.add(MapObjectFactory.buildBadArea(300, 40, 40, 100));
+		objects.add(MapObjectFactory.buildBadArea(800, 280, 400, 50));
 		draw();
 	}
 	

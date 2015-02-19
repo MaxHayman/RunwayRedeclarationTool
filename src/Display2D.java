@@ -9,22 +9,29 @@ import javax.swing.JPanel;
 
 public class Display2D extends JPanel implements KeyListener {
 	
-	private BufferedImage image = new BufferedImage(720, 450, BufferedImage.TYPE_INT_RGB);
+	private BufferedImage image = null;
 	private Vector camera = new Vector(300, 200, 1000);
 	private int cameraAngle = 0;
 	private World map = new World();
 	private int height = 450;
 	private int width = 720;
 	
+	public Display2D() {
+		image = new BufferedImage(720, 450, BufferedImage.TYPE_INT_RGB);
+	}
+	
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
-		
-		//image 
-		//map.draw();
+
+		redrawImage();
 		Graphics2D g2 = (Graphics2D) g ;
 		g2.drawImage(image, 0,0, null);
-		redrawImage();
-		
+	}
+	
+	public void setDisplaySize(int width, int height) {
+		this.height = height;
+		this.width = width;
+		image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 	}
 	 
 	public void redrawImage() {
@@ -34,11 +41,11 @@ public class Display2D extends JPanel implements KeyListener {
 		int theColor = 0;
 		System.out.println("Camera X: " + camera.x + "\t Y: " + camera.y + "\t O: " + cameraAngle);
 			
-			for (int i=0; i < width; i++){
-				for (int j=0; j < height; j++){
+			for (int i = 0; i < width; i++){
+				for (int j =0 ; j < height; j++){
 					
-					int newi = (int) ((startx + i)*Math.cos(Math.toRadians((cameraAngle))) + (starty + j)*Math.sin(Math.toRadians((cameraAngle))));
-					int newj = (int) (-(startx + i)*Math.sin(Math.toRadians((cameraAngle))) + (starty + j)*Math.cos(Math.toRadians((cameraAngle))));
+					int newi = (int) ((startx + i) * Math.cos(Math.toRadians((cameraAngle))) + (starty + j) * Math.sin(Math.toRadians((cameraAngle))));
+					int newj = (int) (-(startx + i) * Math.sin(Math.toRadians((cameraAngle))) + (starty + j) * Math.cos(Math.toRadians((cameraAngle))));
 
 					if(newi < 0 || (newj) < 0 || (newi) >= map.size || (newj) >= map.size)
 						theColor = Color.BLACK.getRGB();
@@ -59,37 +66,37 @@ public class Display2D extends JPanel implements KeyListener {
     public void keyTyped(KeyEvent e) { }
     public void keyPressed(KeyEvent e) {
     	pressed.add(e.getKeyCode());
+    	boolean changed = false;
         if (pressed.size() > 0) {
             if (pressed.contains(KeyEvent.VK_UP)) {
-            	//System.out.println("UP");
             	camera.y -= 4;
-            	
+            	changed = true;
             }
             if (pressed.contains(KeyEvent.VK_DOWN)) {
-            	//System.out.println("DOWN");
             	camera.y += 4;
-             	
+            	changed = true;
             }
             if (pressed.contains(KeyEvent.VK_RIGHT)) {
-            	//System.out.println("RIGHT");
             	camera.x += 4;
+            	changed = true;
             }
             if (pressed.contains(KeyEvent.VK_LEFT)) {
-            	//System.out.println("LEFT");
             	camera.x -= 4;
+            	changed = true;
             }
             if (pressed.contains(KeyEvent.VK_Z)) {
-            	//System.out.println("RIGHT");
             	cameraAngle =  (cameraAngle + 2);
+            	changed = true;
             
             }
             if (pressed.contains(KeyEvent.VK_X)) {
-            	//System.out.println("LEFT");
             	cameraAngle = (cameraAngle - 2);
+            	changed = true;
             }
 
         }
     	
-        repaint();
+        if(changed)
+        	repaint();
     }
 }
