@@ -7,17 +7,23 @@ import java.util.Set;
 import javax.swing.JPanel;
 
 
-public class Display2D extends JPanel implements KeyListener {
+public class Display2D extends JPanel implements KeyListener, MouseWheelListener{
 	
 	private BufferedImage image = null;
 	private Vector camera = new Vector(300, 200, 1000);
 	private int cameraAngle = 0;
-	private World map = new World();
-	private int height = 450;
-	private int width = 720;
+	private int cameraZoom = 100;
+	private World map = null;
+	private int width;
+	private int height;
 	
-	public Display2D() {
-		image = new BufferedImage(720, 450, BufferedImage.TYPE_INT_RGB);
+	public Display2D(World map, int width, int height) {
+		this.map = map;
+		this.width = width;
+		this.height = height;
+		image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+		
+		this.addMouseWheelListener(this);
 	}
 	
 	public void paintComponent(Graphics g){
@@ -44,8 +50,10 @@ public class Display2D extends JPanel implements KeyListener {
 			for (int i = 0; i < width; i++){
 				for (int j =0 ; j < height; j++){
 					
-					int newi = (int) ((startx + i) * Math.cos(Math.toRadians((cameraAngle))) + (starty + j) * Math.sin(Math.toRadians((cameraAngle))));
-					int newj = (int) (-(startx + i) * Math.sin(Math.toRadians((cameraAngle))) + (starty + j) * Math.cos(Math.toRadians((cameraAngle))));
+					int tempi = i*cameraZoom/100;
+					int tempj = j*cameraZoom/100;
+					int newi = (int) ((startx + tempi) * Math.cos(Math.toRadians((cameraAngle))) + (starty + tempj) * Math.sin(Math.toRadians((cameraAngle))));
+					int newj = (int) (-(startx + tempi) * Math.sin(Math.toRadians((cameraAngle))) + (starty + tempj) * Math.cos(Math.toRadians((cameraAngle))));
 
 					if(newi < 0 || (newj) < 0 || (newi) >= map.size || (newj) >= map.size)
 						theColor = Color.BLACK.getRGB();
@@ -99,4 +107,10 @@ public class Display2D extends JPanel implements KeyListener {
         if(changed)
         	repaint();
     }
+
+	public void mouseWheelMoved(MouseWheelEvent e) {
+		int notches = e.getWheelRotation();
+	    cameraZoom -= notches;
+	    repaint();
+	}
 }

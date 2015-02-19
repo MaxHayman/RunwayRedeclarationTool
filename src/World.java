@@ -1,9 +1,6 @@
 import java.awt.Color;
 import java.util.ArrayList;
 
-import javax.naming.spi.ObjectFactory;
-
-
 public class World {
 
 	public int[][] map = null;

@@ -9,13 +9,17 @@ public class Frame2D extends JFrame implements ComponentListener {
 	
 	Display2D display2D;
 	
-	public Frame2D () {
+	public Frame2D (World map) {
 		super("Runway Redeclaration Tool");
-		display2D = new Display2D();
+		
+		int width = 720;
+		int height = 450;
+		
+		display2D = new Display2D(map, width, height);
 		this.setContentPane(display2D);
 		this.addKeyListener(display2D);
 		this.setVisible(true);
-		this.setSize(720, 450);
+		this.setSize(width, height);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.addComponentListener(this);
 	}
