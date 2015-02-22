@@ -16,6 +16,14 @@ public class Airport {
 	}
 
 	//============================================
+	//METHODS:
+	//============================================
+	
+	public void addRunway(Runway r) {
+		runwayList.add(r);
+	}
+
+	//============================================
 	//GETTERS AND SETTERS:
 	//============================================
 	public String getName() {

@@ -7,25 +7,26 @@ import java.util.Set;
 import javax.swing.JPanel;
 
 
-public class Display2D extends JPanel implements KeyListener, MouseWheelListener{
+public class Display2D extends Display {
 	
 	private BufferedImage image = null;
-	private Vector camera = new Vector(300, 200, 1000);
+	//private Vector camera = new Vector(300, 200, 1000);
+	private Vector camera = new Vector(0, 0, 1000);
 	private int cameraAngle = 0;
 	private int cameraZoom = 100;
-	private World map = null;
-	private int width;
-	private int height;
-	
-	public Display2D(World map, int width, int height) {
-		this.map = map;
-		this.width = width;
-		this.height = height;
-		image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-		
+	//private World map = null;
+	//private int width;
+	//private int height;
+
+	public Display2D(World map) {
+		super(map);
 		this.addMouseWheelListener(this);
 	}
-	
+
+	public void init() {
+		
+	}
+
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 
@@ -33,32 +34,30 @@ public class Display2D extends JPanel implements KeyListener, MouseWheelListener
 		Graphics2D g2 = (Graphics2D) g ;
 		g2.drawImage(image, 0,0, null);
 	}
-	
-	public void setDisplaySize(int width, int height) {
-		this.height = height;
-		this.width = width;
-		image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-	}
 	 
 	public void redrawImage() {
-		int startx = (int) (camera.x - Math.floor(width / 2));
-		int starty = (int) (camera.y - Math.floor(height / 2));
+		image = new BufferedImage(this.getWidth(), this.getHeight(), BufferedImage.TYPE_INT_RGB);
+		//int startx = (int) (camera.x - Math.floor(this.getWidth() / 2));
+		//int starty = (int) (camera.y - Math.floor(this.getHeight() / 2));
+		
+		int startx = (int) (camera.x);
+		int starty = (int) (camera.y);
 
 		int theColor = 0;
 		System.out.println("Camera X: " + camera.x + "\t Y: " + camera.y + "\t O: " + cameraAngle);
 			
-			for (int i = 0; i < width; i++){
-				for (int j =0 ; j < height; j++){
+			for (int i = 0; i < this.getWidth(); i++){
+				for (int j =0 ; j < this.getHeight(); j++){
 					
 					int tempi = i*cameraZoom/100;
 					int tempj = j*cameraZoom/100;
 					int newi = (int) ((startx + tempi) * Math.cos(Math.toRadians((cameraAngle))) + (starty + tempj) * Math.sin(Math.toRadians((cameraAngle))));
 					int newj = (int) (-(startx + tempi) * Math.sin(Math.toRadians((cameraAngle))) + (starty + tempj) * Math.cos(Math.toRadians((cameraAngle))));
 
-					if(newi < 0 || (newj) < 0 || (newi) >= map.size || (newj) >= map.size)
+					if(newi < 0 || (newj) < 0 || (newi) >= this.getWorld().size || (newj) >= this.getWorld().size)
 						theColor = Color.BLACK.getRGB();
 					else
-						theColor = map.map[newi][newj];
+						theColor = this.getWorld().map[newi][newj];
 					
 					image.setRGB(i, j, theColor);
 				}

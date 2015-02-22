@@ -6,16 +6,17 @@ public class Runway {
 
 	private List<Obstacle> obstacleList;
 	private int orientation;
-	private char designation;
-	private float length;
+	private Character designation;
+	private float length, width;
 
 	//============================================
 	//CONSTRUCTORS:
 	//============================================
-	public Runway(int orientation, char designation, float length) {
+	public Runway(int orientation, Character designation, float length, float width) {
 		this.orientation = orientation;
 		this.designation = designation;
 		this.length = length;
+		this.width = width;
 		obstacleList = new ArrayList<Obstacle>();
 	}
 
@@ -31,6 +32,10 @@ public class Runway {
 	//============================================
 	//GETTERS AND SETTERS:
 	//============================================
+	public List<Obstacle> getObstacleList() {
+		return obstacleList;
+	}
+	
 	public int getOrientation() {
 		return orientation;
 	}
@@ -41,6 +46,10 @@ public class Runway {
 
 	public float getLength() {
 		return length;
+	}
+	
+	public float getWidth() {
+		return width;
 	}
 
 	//TODO: implement calculations

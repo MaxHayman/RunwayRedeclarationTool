@@ -7,7 +7,7 @@ import javax.swing.JFrame;
 
 public class Frame2D extends JFrame implements ComponentListener {
 	
-	Display2D display2D;
+	Display display;
 	
 	public Frame2D (World map) {
 		super("Runway Redeclaration Tool");
@@ -15,9 +15,9 @@ public class Frame2D extends JFrame implements ComponentListener {
 		int width = 720;
 		int height = 450;
 		
-		display2D = new Display2D(map, width, height);
-		this.setContentPane(display2D);
-		this.addKeyListener(display2D);
+		display = new Display2D(map);
+		this.setContentPane(display);
+		this.addKeyListener(display);
 		this.setVisible(true);
 		this.setSize(width, height);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -26,9 +26,10 @@ public class Frame2D extends JFrame implements ComponentListener {
 
 	public void componentResized(ComponentEvent e) {
 		
-		Dimension d = display2D.getSize();
-		display2D.setDisplaySize((int)d.getWidth(), (int)d.getHeight());
-		System.out.println(d.getWidth() + " " + d.getHeight());
+		//Dimension d = display.getSize();
+		//display.setDisplaySize((int)d.getWidth(), (int)d.getHeight());
+		System.out.println(display.getWidth() + " " + display.getHeight());
+		display.redrawImage();
 	}
 
 	public void componentMoved(ComponentEvent e) { }
