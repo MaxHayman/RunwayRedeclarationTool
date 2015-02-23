@@ -6,6 +6,7 @@ public class Controller {
 
 	private Airport airport;
 	private Runway currentRunway;
+	private Obstacle currentObstacle;
 	private World world;
 	private ControlFrame frame;
 	public static EventManager eventManager = new EventManager();
@@ -50,6 +51,15 @@ public class Controller {
 			currentRunway.addObstacle(o);
 			updateView();
 		}
+		if(frame!=null){
+			frame.updateObstacles();
+		}
+	}
+	
+	public void updateObstacles(){
+		if(frame!=null){
+			frame.updateObstacles();
+		}
 	}
 
 	public boolean viewingRunway() {
@@ -74,9 +84,16 @@ public class Controller {
 		this.updateView();
 	}
 	
+	public void setCurrentObstacle(Obstacle o) {
+		this.currentObstacle = o;
+		this.updateView();
+	}
+	
 	//I don't really want to make the obstacles visible to the view but I can't think of a better way to do it:
 	public List<Obstacle> getObstacleList() {
-		return currentRunway.getObstacleList();
+		if (currentRunway != null){
+			return currentRunway.getObstacleList();
+		} else {return null;}
 	}
 	
 	public List<Runway> getRunwayList() {

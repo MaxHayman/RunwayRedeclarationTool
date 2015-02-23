@@ -14,6 +14,7 @@ public class ControlFrame extends JFrame {
 	World world;
 	Container pane;
 	RunwayComboBox runwayComboBox;
+	ObstacleComboBox obstacleComboBox;
 
 	public ControlFrame(Controller controller, World world) {
 		super("Runway Redclaration Tool");
@@ -26,6 +27,7 @@ public class ControlFrame extends JFrame {
 		GridBagConstraints c = new GridBagConstraints();
 
 		runwayComboBox = new RunwayComboBox(controller);
+		obstacleComboBox = new ObstacleComboBox(controller);
 
 		//first line:
 		c.gridx = 0; c.gridy = 0;
@@ -36,9 +38,14 @@ public class ControlFrame extends JFrame {
 		pane.add(runwayComboBox, c);
 		this.updateRunways();
 		
-		//second line:
-		c.gridwidth = 1;
+		//second line
 		c.gridy = 1;
+		pane.add(obstacleComboBox, c);
+		this.updateObstacles();
+		
+		//third line:
+		c.gridwidth = 1;
+		c.gridy = 2;
 		c.gridx = 0;
 		pane.add(new AddRunwayButton(), c);
 		c.gridx = 1;
@@ -46,8 +53,8 @@ public class ControlFrame extends JFrame {
 		c.gridx = 2;
 		pane.add(new View2DButton(), c);
 
-		//third line:
-		c.gridy = 2;
+		//forth line:
+		c.gridy = 3;
 		c.gridx = 0;
 		pane.add(new RmvRunwayButton(), c);
 		c.gridx = 1;
@@ -55,8 +62,8 @@ public class ControlFrame extends JFrame {
 		c.gridx = 2;
 		pane.add(new JButton("Open Side-on 2D View"), c);
 
-		//forth line:
-		c.gridy = 3;
+		//fith line:
+		c.gridy = 4;
 		c.gridx = 0;
 		pane.add(new EditRunwayButton(), c);
 		c.gridx = 1;
@@ -73,6 +80,10 @@ public class ControlFrame extends JFrame {
 		runwayComboBox.update();
 	}
 
+	public void updateObstacles() {
+		obstacleComboBox.update();
+	}
+	
 	private class AddRunwayButton extends JButton implements ActionListener{
 
 		public AddRunwayButton() {

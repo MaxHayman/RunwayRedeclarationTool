@@ -25,6 +25,7 @@ public class RunwayComboBox extends JComboBox<Runway> implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		System.out.println("new Runway selected");
 		controller.setCurrentRunway((Runway)this.getSelectedItem());
+		controller.updateObstacles();
 	}
 
 }

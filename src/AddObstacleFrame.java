@@ -89,6 +89,7 @@ public class AddObstacleFrame extends JFrame{
 				
 				//make and add the obstacle:
 				controller.addObstacle(new Obstacle(xSize, ySize, zSize, xLoc, yLoc, angle));
+				frame.dispose();
 			} catch(NumberFormatException ex) {
 				//ex.printStackTrace();
 				JOptionPane.showMessageDialog(frame, "Error: poorly formatted values");
