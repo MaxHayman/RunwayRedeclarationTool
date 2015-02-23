@@ -15,7 +15,7 @@ public class AddRunwayFrame extends JFrame{
 	
 	Controller controller;
 	Container pane;
-	JTextField orientationField, designationField, lengthField, widthField;
+	JTextField orientationField, designationField, lengthField, widthField, clearwayField, stopwayField, displacedThresholdField;
 	GridBagConstraints gbc;
 	JFrame frame;
 	
@@ -34,6 +34,9 @@ public class AddRunwayFrame extends JFrame{
 		designationField = addField("Designation:");
 		lengthField = addField("Length:");
 		widthField = addField("Width:");
+		clearwayField = addField("Clearway:");
+		stopwayField = addField("Stopway:");
+		displacedThresholdField = addField("Displaced Threshold:");
 		
 		gbc.gridx = 0;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -75,7 +78,7 @@ public class AddRunwayFrame extends JFrame{
 			//bad code inc
 			int orientation = 0;
 			Character designation = null;
-			float length = 0, width = 0;
+			float length = 0, width = 0, clearway = 0, stopway = 0, displacedThreshold = 0;
 			
 			//put this in a try to catch an exception due to poor format:
 			try {
@@ -87,8 +90,11 @@ public class AddRunwayFrame extends JFrame{
 				}
 				length = Float.parseFloat(lengthField.getText());
 				width = Float.parseFloat(widthField.getText());
+				clearway = Float.parseFloat(clearwayField.getText());
+				stopway = Float.parseFloat(stopwayField.getText());
+				displacedThreshold = Float.parseFloat(displacedThresholdField.getText());
 				//add the runway to the controller:
-				controller.addRunway(new Runway(orientation, designation, length, width));
+				controller.addRunway(new Runway(orientation, designation, length, width, clearway, stopway, displacedThreshold));
 			} catch(NumberFormatException ex) {
 				//ex.printStackTrace();
 				JOptionPane.showMessageDialog(frame, "Error: poorly formatted values");

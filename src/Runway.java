@@ -7,17 +7,21 @@ public class Runway {
 	private List<Obstacle> obstacleList;
 	private int orientation;
 	private Character designation;
-	private float length, width;
+	private float length, width, clearway, stopway, displacedThreshold, TORA, TODA, ASDA, LDA, RESA = 240;
 
 	//============================================
 	//CONSTRUCTORS:
 	//============================================
-	public Runway(int orientation, Character designation, float length, float width) {
+	public Runway(int orientation, Character designation, float length, float width, float clearway, float stopway, float displacedThreshold) {
 		this.orientation = orientation;
 		this.designation = designation;
 		this.length = length;
 		this.width = width;
+		this.clearway = clearway;
+		this.stopway = stopway;
+		this.displacedThreshold = displacedThreshold;
 		obstacleList = new ArrayList<Obstacle>();
+		recalculate();
 	}
 
 	//============================================
@@ -37,6 +41,12 @@ public class Runway {
 	//============================================
 	//GETTERS AND SETTERS:
 	//============================================
+	public void setWidth(float width){this.width = width; recalculate();}
+	public void setLength(float length){this.length = length; recalculate();}
+	public void setClearway(float clearway){this.clearway = clearway; recalculate();}
+	public void setStopway(float stopway){this.stopway = stopway; recalculate();}
+	public void setDisplacedThreshold(float displacedThreshold){this.displacedThreshold = displacedThreshold; recalculate();}
+	
 	public List<Obstacle> getObstacleList() {
 		return obstacleList;
 	}
@@ -60,21 +70,23 @@ public class Runway {
 		return width;
 	}
 
-	//TODO: implement calculations
-	public int getTORA() {
-		return 0;
-	}
-
-	public int getTODA() {
-		return 0;
-	}
-
-	public int getASDA() {
-		return 0;
-	}
-
-	public int getTDA() {
-		return 0;
+	//===========
+	//Methods
+	//===========
+	public void recalculate(){
+		this.TORA = length;
+		this.TODA = TORA + clearway;
+		this.ASDA = TORA + stopway;
+		this.LDA = TORA - displacedThreshold;
+		for (Obstacle o: obstacleList){
+			//TORA - Displaced Threshold - Distance of object from threshold - height of object times 50 - safety distance(60m)
+			//TORA - Displaced Threshold - RESA - safety distance(60m)
+			float RLDA = Math.max(TORA - displacedThreshold - o.getxLocation() - (o.getzSize() * 50) - 60,
+					TORA - displacedThreshold - RESA - 60);
+			if (RLDA < LDA){
+				this.LDA = RLDA;
+			}
+		}
 	}
 
 }
