@@ -33,13 +33,17 @@ public class ControlFrame extends JFrame {
 		pane.add(runwayComboBox, c);
 		this.updateRunways();
 		c.gridx = 1;
-		pane.add(new JButton("Add Runway"), c);
+		pane.add(new AddRunwayButton(controller), c);
 		c.gridx = 2;
 		pane.add(new JButton("Add Obstacle"), c);
 		
 		//second line:
 		c.gridx = 0; c.gridy = 1;
 		pane.add(new View2DButton(controller, world), c);
+		c.gridx = 1;
+		pane.add(new JButton("Open Side-on 2D View"), c);
+		c.gridx = 2;
+		pane.add(new JButton("Open 3D View"), c);
 		
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.pack();
