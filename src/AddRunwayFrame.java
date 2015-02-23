@@ -95,6 +95,7 @@ public class AddRunwayFrame extends JFrame{
 				displacedThreshold = Float.parseFloat(displacedThresholdField.getText());
 				//add the runway to the controller:
 				controller.addRunway(new Runway(orientation, designation, length, width, clearway, stopway, displacedThreshold));
+				frame.dispose();
 			} catch(NumberFormatException ex) {
 				//ex.printStackTrace();
 				JOptionPane.showMessageDialog(frame, "Error: poorly formatted values");

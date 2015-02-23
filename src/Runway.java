@@ -41,6 +41,8 @@ public class Runway {
 	//============================================
 	//GETTERS AND SETTERS:
 	//============================================
+	public void setOrientation(int orientation){this.orientation = orientation;}
+	public void setDesignation(Character designation){this.designation = designation;}
 	public void setWidth(float width){this.width = width; recalculate();}
 	public void setLength(float length){this.length = length; recalculate();}
 	public void setClearway(float clearway){this.clearway = clearway; recalculate();}

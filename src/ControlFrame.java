@@ -58,7 +58,7 @@ public class ControlFrame extends JFrame {
 		//forth line:
 		c.gridy = 3;
 		c.gridx = 0;
-		pane.add(new JButton("Edit Runway"), c);
+		pane.add(new EditRunwayButton(), c);
 		c.gridx = 1;
 		pane.add(new JButton("Edit Obstacle"), c);
 		c.gridx = 2;
@@ -121,6 +121,19 @@ public class ControlFrame extends JFrame {
 
 		public void actionPerformed(ActionEvent e) {
 			controller.removeRunway((Runway) runwayComboBox.getSelectedItem()); 
+		}
+
+	}
+	
+	private class EditRunwayButton extends JButton implements ActionListener{
+
+		public EditRunwayButton() {
+			super("Edit Runway");
+			this.addActionListener(this);
+		}
+
+		public void actionPerformed(ActionEvent e) {
+			new EditRunwayFrame(controller, (Runway) runwayComboBox.getSelectedItem());
 		}
 
 	}
