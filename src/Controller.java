@@ -16,20 +16,15 @@ public class Controller {
 	public Controller() {
 		airport = new Airport("airport name");
 		viewList = new ArrayList<Frame2D>();
+		
+		world = new World(this);
+		frame = new ControlFrame(this, world);
 	}
 
 
 	//============================================
 	//PUBLIC METHODS:
 	//============================================
-
-	public void setWorld(World w) {
-		this.world = w;
-	}
-	
-	public void setFrame(ControlFrame f) {
-		this.frame = f;
-	}
 
 	public void addRunway(Runway r) {
 		airport.addRunway(r);

@@ -29,7 +29,6 @@ public class Frame2D extends JFrame implements ComponentListener {
 		this.addKeyListener(display);
 		this.setVisible(true);
 		this.setSize(width, height);
-		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.addComponentListener(this);
 	}
 	
