@@ -38,9 +38,9 @@ public class AddRunwayFrame extends JFrame{
 		gbc.gridx = 0;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.gridwidth = GridBagConstraints.REMAINDER;
-		pane.add(new AddButton());
+		pane.add(new AddButton(), gbc);
 		
-		this.pack();
+		this.setSize(300, 150);
 		this.setVisible(true);
 	}
 	
@@ -90,7 +90,7 @@ public class AddRunwayFrame extends JFrame{
 				//add the runway to the controller:
 				controller.addRunway(new Runway(orientation, designation, length, width));
 			} catch(NumberFormatException ex) {
-				ex.printStackTrace();
+				//ex.printStackTrace();
 				JOptionPane.showMessageDialog(frame, "Error: poorly formatted values");
 			}
 		}		
