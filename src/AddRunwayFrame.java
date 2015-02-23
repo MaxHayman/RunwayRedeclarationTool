@@ -80,14 +80,14 @@ public class AddRunwayFrame extends JFrame{
 				orientation = Integer.parseInt(orientationField.getText());
 				designation = null;
 				//check if there is an entry in the designation field before setting the value
-				if(designationField.getText() != "") {
+				if(designationField.getText().length() > 1) {
 					designation = designationField.getText().charAt(0);
 				}
 				length = Float.parseFloat(lengthField.getText());
 				width = Float.parseFloat(widthField.getText());
 				//add the runway to the controller:
 				controller.addRunway(new Runway(orientation, designation, length, width));
-			} catch(Exception ex) {
+			} catch(NumberFormatException ex) {
 				ex.printStackTrace();
 				JOptionPane.showMessageDialog(frame, "Error: poorly formatted values");
 			}
