@@ -56,6 +56,16 @@ public class Controller {
 		}
 	}
 	
+	public void removeObstacle(Obstacle o){
+		if(currentRunway != null){
+			currentRunway.removeObstacle(o);
+			updateView();
+		}
+		if(frame!=null){
+			frame.updateObstacles();
+		}
+	}
+	
 	public void updateObstacles(){
 		if(frame!=null){
 			frame.updateObstacles();

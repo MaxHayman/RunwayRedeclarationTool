@@ -32,6 +32,10 @@ public class Runway {
 		this.obstacleList.add(o);
 	}
 	
+	public void removeObstacle(Obstacle o){
+		this.obstacleList.remove(o);
+	}
+	
 	//override this for display in the ComboBox:
 	public String toString() {
 		return this.getName();

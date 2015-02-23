@@ -36,6 +36,10 @@ public class Obstacle {
 		this(xSize, ySize, zSize, xLocation, yLocation, angle, DEFAULT_NAME);
 	}
 	
+	public String toString(){
+		return xSize + "*" + ySize + "*" + zSize + " " + getName() + " @ " + xLocation + "," + yLocation;
+	}
+	
 	//============================================
 	//GETTERS AND SETTERS:
 	//============================================

@@ -58,7 +58,7 @@ public class ControlFrame extends JFrame {
 		c.gridx = 0;
 		pane.add(new RmvRunwayButton(), c);
 		c.gridx = 1;
-		pane.add(new JButton("Remove Obstacle"), c);
+		pane.add(new RmvObstacleButton(), c);
 		c.gridx = 2;
 		pane.add(new JButton("Open Side-on 2D View"), c);
 
@@ -145,6 +145,19 @@ public class ControlFrame extends JFrame {
 
 		public void actionPerformed(ActionEvent e) {
 			new EditRunwayFrame(controller, (Runway) runwayComboBox.getSelectedItem());
+		}
+
+	}
+	
+	private class RmvObstacleButton extends JButton implements ActionListener{
+
+		public RmvObstacleButton() {
+			super("Remove Obstacle");
+			this.addActionListener(this);
+		}
+
+		public void actionPerformed(ActionEvent e) {
+			controller.removeObstacle((Obstacle) obstacleComboBox.getSelectedItem()); 
 		}
 
 	}
