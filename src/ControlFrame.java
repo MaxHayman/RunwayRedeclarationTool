@@ -32,18 +32,35 @@ public class ControlFrame extends JFrame {
 		c.fill = GridBagConstraints.BOTH;
 		c.weighty = 1;
 		c.weightx = 1;
+		c.gridwidth = 3;
 		pane.add(runwayComboBox, c);
 		this.updateRunways();
-		c.gridx = 1;
-		pane.add(new AddRunwayButton(), c);
-		c.gridx = 2;
-		pane.add(new AddObstacleButton(), c);
-
+		
 		//second line:
-		c.gridx = 0; c.gridy = 1;
-		pane.add(new View2DButton(), c);
+		c.gridwidth = 1;
+		c.gridy = 1;
+		c.gridx = 0;
+		pane.add(new AddRunwayButton(), c);
 		c.gridx = 1;
+		pane.add(new AddObstacleButton(), c);
+		c.gridx = 2;
+		pane.add(new View2DButton(), c);
+
+		//third line:
+		c.gridy = 2;
+		c.gridx = 0;
+		pane.add(new JButton("Remove Runway"), c);
+		c.gridx = 1;
+		pane.add(new JButton("Remove Obstacle"), c);
+		c.gridx = 2;
 		pane.add(new JButton("Open Side-on 2D View"), c);
+
+		//forth line:
+		c.gridy = 3;
+		c.gridx = 0;
+		pane.add(new JButton("Edit Runway"), c);
+		c.gridx = 1;
+		pane.add(new JButton("Edit Obstacle"), c);
 		c.gridx = 2;
 		pane.add(new JButton("Open 3D View"), c);
 
