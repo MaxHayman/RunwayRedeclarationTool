@@ -17,21 +17,17 @@ public class World {
 			map[i] = new int[size];
 		}
 		
-		draw();
-		
-		/*objects.add(MapObjectFactory.buildRunway(20, 20, 2400, 160));
-		objects.add(MapObjectFactory.buildRunway(20, 200, 2400, 160));
-		objects.add(MapObjectFactory.buildRunway(20, 400, 800, 80));
-		
-		objects.add(MapObjectFactory.buildBadArea(300, 40, 40, 100));
-		objects.add(MapObjectFactory.buildBadArea(800, 280, 400, 50));*/
+		update();
 	}
 	
 	//update makes the World refetch all its information from the Controller
 	//this should be called when the model might have changed
 	public void update() {
 		//first check if there is a runway being viewed, if there isn't you don't need to do anything
+		System.out.println("updating world");
 		if(controller.viewingRunway()) {
+			//clear the previous stuff:
+			objects.clear();
 			
 			//add the runway:
 			objects.add(MapObjectFactory.buildRunway(OFFSET_X, OFFSET_Y, (int)controller.getRunwayLength(), (int)controller.getRunwayWidth()));
@@ -44,7 +40,7 @@ public class World {
 		}
 		
 		//redraw after updating:
-		draw();		
+		draw();	
 	}
 	
 	public void draw() {
@@ -59,4 +55,5 @@ public class World {
 			o.draw(map);
 		}
 	}
+	
 }

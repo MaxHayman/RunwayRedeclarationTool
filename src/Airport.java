@@ -26,6 +26,10 @@ public class Airport {
 	//============================================
 	//GETTERS AND SETTERS:
 	//============================================
+	public List<Runway> getRunwayList() {
+		return runwayList;
+	}
+	
 	public String getName() {
 		return name;
 	}

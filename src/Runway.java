@@ -27,6 +27,11 @@ public class Runway {
 	public void addObstacle(Obstacle o) {
 		this.obstacleList.add(o);
 	}
+	
+	//override this for display in the ComboBox:
+	public String toString() {
+		return this.getName();
+	}
 
 
 	//============================================
@@ -41,6 +46,9 @@ public class Runway {
 	}
 
 	public String getName() {
+		if(designation == null) {
+			return Integer.toString(orientation);
+		}
 		return Integer.toString(orientation) + designation;
 	}
 

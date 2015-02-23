@@ -6,6 +6,7 @@ public class Controller {
 	private Airport airport;
 	private Runway currentRunway;
 	private World world;
+	private Frame2D frame;
 
 	//============================================
 	//CONSTRUCTORS:
@@ -22,9 +23,16 @@ public class Controller {
 	public void setWorld(World w) {
 		this.world = w;
 	}
+	
+	public void setFrame(Frame2D f) {
+		this.frame = f;
+	}
 
 	public void addRunway(Runway r) {
 		airport.addRunway(r);
+		if(frame!=null) {
+			frame.updateRunways();
+		}
 	}
 
 	public void addObstacle(Obstacle o) {
@@ -43,9 +51,8 @@ public class Controller {
 	//============================================
 	
 	private void updateView() {
-		if(world!=null) {
-			world.update();
-		}
+		world.update();
+		frame.updateDisplay();
 	}
 
 	//============================================
@@ -54,12 +61,16 @@ public class Controller {
 
 	public void setCurrentRunway(Runway r) {
 		this.currentRunway = r;
-		updateView();
+		this.updateView();
 	}
 	
 	//I don't really want to make the obstacles visible to the view but I can't think of a better way to do it:
 	public List<Obstacle> getObstacleList() {
 		return currentRunway.getObstacleList();
+	}
+	
+	public List<Runway> getRunwayList() {
+		return airport.getRunwayList();
 	}
 
 	public float getRunwayLength() {

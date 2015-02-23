@@ -6,7 +6,7 @@ public class Main {
 		World world = new World(controller);
 		controller.setWorld(world);
 		
-		new Frame2D(world);
+		new Frame2D(world, controller);
 	}
 
 }
