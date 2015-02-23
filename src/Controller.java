@@ -8,14 +8,13 @@ public class Controller {
 	private Runway currentRunway;
 	private World world;
 	private ControlFrame frame;
-	private List<Frame2D> viewList;
+	public static EventManager eventManager = new EventManager();
 
 	//============================================
 	//CONSTRUCTORS:
 	//============================================
 	public Controller() {
 		airport = new Airport("airport name");
-		viewList = new ArrayList<Frame2D>();
 		
 		world = new World(this);
 		frame = new ControlFrame(this, world);
@@ -31,10 +30,6 @@ public class Controller {
 		if(frame!=null) {
 			frame.updateRunways();
 		}
-	}
-	
-	public void addView(Frame2D frame) {
-		viewList.add(frame);
 	}
 	
 	public void addObstacle(Obstacle o) {
@@ -54,9 +49,7 @@ public class Controller {
 	
 	private void updateView() {
 		world.update();
-		for(Frame2D f : viewList) {
-			f.updateDisplay();
-		}
+		eventManager.Notify(EventManager.EventName.UPDATE_DISPLAY);
 	}
 
 	//============================================

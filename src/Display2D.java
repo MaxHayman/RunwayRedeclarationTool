@@ -14,9 +14,6 @@ public class Display2D extends Display {
 	private Vector camera = new Vector(0, 0, 1000);
 	private int cameraAngle = 0;
 	private int cameraZoom = 100;
-	//private World map = null;
-	//private int width;
-	//private int height;
 
 	public Display2D(World map) {
 		super(map);

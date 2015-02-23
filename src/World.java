@@ -5,7 +5,7 @@ public class World {
 
 	private static final int OFFSET_X = 20, OFFSET_Y = 20;
 	public int[][] map = null;
-	public int size = 6000;
+	public int size = 2500;
 	public ArrayList<MapObject> objects = new ArrayList<MapObject>();
 	private Controller controller;
 	

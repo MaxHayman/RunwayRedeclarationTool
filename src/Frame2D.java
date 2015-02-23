@@ -1,16 +1,7 @@
-import java.awt.Component;
-import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 
-import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
-
 
 public class Frame2D extends JFrame implements ComponentListener {
 	
@@ -19,30 +10,32 @@ public class Frame2D extends JFrame implements ComponentListener {
 	public Frame2D (World map, Controller controller) {
 		super("Runway Redeclaration Tool");
 		
-		int width = 720;
-		int height = 450;
-		
 		display = new Display2D(map);
 		
 		//view:
 		this.setContentPane(display);
 		this.addKeyListener(display);
 		this.setVisible(true);
-		this.setSize(width, height);
+		this.setSize(720, 450);
 		this.addComponentListener(this);
+		
+		try {
+			Controller.eventManager.AddEventNotify(EventManager.EventName.UPDATE_DISPLAY, this.getClass().getMethod("updateDisplay"), this);
+		} catch (NoSuchMethodException | SecurityException e) {
+			e.printStackTrace();
+		}
+
 	}
 	
 	public void updateDisplay() {
 		System.out.println("updating display");
-		display.redrawImage();
+		display.repaint();
+		
+
 	}
 
 	public void componentResized(ComponentEvent e) {
-		
-		//Dimension d = display.getSize();
-		//display.setDisplaySize((int)d.getWidth(), (int)d.getHeight());
-		System.out.println(display.getWidth() + " " + display.getHeight());
-		display.redrawImage();
+		System.out.println("Resized: " + display.getWidth() + " " + display.getHeight());
 	}
 
 	public void componentMoved(ComponentEvent e) { }
