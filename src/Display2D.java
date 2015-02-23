@@ -10,8 +10,7 @@ import javax.swing.JPanel;
 public class Display2D extends Display {
 	
 	private BufferedImage image = null;
-	//private Vector camera = new Vector(300, 200, 1000);
-	private Vector camera = new Vector(0, 0, 1000);
+	private Vector camera = new Vector(300, 300, 1000);
 	private int cameraAngle = 0;
 	private int cameraZoom = 100;
 
@@ -34,22 +33,19 @@ public class Display2D extends Display {
 	 
 	public void redrawImage() {
 		image = new BufferedImage(this.getWidth(), this.getHeight(), BufferedImage.TYPE_INT_RGB);
-		//int startx = (int) (camera.x - Math.floor(this.getWidth() / 2));
-		//int starty = (int) (camera.y - Math.floor(this.getHeight() / 2));
+		int startx = (int) (camera.x - Math.floor(this.getWidth() / 2));
+		int starty = (int) (camera.y - Math.floor(this.getHeight() / 2));
 		
-		int startx = (int) (camera.x);
-		int starty = (int) (camera.y);
-
-		int theColor = 0;
+		int theColor, tempi, tempj, newi, newj = 0;
 		System.out.println("Camera X: " + camera.x + "\t Y: " + camera.y + "\t O: " + cameraAngle);
 			
 			for (int i = 0; i < this.getWidth(); i++){
 				for (int j =0 ; j < this.getHeight(); j++){
 					
-					int tempi = i*cameraZoom/100;
-					int tempj = j*cameraZoom/100;
-					int newi = (int) ((startx + tempi) * Math.cos(Math.toRadians((cameraAngle))) + (starty + tempj) * Math.sin(Math.toRadians((cameraAngle))));
-					int newj = (int) (-(startx + tempi) * Math.sin(Math.toRadians((cameraAngle))) + (starty + tempj) * Math.cos(Math.toRadians((cameraAngle))));
+					tempi = i*cameraZoom/100;
+					tempj = j*cameraZoom/100;
+					newi = (int) ((startx + tempi) * Math.cos(Math.toRadians((cameraAngle))) + (starty + tempj) * Math.sin(Math.toRadians((cameraAngle))));
+					newj = (int) (-(startx + tempi) * Math.sin(Math.toRadians((cameraAngle))) + (starty + tempj) * Math.cos(Math.toRadians((cameraAngle))));
 
 					if(newi < 0 || (newj) < 0 || (newi) >= this.getWorld().size || (newj) >= this.getWorld().size)
 						theColor = Color.BLACK.getRGB();
