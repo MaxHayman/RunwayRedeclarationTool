@@ -49,7 +49,7 @@ public class Controller {
 	
 	private void updateView() {
 		world.update();
-		eventManager.Notify(EventManager.EventName.UPDATE_DISPLAY);
+		eventManager.notify(EventManager.EventName.UPDATE_DISPLAY);
 	}
 
 	//============================================

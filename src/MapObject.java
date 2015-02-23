@@ -12,7 +12,7 @@ public class MapObject {
 	Color color = Color.black;
 	
 	void draw(int[][] map) {
-		System.out.println("Drawing: " + name);
+		//System.out.println("Drawing: " + name);
 		for(int i = x; i < (x + width); i++) {
 			for(int j = y; j < (y + height); j++) {
 				map[i][j] = color.getRGB();
