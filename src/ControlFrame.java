@@ -9,7 +9,7 @@ import javax.swing.JFrame;
 
 
 public class ControlFrame extends JFrame {
-	
+
 	Controller controller;
 	World world;
 	Container pane;
@@ -19,14 +19,14 @@ public class ControlFrame extends JFrame {
 		super("Runway Redclaration Tool");
 		this.controller = controller;
 		this.world = world;
-		
+
 		pane = new Container();
 		this.setContentPane(pane);
 		pane.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
-		
+
 		runwayComboBox = new RunwayComboBox(controller);
-		
+
 		//first line:
 		c.gridx = 0; c.gridy = 0;
 		c.fill = GridBagConstraints.BOTH;
@@ -37,8 +37,8 @@ public class ControlFrame extends JFrame {
 		c.gridx = 1;
 		pane.add(new AddRunwayButton(), c);
 		c.gridx = 2;
-		pane.add(new JButton("Add Obstacle"), c);
-		
+		pane.add(new AddObstacleButton(), c);
+
 		//second line:
 		c.gridx = 0; c.gridy = 1;
 		pane.add(new View2DButton(), c);
@@ -46,18 +46,18 @@ public class ControlFrame extends JFrame {
 		pane.add(new JButton("Open Side-on 2D View"), c);
 		c.gridx = 2;
 		pane.add(new JButton("Open 3D View"), c);
-		
+
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.pack();
 		this.setVisible(true);
 	}
-	
+
 	public void updateRunways() {
 		runwayComboBox.update();
 	}
-	
+
 	private class AddRunwayButton extends JButton implements ActionListener{
-		
+
 		public AddRunwayButton() {
 			super("Add Runway");
 			this.addActionListener(this);
@@ -68,9 +68,22 @@ public class ControlFrame extends JFrame {
 		}
 
 	}
-	
+
+	private class AddObstacleButton extends JButton implements ActionListener{
+
+		public AddObstacleButton() {
+			super("Add Obstacle");
+			this.addActionListener(this);
+		}
+
+		public void actionPerformed(ActionEvent e) {
+			new AddObstacleFrame(controller);
+		}
+
+	}
+
 	private class View2DButton extends JButton implements ActionListener{
-		
+
 		public View2DButton() {
 			super("Open Top-down 2D View");
 			this.addActionListener(this);
