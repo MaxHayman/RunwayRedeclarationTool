@@ -22,6 +22,10 @@ public class Airport {
 	public void addRunway(Runway r) {
 		runwayList.add(r);
 	}
+	
+	public void removeRunway(Runway r) {
+		runwayList.remove(r);
+	}
 
 	//============================================
 	//GETTERS AND SETTERS:

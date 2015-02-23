@@ -32,6 +32,13 @@ public class Controller {
 		}
 	}
 	
+	public void removeRunway(Runway r){
+		airport.removeRunway(r);
+		if(frame!=null) {
+			frame.updateRunways();
+		}
+	}
+	
 	public void addObstacle(Obstacle o) {
 		if(currentRunway != null) {
 			currentRunway.addObstacle(o);
