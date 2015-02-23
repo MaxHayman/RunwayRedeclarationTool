@@ -1,13 +1,44 @@
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
+class Delegate {
+	private Object object;
+	private String method;
+	
+	public Delegate(Object object, String method) {
+		this.object = object;
+		this.method = method;
+	}
+	
+	public void invoke(Object... args) {
+		try {
+			object.getClass().getMethod(method).invoke(object, args);
+		} catch (IllegalAccessException | IllegalArgumentException
+				| InvocationTargetException | NoSuchMethodException
+				| SecurityException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public int hashCode() {
+		return (object.toString() + method).hashCode();
+	}
+
+	public boolean equals(Object obj) {
+		if (!(obj instanceof Delegate))
+			return false;
+		if (obj == this)
+			return true;
+
+		if(hashCode() == obj.hashCode())
+			return true;
+		
+		return false;
+	}
+}
 
 public class EventManager {
 	
@@ -15,31 +46,37 @@ public class EventManager {
 	    UPDATE_DISPLAY,
 	}
 	
-	public Map<EventName, Map<Object, Method>> _Notify = new HashMap<EventName, Map<Object, Method>>();
+	public Map<EventName, List<Delegate>> _Notify = new HashMap<EventName, List<Delegate>>();
 	
-	public void AddEventNotify(EventName event, Method method, Object o) {
+	public void addEventNotify(EventName event, Object object, String method) {
 		if(_Notify.get(event) == null)
-			_Notify.put(event, new HashMap<Object, Method>());
+			_Notify.put(event, new ArrayList<Delegate>());
 		
-		_Notify.get(event).put(o, method);
+		Delegate del = new Delegate(object, method);
+		
+		if(!_Notify.get(event).contains(del))
+			_Notify.get(event).add(del);
 	}
 	
-	public void Notify(EventName event, Object... arg) {
+	public void removeEventNotify(EventName event, Object object, String method) {
 		if(_Notify.get(event) == null)
 			return;
 		
-		Map<Object, Method> methods = _Notify.get(event);
+		Delegate del = new Delegate(object, method);
 		
-		Iterator<Entry<Object, Method>> it = methods.entrySet().iterator();
-	    while (it.hasNext()) {
-	        Map.Entry<Object, Method> pair = (Map.Entry<Object, Method>)it.next();
-	        try {
-				pair.getValue().invoke(pair.getKey(), arg);
-			} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-				System.out.println("Invalid amount of arguments for " + event + " " + pair.getValue() + " " + pair.getKey());
-				e.printStackTrace();
-			}
-	    }
+		if(_Notify.get(event).contains(del))
+			_Notify.get(event).remove(del);
+	}
+	
+	public void notify(EventName event, Object... args) {
+		if(_Notify.get(event) == null)
+			return;
+		
+		List<Delegate> delegates = _Notify.get(event);
+		
+		for(Delegate del : delegates) {
+			del.invoke(args);
+		}
 
 	}
 }
