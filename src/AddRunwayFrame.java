@@ -30,10 +30,10 @@ public class AddRunwayFrame extends JFrame{
 		gbc = new GridBagConstraints();
 		gbc.gridy = 0;
 		
-		addField("Orientation:", orientationField);
-		addField("Designation:", designationField);
-		addField("Length:", lengthField);
-		addField("Width:", widthField);
+		orientationField = addField("Orientation:");
+		designationField = addField("Designation:");
+		lengthField = addField("Length:");
+		widthField = addField("Width:");
 		
 		gbc.gridx = 0;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -44,8 +44,9 @@ public class AddRunwayFrame extends JFrame{
 		this.setVisible(true);
 	}
 	
-	private void addField(String fieldLabel, JTextField textField) {
+	private JTextField addField(String fieldLabel) {
 		//initialise text field and make it editable:
+		JTextField textField;
 		textField = new JTextField();
 		textField.setEditable(true);
 		
@@ -60,6 +61,7 @@ public class AddRunwayFrame extends JFrame{
 		gbc.gridx = 1;
 		pane.add(textField, gbc);
 		gbc.gridy++;
+		return textField;
 	}
 	
 	private class AddButton extends JButton implements ActionListener{
