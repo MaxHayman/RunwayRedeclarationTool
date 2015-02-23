@@ -5,7 +5,8 @@ public class Test {
 		Runway testRunway = new Runway(9, null, 2400, 160);
 		World testWorld = new World(testController);
 		testController.setWorld(testWorld);
-		testController.setFrame(new Frame2D(testWorld, testController));
+		testController.setFrame(new ControlFrame(testController));
+		testController.addView(new Frame2D(testWorld, testController));
 		
 		testController.addRunway(testRunway);
 		testController.addRunway(new Runway(18, 'L', 600, 80));

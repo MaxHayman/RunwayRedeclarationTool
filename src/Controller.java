@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -6,13 +7,15 @@ public class Controller {
 	private Airport airport;
 	private Runway currentRunway;
 	private World world;
-	private Frame2D frame;
+	private ControlFrame frame;
+	private List<Frame2D> viewList;
 
 	//============================================
 	//CONSTRUCTORS:
 	//============================================
 	public Controller() {
 		airport = new Airport("airport name");
+		viewList = new ArrayList<Frame2D>();
 	}
 
 
@@ -24,7 +27,7 @@ public class Controller {
 		this.world = w;
 	}
 	
-	public void setFrame(Frame2D f) {
+	public void setFrame(ControlFrame f) {
 		this.frame = f;
 	}
 
@@ -34,7 +37,11 @@ public class Controller {
 			frame.updateRunways();
 		}
 	}
-
+	
+	public void addView(Frame2D frame) {
+		viewList.add(frame);
+	}
+	
 	public void addObstacle(Obstacle o) {
 		if(currentRunway != null) {
 			currentRunway.addObstacle(o);
@@ -52,7 +59,9 @@ public class Controller {
 	
 	private void updateView() {
 		world.update();
-		frame.updateDisplay();
+		for(Frame2D f : viewList) {
+			f.updateDisplay();
+		}
 	}
 
 	//============================================
