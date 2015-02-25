@@ -5,6 +5,7 @@ import java.util.List;
 public class Runway {
 
 	private List<Obstacle> obstacleList;
+	private Controller controller;
 	private int orientation;
 	private Character designation;
 	private float length, width, clearway, stopway, displacedThreshold, TORA, TODA, ASDA, LDA, RESA = 240;
@@ -12,7 +13,7 @@ public class Runway {
 	//============================================
 	//CONSTRUCTORS:
 	//============================================
-	public Runway(int orientation, Character designation, float length, float width, float clearway, float stopway, float displacedThreshold) {
+	public Runway(int orientation, Character designation, float length, float width, float clearway, float stopway, float displacedThreshold, Controller controller) {
 		this.orientation = orientation;
 		this.designation = designation;
 		this.length = length;
@@ -20,6 +21,7 @@ public class Runway {
 		this.clearway = clearway;
 		this.stopway = stopway;
 		this.displacedThreshold = displacedThreshold;
+		this.controller = controller;
 		obstacleList = new ArrayList<Obstacle>();
 		recalculate();
 	}
@@ -30,10 +32,14 @@ public class Runway {
 	
 	public void addObstacle(Obstacle o) {
 		this.obstacleList.add(o);
-	}
+		recalculate();
+		controller.updateLabels();
+		}
 	
 	public void removeObstacle(Obstacle o){
 		this.obstacleList.remove(o);
+		recalculate();
+		controller.updateLabels();
 	}
 	
 	//override this for display in the ComboBox:
@@ -91,8 +97,8 @@ public class Runway {
 		for (Obstacle o: obstacleList){
 			//TORA - Displaced Threshold - Distance of object from threshold - height of object times 50 - safety distance(60m)
 			//TORA - Displaced Threshold - RESA - safety distance(60m)
-			float RLDA = Math.max(TORA - displacedThreshold - o.getxLocation() - (o.getzSize() * 50) - 60,
-					TORA - displacedThreshold - RESA - 60);
+			float RLDA = Math.max(o.getxLocation() - displacedThreshold - (o.getzSize() * 50) - 60,
+					o.getxLocation() - displacedThreshold - RESA - 60);
 			if (RLDA < LDA){
 				this.LDA = RLDA;
 			}

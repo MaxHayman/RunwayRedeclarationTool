@@ -232,6 +232,7 @@ public class ControlFrame extends JFrame implements ComponentListener {
 
 		public void actionPerformed(ActionEvent e) {
 			controller.removeObstacle((Obstacle) obstacleComboBox.getSelectedItem()); 
+			controller.updateLabels();
 		}
 
 	}
