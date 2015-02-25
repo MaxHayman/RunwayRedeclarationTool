@@ -67,7 +67,7 @@ public class ControlFrame extends JFrame {
 		c.gridx = 0;
 		pane.add(new EditRunwayButton(), c);
 		c.gridx = 1;
-		pane.add(new JButton("Edit Obstacle"), c);
+		pane.add(new EditObstacleButton(), c);
 		c.gridx = 2;
 		pane.add(new JButton("Open 3D View"), c);
 
@@ -158,6 +158,19 @@ public class ControlFrame extends JFrame {
 
 		public void actionPerformed(ActionEvent e) {
 			controller.removeObstacle((Obstacle) obstacleComboBox.getSelectedItem()); 
+		}
+
+	}
+	
+	private class EditObstacleButton extends JButton implements ActionListener{
+
+		public EditObstacleButton() {
+			super("Edit Obstacle");
+			this.addActionListener(this);
+		}
+
+		public void actionPerformed(ActionEvent e) {
+			new EditObstacleFrame(controller, (Obstacle) obstacleComboBox.getSelectedItem());
 		}
 
 	}

@@ -42,7 +42,7 @@ public class EditRunwayFrame extends JFrame{
 		gbc.gridx = 0;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.gridwidth = GridBagConstraints.REMAINDER;
-		pane.add(new AddButton(), gbc);
+		pane.add(new EditButton(), gbc);
 		
 		this.setSize(300, 150);
 		this.setVisible(true);
@@ -68,9 +68,9 @@ public class EditRunwayFrame extends JFrame{
 		return textField;
 	}
 	
-	private class AddButton extends JButton implements ActionListener{
+	private class EditButton extends JButton implements ActionListener{
 		
-		public AddButton() {
+		public EditButton() {
 			super("Edit Runway");
 			this.addActionListener(this);
 		}

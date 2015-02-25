@@ -45,6 +45,7 @@ public class Obstacle {
 	//============================================
 	
 	//these are all auto-generated (ty based Eclipse)
+	
 	public float getxLocation() {
 		return xLocation;
 	}
@@ -64,17 +65,33 @@ public class Obstacle {
 	public float getxSize() {
 		return xSize;
 	}
+	
+	public void setxSize(float xSize){
+		this.xSize = xSize;
+	}
 
 	public float getySize() {
 		return ySize;
+	}
+	
+	public void setySize(float ySize){
+		this.ySize = ySize;
 	}
 
 	public float getzSize() {
 		return zSize;
 	}
+	
+	public void setzSize(float zSize){
+		this.zSize = zSize;
+	}
 
 	public float getAngle() {
 		return angle;
+	}
+	
+	public void setAngle(float angle){
+		this.angle = angle;
 	}
 
 	public String getName() {
