@@ -3,16 +3,20 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 
-public class ControlFrame extends JFrame {
+public class ControlFrame extends JFrame implements ComponentListener {
 
 	Controller controller;
 	World world;
-	Container pane;
+	Display display;
+	Container mainPane, displayPane = new JPanel();
 	RunwayComboBox runwayComboBox;
 	ObstacleComboBox obstacleComboBox;
 
@@ -20,56 +24,75 @@ public class ControlFrame extends JFrame {
 		super("Runway Redclaration Tool");
 		this.controller = controller;
 		this.world = world;
+		display = new Display2D(world);
 
-		pane = new Container();
-		this.setContentPane(pane);
-		pane.setLayout(new GridBagLayout());
+		mainPane = new Container();
+		this.setContentPane(mainPane);
+		mainPane.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 
 		runwayComboBox = new RunwayComboBox(controller);
 		obstacleComboBox = new ObstacleComboBox(controller);
 
+		//main pane:
 		//first line:
 		c.gridx = 0; c.gridy = 0;
-		c.fill = GridBagConstraints.BOTH;
-		c.weighty = 1;
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.anchor = c.NORTH;
 		c.weightx = 1;
 		c.gridwidth = 3;
-		pane.add(runwayComboBox, c);
+		mainPane.add(runwayComboBox, c);
 		this.updateRunways();
+		c.gridx = 3;
+		c.gridheight = 4;
+		mainPane.add(displayPane, c);
 		
 		//second line
+		c.gridheight = 1;
 		c.gridy = 1;
-		pane.add(obstacleComboBox, c);
+		c.gridx = 0;
+		mainPane.add(obstacleComboBox, c);
 		this.updateObstacles();
 		
 		//third line:
 		c.gridwidth = 1;
 		c.gridy = 2;
 		c.gridx = 0;
-		pane.add(new AddRunwayButton(), c);
+		mainPane.add(new AddRunwayButton(), c);
 		c.gridx = 1;
-		pane.add(new AddObstacleButton(), c);
+		mainPane.add(new AddObstacleButton(), c);
 		c.gridx = 2;
-		pane.add(new View2DButton(), c);
+		mainPane.add(new View2DButton(), c);
 
 		//forth line:
 		c.gridy = 3;
 		c.gridx = 0;
-		pane.add(new RmvRunwayButton(), c);
+		mainPane.add(new RmvRunwayButton(), c);
 		c.gridx = 1;
-		pane.add(new RmvObstacleButton(), c);
+		mainPane.add(new RmvObstacleButton(), c);
 		c.gridx = 2;
-		pane.add(new JButton("Open Side-on 2D View"), c);
+		mainPane.add(new JButton("Open Side-on 2D View"), c);
 
 		//fith line:
+		c.weighty = 1;
 		c.gridy = 4;
 		c.gridx = 0;
-		pane.add(new EditRunwayButton(), c);
+		mainPane.add(new EditRunwayButton(), c);
 		c.gridx = 1;
-		pane.add(new EditObstacleButton(), c);
+		mainPane.add(new EditObstacleButton(), c);
 		c.gridx = 2;
-		pane.add(new JButton("Open 3D View"), c);
+		mainPane.add(new JButton("Open 3D View"), c);
+		
+		//display pane:
+		c.gridx = 0;
+		c.gridy = 0;
+		c.weightx = 100;
+		c.weighty = 100;
+		c.fill = c.BOTH;
+		this.addKeyListener(display);
+		this.addComponentListener(this);
+		Controller.eventManager.addEventNotify(EventManager.EventName.UPDATE_DISPLAY, this, "updateDisplay");
+		displayPane.add(display, c);
 
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.pack();
@@ -82,6 +105,35 @@ public class ControlFrame extends JFrame {
 
 	public void updateObstacles() {
 		obstacleComboBox.update();
+	}
+	
+	public void updateDisplay() {
+		System.out.println("updating display");
+		display.repaint();
+	}
+
+	public void componentResized(ComponentEvent e) {
+		System.out.println("Resized: " + display.getWidth() + " " + display.getHeight());
+	}
+	
+	//Needed for component listener:
+	
+	@Override
+	public void componentHidden(ComponentEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void componentMoved(ComponentEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void componentShown(ComponentEvent arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	private class AddRunwayButton extends JButton implements ActionListener{
@@ -174,7 +226,4 @@ public class ControlFrame extends JFrame {
 		}
 
 	}
-	
-	
-
 }

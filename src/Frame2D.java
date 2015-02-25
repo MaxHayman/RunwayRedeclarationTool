@@ -25,8 +25,6 @@ public class Frame2D extends JFrame implements ComponentListener {
 	public void updateDisplay() {
 		System.out.println("updating display");
 		display.repaint();
-		
-
 	}
 
 	public void componentResized(ComponentEvent e) {
