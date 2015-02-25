@@ -52,6 +52,10 @@ public class Runway {
 	public void setClearway(float clearway){this.clearway = clearway; recalculate();}
 	public void setStopway(float stopway){this.stopway = stopway; recalculate();}
 	public void setDisplacedThreshold(float displacedThreshold){this.displacedThreshold = displacedThreshold; recalculate();}
+	public float getTORA(){return this.TORA;}
+	public float getTODA(){return this.TODA;}
+	public float getASDA(){return this.ASDA;}
+	public float getLDA(){return this.LDA;}
 	
 	public List<Obstacle> getObstacleList() {
 		return obstacleList;

@@ -9,6 +9,7 @@ import java.awt.event.ComponentListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 
@@ -18,6 +19,7 @@ public class ControlFrame extends JFrame implements ComponentListener {
 	World world;
 	Display display;
 	Container formPane = new JPanel(), displayPane = new JPanel();
+	JLabel labelTORA = new JLabel("TORA: "), labelTODA = new JLabel("TODA: "), labelASDA = new JLabel("ASDA: "), labelLDA = new JLabel("LDA: ");
 	RunwayComboBox runwayComboBox;
 	ObstacleComboBox obstacleComboBox;
 
@@ -28,7 +30,7 @@ public class ControlFrame extends JFrame implements ComponentListener {
 		this.controller = controller;
 		this.world = world;
 		display = new Display2D(world);
-		display.setPreferredSize(new Dimension(500, 300));
+		display.setPreferredSize(new Dimension(500, 150));
 
 		JPanel mainPane = (JPanel) this.getContentPane();
 		formPane.setLayout(new GridBagLayout());
@@ -38,15 +40,15 @@ public class ControlFrame extends JFrame implements ComponentListener {
 		obstacleComboBox = new ObstacleComboBox(controller);
 
 		mainPane.setLayout(new GridBagLayout());
-		mainPane.add(formPane);
+		c.anchor = c.NORTHEAST;
+		mainPane.add(formPane, c);
 		c.gridx = 1;
 		c.fill = c.BOTH;
-		mainPane.add(displayPane);
+		mainPane.add(displayPane, c);
 		//form pane:
 		//first line:
 		c.gridx = 0; c.gridy = 0;
 		c.fill = GridBagConstraints.HORIZONTAL;
-		c.anchor = c.NORTH;
 		c.weightx = 1;
 		c.gridwidth = 3;
 		formPane.add(runwayComboBox, c);
@@ -87,6 +89,7 @@ public class ControlFrame extends JFrame implements ComponentListener {
 		formPane.add(new JButton("Open 3D View"), c);
 		
 		//display pane:
+		displayPane.setLayout(new GridBagLayout());
 		c.gridx = 0;
 		c.gridy = 0;
 		c.fill = c.BOTH;
@@ -94,6 +97,14 @@ public class ControlFrame extends JFrame implements ComponentListener {
 		this.addComponentListener(this);
 		Controller.eventManager.addEventNotify(EventManager.EventName.UPDATE_DISPLAY, this, "updateDisplay");
 		displayPane.add(display, c);
+		c.gridy = 1;
+		displayPane.add(labelTORA, c);
+		c.gridy = 2;
+		displayPane.add(labelTODA, c);
+		c.gridy = 3;
+		displayPane.add(labelASDA, c);
+		c.gridy = 4;
+		displayPane.add(labelLDA, c);
 
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.pack();
@@ -106,6 +117,16 @@ public class ControlFrame extends JFrame implements ComponentListener {
 
 	public void updateObstacles() {
 		obstacleComboBox.update();
+	}
+	
+	public void updateLabels(){
+		if (runwayComboBox.getSelectedItem() != null){
+			Runway runway = (Runway) runwayComboBox.getSelectedItem();
+			labelTORA.setText("TORA: " + runway.getTORA());
+			labelTODA.setText("TODA: " + runway.getTODA());
+			labelASDA.setText("ASDA: " + runway.getASDA());
+			labelLDA.setText("LDA: " + runway.getLDA());
+		}
 	}
 	
 	public void updateDisplay() {

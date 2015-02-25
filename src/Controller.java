@@ -46,6 +46,12 @@ public class Controller {
 		}
 	}
 	
+	public void updateLabels(){
+		if(frame!=null){
+			frame.updateLabels();
+		}
+	}
+	
 	public void addObstacle(Obstacle o) {
 		if(currentRunway != null) {
 			currentRunway.addObstacle(o);
