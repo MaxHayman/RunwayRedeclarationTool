@@ -1,4 +1,5 @@
 import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
@@ -16,78 +17,78 @@ public class ControlFrame extends JFrame implements ComponentListener {
 	Controller controller;
 	World world;
 	Display display;
-	Container mainPane, displayPane = new JPanel();
+	Container formPane = new JPanel(), displayPane = new JPanel();
 	RunwayComboBox runwayComboBox;
 	ObstacleComboBox obstacleComboBox;
 
+	//ISSUE: Display doesn't expand properly
+	//ISSUE: Display doesn't pick up arrow keys
 	public ControlFrame(Controller controller, World world) {
 		super("Runway Redclaration Tool");
 		this.controller = controller;
 		this.world = world;
 		display = new Display2D(world);
+		display.setPreferredSize(new Dimension(500, 300));
 
-		mainPane = new Container();
-		this.setContentPane(mainPane);
-		mainPane.setLayout(new GridBagLayout());
+		JPanel mainPane = (JPanel) this.getContentPane();
+		formPane.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 
 		runwayComboBox = new RunwayComboBox(controller);
 		obstacleComboBox = new ObstacleComboBox(controller);
 
-		//main pane:
+		mainPane.setLayout(new GridBagLayout());
+		mainPane.add(formPane);
+		c.gridx = 1;
+		c.fill = c.BOTH;
+		mainPane.add(displayPane);
+		//form pane:
 		//first line:
 		c.gridx = 0; c.gridy = 0;
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.anchor = c.NORTH;
 		c.weightx = 1;
 		c.gridwidth = 3;
-		mainPane.add(runwayComboBox, c);
+		formPane.add(runwayComboBox, c);
 		this.updateRunways();
-		c.gridx = 3;
-		c.gridheight = 4;
-		mainPane.add(displayPane, c);
 		
 		//second line
-		c.gridheight = 1;
 		c.gridy = 1;
-		c.gridx = 0;
-		mainPane.add(obstacleComboBox, c);
+		formPane.add(obstacleComboBox, c);
 		this.updateObstacles();
 		
 		//third line:
 		c.gridwidth = 1;
 		c.gridy = 2;
 		c.gridx = 0;
-		mainPane.add(new AddRunwayButton(), c);
+		formPane.add(new AddRunwayButton(), c);
 		c.gridx = 1;
-		mainPane.add(new AddObstacleButton(), c);
+		formPane.add(new AddObstacleButton(), c);
 		c.gridx = 2;
-		mainPane.add(new View2DButton(), c);
+		formPane.add(new View2DButton(), c);
 
 		//forth line:
 		c.gridy = 3;
 		c.gridx = 0;
-		mainPane.add(new RmvRunwayButton(), c);
+		formPane.add(new RmvRunwayButton(), c);
 		c.gridx = 1;
-		mainPane.add(new RmvObstacleButton(), c);
+		formPane.add(new RmvObstacleButton(), c);
 		c.gridx = 2;
-		mainPane.add(new JButton("Open Side-on 2D View"), c);
+		formPane.add(new JButton("Open Side-on 2D View"), c);
 
 		//fith line:
 		c.weighty = 1;
 		c.gridy = 4;
 		c.gridx = 0;
-		mainPane.add(new EditRunwayButton(), c);
+		formPane.add(new EditRunwayButton(), c);
 		c.gridx = 1;
-		mainPane.add(new EditObstacleButton(), c);
+		formPane.add(new EditObstacleButton(), c);
 		c.gridx = 2;
-		mainPane.add(new JButton("Open 3D View"), c);
+		formPane.add(new JButton("Open 3D View"), c);
 		
 		//display pane:
 		c.gridx = 0;
 		c.gridy = 0;
-		c.weightx = 100;
-		c.weighty = 100;
 		c.fill = c.BOTH;
 		this.addKeyListener(display);
 		this.addComponentListener(this);
