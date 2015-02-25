@@ -17,7 +17,7 @@ public class ControlFrame extends JFrame implements ComponentListener {
 
 	Controller controller;
 	World world;
-	Display display;
+	//Display display;
 	Container formPane = new JPanel(), displayPane = new JPanel();
 	JLabel labelTORA = new JLabel("TORA: "), labelTODA = new JLabel("TODA: "), labelASDA = new JLabel("ASDA: "), labelLDA = new JLabel("LDA: ");
 	RunwayComboBox runwayComboBox;
@@ -29,8 +29,8 @@ public class ControlFrame extends JFrame implements ComponentListener {
 		super("Runway Redclaration Tool");
 		this.controller = controller;
 		this.world = world;
-		display = new Display2D(world);
-		display.setPreferredSize(new Dimension(500, 150));
+		//display = new Display2D(world);
+		//display.setPreferredSize(new Dimension(500, 150));
 
 		JPanel mainPane = (JPanel) this.getContentPane();
 		formPane.setLayout(new GridBagLayout());
@@ -93,10 +93,10 @@ public class ControlFrame extends JFrame implements ComponentListener {
 		c.gridx = 0;
 		c.gridy = 0;
 		c.fill = c.BOTH;
-		this.addKeyListener(display);
+		//this.addKeyListener(display);
 		this.addComponentListener(this);
 		Controller.eventManager.addEventNotify(EventManager.EventName.UPDATE_DISPLAY, this, "updateDisplay");
-		displayPane.add(display, c);
+		//displayPane.add(display, c);
 		c.gridy = 1;
 		displayPane.add(labelTORA, c);
 		c.gridy = 2;
@@ -131,11 +131,11 @@ public class ControlFrame extends JFrame implements ComponentListener {
 	
 	public void updateDisplay() {
 		System.out.println("updating display");
-		display.repaint();
+	//	display.repaint();
 	}
 
 	public void componentResized(ComponentEvent e) {
-		System.out.println("Resized: " + display.getWidth() + " " + display.getHeight());
+		//System.out.println("Resized: " + display.getWidth() + " " + display.getHeight());
 	}
 	
 	//Needed for component listener:
