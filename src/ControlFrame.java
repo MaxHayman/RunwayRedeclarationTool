@@ -13,7 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 
-public class ControlFrame extends JFrame implements ComponentListener {
+public class ControlFrame extends JFrame { //implements ComponentListener {
 
 	Controller controller;
 	World world;
@@ -42,9 +42,9 @@ public class ControlFrame extends JFrame implements ComponentListener {
 		mainPane.setLayout(new GridBagLayout());
 		c.anchor = c.NORTHEAST;
 		mainPane.add(formPane, c);
-		c.gridx = 1;
-		c.fill = c.BOTH;
-		mainPane.add(displayPane, c);
+		//c.gridx = 1;
+		//c.fill = c.BOTH;
+		//mainPane.add(displayPane, c);
 		//form pane:
 		//first line:
 		c.gridx = 0; c.gridy = 0;
@@ -88,23 +88,34 @@ public class ControlFrame extends JFrame implements ComponentListener {
 		c.gridx = 2;
 		formPane.add(new JButton("Open 3D View"), c);
 		
-		//display pane:
-		displayPane.setLayout(new GridBagLayout());
+		//sixth+:
+		c.gridy = 5;
 		c.gridx = 0;
-		c.gridy = 0;
-		c.fill = c.BOTH;
-		//this.addKeyListener(display);
-		this.addComponentListener(this);
-		Controller.eventManager.addEventNotify(EventManager.EventName.UPDATE_DISPLAY, this, "updateDisplay");
-		//displayPane.add(display, c);
-		c.gridy = 1;
-		displayPane.add(labelTORA, c);
-		c.gridy = 2;
-		displayPane.add(labelTODA, c);
-		c.gridy = 3;
-		displayPane.add(labelASDA, c);
-		c.gridy = 4;
-		displayPane.add(labelLDA, c);
+		formPane.add(labelTORA, c);
+		c.gridy = 6;
+		formPane.add(labelTODA, c);
+		c.gridy = 7;
+		formPane.add(labelASDA, c);
+		c.gridy = 8;
+		formPane.add(labelLDA, c);
+		
+//		//display pane:
+//		displayPane.setLayout(new GridBagLayout());
+//		c.gridx = 0;
+//		c.gridy = 0;
+//		c.fill = c.BOTH;
+//		//this.addKeyListener(display);
+//		this.addComponentListener(this);
+//		Controller.eventManager.addEventNotify(EventManager.EventName.UPDATE_DISPLAY, this, "updateDisplay");
+//		//displayPane.add(display, c);
+//		c.gridy = 1;
+//		displayPane.add(labelTORA, c);
+//		c.gridy = 2;
+//		displayPane.add(labelTODA, c);
+//		c.gridy = 3;
+//		displayPane.add(labelASDA, c);
+//		c.gridy = 4;
+//		displayPane.add(labelLDA, c);
 
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.pack();
@@ -129,34 +140,34 @@ public class ControlFrame extends JFrame implements ComponentListener {
 		}
 	}
 	
-	public void updateDisplay() {
-		System.out.println("updating display");
-	//	display.repaint();
-	}
+//	public void updateDisplay() {
+//		System.out.println("updating display");
+//	//	display.repaint();
+//	}
 
-	public void componentResized(ComponentEvent e) {
-		//System.out.println("Resized: " + display.getWidth() + " " + display.getHeight());
-	}
+//	public void componentResized(ComponentEvent e) {
+//		//System.out.println("Resized: " + display.getWidth() + " " + display.getHeight());
+//	}
 	
 	//Needed for component listener:
 	
-	@Override
-	public void componentHidden(ComponentEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void componentMoved(ComponentEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void componentShown(ComponentEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
+//	@Override
+//	public void componentHidden(ComponentEvent arg0) {
+//		// TODO Auto-generated method stub
+//		
+//	}
+//
+//	@Override
+//	public void componentMoved(ComponentEvent arg0) {
+//		// TODO Auto-generated method stub
+//		
+//	}
+//
+//	@Override
+//	public void componentShown(ComponentEvent arg0) {
+//		// TODO Auto-generated method stub
+//		
+//	}
 	
 	private class AddRunwayButton extends JButton implements ActionListener{
 
