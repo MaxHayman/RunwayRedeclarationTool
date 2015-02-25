@@ -26,7 +26,7 @@ public class World {
 	//this should be called when the model might have changed
 	public void update() {
 		//first check if there is a runway being viewed, if there isn't you don't need to do anything
-		System.out.println("updating world");
+		//System.out.println("updating world");
 		if(controller.viewingRunway()) {
 			//clear the previous stuff:
 			objects.clear();
