@@ -13,10 +13,15 @@ public class ObstacleComboBox extends JComboBox<Obstacle> implements ActionListe
 		this.controller = controller;
 		this.update();
 		this.addActionListener(this);
+		
+		Controller.eventManager.addEventNotify(EventManager.EventName.UPDATE_DISPLAY, this, "update");
 	}
 
 	public void update() {
+		//clear the list:
 		this.removeAllItems();
+		
+		//add the new obstacles:
 		if(controller.viewingRunway()){
 			for(Obstacle o : controller.getObstacleList()) {
 				//System.out.println("Adding obstacle " + o.toString());

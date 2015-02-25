@@ -13,6 +13,8 @@ public class RunwayComboBox extends JComboBox<Runway> implements ActionListener{
 		this.controller = controller;
 		this.update();
 		this.addActionListener(this);
+		
+		Controller.eventManager.addEventNotify(EventManager.EventName.UPDATE_DISPLAY, this, "update");
 	}
 	
 	public void update() {

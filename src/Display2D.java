@@ -17,6 +17,12 @@ public class Display2D extends Display {
 	public Display2D(World map) {
 		super(map);
 		this.addMouseWheelListener(this);
+		
+		Controller.eventManager.addEventNotify(EventManager.EventName.UPDATE_DISPLAY, this, "update");
+	}
+	
+	public void update() {
+		this.repaint();
 	}
 
 	public void init() {

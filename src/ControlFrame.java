@@ -103,8 +103,9 @@ public class ControlFrame extends JFrame {
 	}
 	
 	public void update() {
-		updateRunways();
-		updateObstacles();
+		//updateRunways();
+		//updateObstacles();
+		//System.out.println("updating control frame");
 		updateLabels();
 	}
 
