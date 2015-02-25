@@ -28,37 +28,26 @@ public class Controller {
 
 	public void addRunway(Runway r) {
 		airport.addRunway(r);
-		if(frame!=null) {
-			frame.updateRunways();
-		}
+		updateView();
 	}
 	
 	public void removeRunway(Runway r){
 		airport.removeRunway(r);
-		if(frame!=null) {
-			frame.updateRunways();
-		}
+		updateView();
 	}
 	
 	public void updateRunways(){
-		if(frame!=null){
-			frame.updateRunways();
-		}
+		updateView();
 	}
 	
 	public void updateLabels(){
-		if(frame!=null){
-			frame.updateLabels();
-		}
+		updateView();
 	}
 	
 	public void addObstacle(Obstacle o) {
 		if(currentRunway != null) {
 			currentRunway.addObstacle(o);
 			updateView();
-		}
-		if(frame!=null){
-			frame.updateObstacles();
 		}
 	}
 	
@@ -67,15 +56,10 @@ public class Controller {
 			currentRunway.removeObstacle(o);
 			updateView();
 		}
-		if(frame!=null){
-			frame.updateObstacles();
-		}
 	}
 	
 	public void updateObstacles(){
-		if(frame!=null){
-			frame.updateObstacles();
-		}
+		updateView();
 	}
 
 	public boolean viewingRunway() {
@@ -87,17 +71,24 @@ public class Controller {
 	//============================================
 	
 	private void updateView() {
-		world.update();
 		eventManager.notify(EventManager.EventName.UPDATE_DISPLAY);
 	}
 
 	//============================================
 	//GETTERS AND SETTERS:
 	//============================================
+	
+	public Runway getCurrentRunway() {
+		return currentRunway;
+	}
 
 	public void setCurrentRunway(Runway r) {
 		this.currentRunway = r;
 		this.updateView();
+	}
+	
+	public Obstacle getCurrentObstacle() {
+		return currentObstacle;
 	}
 	
 	public void setCurrentObstacle(Obstacle o) {

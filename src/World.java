@@ -17,6 +17,8 @@ public class World {
 			map[i] = new int[size];
 		}
 		
+		Controller.eventManager.addEventNotify(EventManager.EventName.UPDATE_DISPLAY, this, "update");
+		
 		update();
 	}
 	

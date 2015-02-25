@@ -13,12 +13,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 
-public class ControlFrame extends JFrame implements ComponentListener {
+public class ControlFrame extends JFrame {
 
 	Controller controller;
 	World world;
-	Display display;
-	Container formPane = new JPanel(), displayPane = new JPanel();
+	//Display display;
+	Container pane = new JPanel();
 	JLabel labelTORA = new JLabel("TORA: "), labelTODA = new JLabel("TODA: "), labelASDA = new JLabel("ASDA: "), labelLDA = new JLabel("LDA: ");
 	RunwayComboBox runwayComboBox;
 	ObstacleComboBox obstacleComboBox;
@@ -26,136 +26,107 @@ public class ControlFrame extends JFrame implements ComponentListener {
 	//ISSUE: Display doesn't expand properly
 	//ISSUE: Display doesn't pick up arrow keys
 	public ControlFrame(Controller controller, World world) {
-		super("Runway Redclaration Tool");
+		super("Runway Redeclaration Tool");
 		this.controller = controller;
 		this.world = world;
-		display = new Display2D(world);
-		display.setPreferredSize(new Dimension(500, 150));
 
-		JPanel mainPane = (JPanel) this.getContentPane();
-		formPane.setLayout(new GridBagLayout());
+		this.setContentPane(pane);
+		this.setResizable(false);
+		pane.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 
 		runwayComboBox = new RunwayComboBox(controller);
 		obstacleComboBox = new ObstacleComboBox(controller);
 
-		mainPane.setLayout(new GridBagLayout());
-		c.anchor = c.NORTHEAST;
-		mainPane.add(formPane, c);
-		c.gridx = 1;
-		c.fill = c.BOTH;
-		mainPane.add(displayPane, c);
-		//form pane:
-		//first line:
-		c.gridx = 0; c.gridy = 0;
+		c.anchor = GridBagConstraints.NORTHEAST;
 		c.fill = GridBagConstraints.HORIZONTAL;
-		c.weightx = 1;
-		c.gridwidth = 3;
-		formPane.add(runwayComboBox, c);
+		c.weightx = 0;
+		c.weighty = 0;
+		
+		//form pane:
+		//first line, runway combo box:
+		c.gridx = 0; c.gridy = 0;
+		c.gridwidth = GridBagConstraints.REMAINDER;
+		pane.add(runwayComboBox, c);
 		this.updateRunways();
 		
-		//second line
-		c.gridy = 1;
-		formPane.add(obstacleComboBox, c);
+		//second line, obstacle combo box
+		c.gridy++;
+		pane.add(obstacleComboBox, c);
 		this.updateObstacles();
 		
-		//third line:
+		//third line, add buttons and 2D view button:
 		c.gridwidth = 1;
-		c.gridy = 2;
+		c.gridy++;
 		c.gridx = 0;
-		formPane.add(new AddRunwayButton(), c);
+		pane.add(new AddRunwayButton(), c);
 		c.gridx = 1;
-		formPane.add(new AddObstacleButton(), c);
+		pane.add(new AddObstacleButton(), c);
 		c.gridx = 2;
-		formPane.add(new View2DButton(), c);
+		pane.add(new View2DButton(), c);
 
-		//forth line:
-		c.gridy = 3;
+		//forth line, remove buttons and 2D side-on view:
+		c.gridy++;
 		c.gridx = 0;
-		formPane.add(new RmvRunwayButton(), c);
+		pane.add(new RemoveRunwayButton(), c);
 		c.gridx = 1;
-		formPane.add(new RmvObstacleButton(), c);
+		pane.add(new RemoveObstacleButton(), c);
 		c.gridx = 2;
-		formPane.add(new JButton("Open Side-on 2D View"), c);
+		pane.add(new JButton("Open Side-on 2D View"), c);
 
-		//fith line:
-		c.weighty = 1;
-		c.gridy = 4;
+		//fith line, edit buttons and 3D view:
+		c.gridy++;
 		c.gridx = 0;
-		formPane.add(new EditRunwayButton(), c);
+		pane.add(new EditRunwayButton(), c);
 		c.gridx = 1;
-		formPane.add(new EditObstacleButton(), c);
+		pane.add(new EditObstacleButton(), c);
 		c.gridx = 2;
-		formPane.add(new JButton("Open 3D View"), c);
+		pane.add(new JButton("Open 3D View"), c);
 		
 		//display pane:
-		displayPane.setLayout(new GridBagLayout());
 		c.gridx = 0;
-		c.gridy = 0;
-		c.fill = c.BOTH;
-		this.addKeyListener(display);
-		this.addComponentListener(this);
-		Controller.eventManager.addEventNotify(EventManager.EventName.UPDATE_DISPLAY, this, "updateDisplay");
-		displayPane.add(display, c);
-		c.gridy = 1;
-		displayPane.add(labelTORA, c);
-		c.gridy = 2;
-		displayPane.add(labelTODA, c);
-		c.gridy = 3;
-		displayPane.add(labelASDA, c);
-		c.gridy = 4;
-		displayPane.add(labelLDA, c);
+		c.gridwidth = GridBagConstraints.REMAINDER;
+		c.gridy++;
+		pane.add(labelTORA, c);
+		c.gridy++;
+		pane.add(labelTODA, c);
+		c.gridy++;
+		pane.add(labelASDA, c);
+		c.gridy++;
+		pane.add(labelLDA, c);
+		
+		Controller.eventManager.addEventNotify(EventManager.EventName.UPDATE_DISPLAY, this, "update");
 
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.pack();
 		this.setVisible(true);
 	}
+	
+	public void update() {
+		updateRunways();
+		updateObstacles();
+		updateLabels();
+	}
 
+	//tells the runway combo box to recheck the runways and redisplay its list
 	public void updateRunways() {
 		runwayComboBox.update();
 	}
 
+	//tells the obstacle combo box to recheck the obstacles on the current runway and redisplay its list
 	public void updateObstacles() {
 		obstacleComboBox.update();
 	}
 	
+	//sets all the calculation labels to the new values:
 	public void updateLabels(){
-		if (runwayComboBox.getSelectedItem() != null){
-			Runway runway = (Runway) runwayComboBox.getSelectedItem();
+		if (controller.viewingRunway()){ //only update if there's a selected item
+			Runway runway = controller.getCurrentRunway();
 			labelTORA.setText("TORA: " + runway.getTORA());
 			labelTODA.setText("TODA: " + runway.getTODA());
 			labelASDA.setText("ASDA: " + runway.getASDA());
 			labelLDA.setText("LDA: " + runway.getLDA());
 		}
-	}
-	
-	public void updateDisplay() {
-		System.out.println("updating display");
-		display.repaint();
-	}
-
-	public void componentResized(ComponentEvent e) {
-		System.out.println("Resized: " + display.getWidth() + " " + display.getHeight());
-	}
-	
-	//Needed for component listener:
-	
-	@Override
-	public void componentHidden(ComponentEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void componentMoved(ComponentEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void componentShown(ComponentEvent arg0) {
-		// TODO Auto-generated method stub
-		
 	}
 	
 	private class AddRunwayButton extends JButton implements ActionListener{
@@ -197,15 +168,15 @@ public class ControlFrame extends JFrame implements ComponentListener {
 
 	}
 	
-	private class RmvRunwayButton extends JButton implements ActionListener{
+	private class RemoveRunwayButton extends JButton implements ActionListener{
 
-		public RmvRunwayButton() {
+		public RemoveRunwayButton() {
 			super("Remove Runway");
 			this.addActionListener(this);
 		}
 
 		public void actionPerformed(ActionEvent e) {
-			controller.removeRunway((Runway) runwayComboBox.getSelectedItem()); 
+			controller.removeRunway((Runway) controller.getCurrentRunway()); 
 		}
 
 	}
@@ -218,14 +189,14 @@ public class ControlFrame extends JFrame implements ComponentListener {
 		}
 
 		public void actionPerformed(ActionEvent e) {
-			new EditRunwayFrame(controller, (Runway) runwayComboBox.getSelectedItem());
+			new EditRunwayFrame(controller, (Runway) controller.getCurrentRunway());
 		}
 
 	}
 	
-	private class RmvObstacleButton extends JButton implements ActionListener{
+	private class RemoveObstacleButton extends JButton implements ActionListener{
 
-		public RmvObstacleButton() {
+		public RemoveObstacleButton() {
 			super("Remove Obstacle");
 			this.addActionListener(this);
 		}

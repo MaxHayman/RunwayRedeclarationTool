@@ -16,7 +16,10 @@ public class RunwayComboBox extends JComboBox<Runway> implements ActionListener{
 	}
 	
 	public void update() {
+		//empty the list:
 		this.removeAllItems();
+		
+		//iterate through the list from the controller to repopulate the list:
 		for(Runway r : controller.getRunwayList()) {
 			this.addItem(r);
 		}
@@ -25,8 +28,6 @@ public class RunwayComboBox extends JComboBox<Runway> implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		System.out.println("new Runway selected");
 		controller.setCurrentRunway((Runway)this.getSelectedItem());
-		controller.updateObstacles();
-		controller.updateLabels();
 	}
 
 }
