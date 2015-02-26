@@ -3,7 +3,7 @@ import java.util.ArrayList;
 
 public class World {
 
-	private static final int OFFSET_X = 20, OFFSET_Y = 20;
+	private static final int OFFSET_X = 0, OFFSET_Y = 0;
 	public int[][] map = null;
 	public int size = 2500;
 	public ArrayList<MapObject> objects = new ArrayList<MapObject>();

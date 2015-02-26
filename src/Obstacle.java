@@ -1,7 +1,7 @@
 
 public class Obstacle {
 	
-	final static float DEFAULT_X_LOC = 0, DEFAULT_Y_LOC = 0, DEFAULT_ANGLE = 0;
+	final static float DEFAULT_X_LOC = 100, DEFAULT_Y_LOC = 75, DEFAULT_ANGLE = 0;
 	final static String DEFAULT_NAME = "obstacle";
 	float xSize, ySize, zSize, xLocation, yLocation, angle;
 	String name;

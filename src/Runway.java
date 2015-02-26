@@ -89,7 +89,34 @@ public class Runway {
 	//===========
 	//Methods
 	//===========
+	int oTORA = 3902;
+	int oTODA = 3902;
+	int oASDA = 3902;
+	int oLDA = 3595;
+	int blastProtection = 300;
+	
+	int odisplacedThreshold = 306;
+	
+	
+	
 	public void recalculate(){
+		
+		for (Obstacle o: obstacleList){
+			int distanceFromThreshold = - (int)(150 - o.getxLocation());
+			int obsticalHeight = (int)o.getzSize();
+			this.TORA = oTORA - blastProtection - distanceFromThreshold - odisplacedThreshold;
+			this.TODA = this.TORA;
+			this.ASDA = this.TORA;
+			this.LDA = oLDA - distanceFromThreshold - 60 - obsticalHeight*50;
+			
+			break;
+			
+		}
+		
+		
+		
+		
+		/*
 		this.TORA = length;
 		this.TODA = TORA + clearway;
 		this.ASDA = TORA + stopway;
@@ -103,6 +130,7 @@ public class Runway {
 				this.LDA = RLDA;
 			}
 		}
+		*/
 	}
 
 }
