@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -22,13 +23,13 @@ public class ControlFrame extends JFrame { //implements ComponentListener {
 	JLabel labelTORA = new JLabel("TORA: "), labelTODA = new JLabel("TODA: "), labelASDA = new JLabel("ASDA: "), labelLDA = new JLabel("LDA: ");
 	RunwayComboBox runwayComboBox;
 	ObstacleComboBox obstacleComboBox;
+	ArrayList<Obstacle> savedObstacles = new ArrayList<Obstacle>();
 
-	//ISSUE: Display doesn't expand properly
-	//ISSUE: Display doesn't pick up arrow keys
 	public ControlFrame(Controller controller, World world) {
 		super("Runway Redclaration Tool");
 		this.controller = controller;
 		this.world = world;
+		addDefaultSavedObstacles();
 		//display = new Display2D(world);
 		//display.setPreferredSize(new Dimension(500, 150));
 
@@ -140,6 +141,10 @@ public class ControlFrame extends JFrame { //implements ComponentListener {
 		}
 	}
 	
+	public void addDefaultSavedObstacles(){
+		savedObstacles.add(new Obstacle(5, 5, 5, 5, 5, 5, "Five"));
+	}
+	
 //	public void updateDisplay() {
 //		System.out.println("updating display");
 //	//	display.repaint();
@@ -190,7 +195,7 @@ public class ControlFrame extends JFrame { //implements ComponentListener {
 		}
 
 		public void actionPerformed(ActionEvent e) {
-			new AddObstacleFrame(controller);
+			new AddObstacleFrame(controller, savedObstacles);
 		}
 
 	}
