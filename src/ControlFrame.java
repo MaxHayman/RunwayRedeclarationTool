@@ -8,6 +8,7 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.util.ArrayList;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -19,7 +20,7 @@ public class ControlFrame extends JFrame { //implements ComponentListener {
 	Controller controller;
 	World world;
 	//Display display;
-	Container formPane = new JPanel(), displayPane = new JPanel();
+	Container formPane = new JPanel();//, displayPane = new JPanel();
 	JLabel labelTORA = new JLabel("TORA: "), labelTODA = new JLabel("TODA: "), labelASDA = new JLabel("ASDA: "), labelLDA = new JLabel("LDA: ");
 	RunwayComboBox runwayComboBox;
 	ObstacleComboBox obstacleComboBox;
@@ -34,71 +35,125 @@ public class ControlFrame extends JFrame { //implements ComponentListener {
 		//display.setPreferredSize(new Dimension(500, 150));
 
 		JPanel mainPane = (JPanel) this.getContentPane();
-		formPane.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 
 		runwayComboBox = new RunwayComboBox(controller);
 		obstacleComboBox = new ObstacleComboBox(controller);
 
 		mainPane.setLayout(new GridBagLayout());
-		c.anchor = c.NORTHEAST;
+		formPane.setLayout(new GridBagLayout());
 		mainPane.add(formPane, c);
-		//c.gridx = 1;
-		//c.fill = c.BOTH;
-		//mainPane.add(displayPane, c);
-		//form pane:
-		//first line:
-		c.gridx = 0; c.gridy = 0;
+		
+		//Runway
+		JPanel runwayPane = new JPanel();
+		runwayPane.setLayout(new GridBagLayout());
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.weightx = 1;
+		formPane.add(runwayPane, c);
+		runwayPane.setBorder(BorderFactory.createTitledBorder("Runway"));
 		c.gridwidth = 3;
-		formPane.add(runwayComboBox, c);
-		this.updateRunways();
-		
-		//second line
-		c.gridy = 1;
-		formPane.add(obstacleComboBox, c);
-		this.updateObstacles();
-		
-		//third line:
+		runwayPane.add(runwayComboBox, c);
 		c.gridwidth = 1;
-		c.gridy = 2;
-		c.gridx = 0;
-		formPane.add(new AddRunwayButton(), c);
+		c.gridy = 1;
+		runwayPane.add(new AddRunwayButton(), c);
 		c.gridx = 1;
-		formPane.add(new AddObstacleButton(), c);
+		runwayPane.add(new EditRunwayButton(), c);
 		c.gridx = 2;
-		formPane.add(new View2DButton(), c);
-
-		//forth line:
-		c.gridy = 3;
-		c.gridx = 0;
-		formPane.add(new RmvRunwayButton(), c);
-		c.gridx = 1;
-		formPane.add(new RmvObstacleButton(), c);
-		c.gridx = 2;
-		formPane.add(new JButton("Open Side-on 2D View"), c);
-
-		//fith line:
-		c.weighty = 1;
-		c.gridy = 4;
-		c.gridx = 0;
-		formPane.add(new EditRunwayButton(), c);
-		c.gridx = 1;
-		formPane.add(new EditObstacleButton(), c);
-		c.gridx = 2;
-		formPane.add(new JButton("Open 3D View"), c);
+		runwayPane.add(new RmvRunwayButton(), c);
 		
-		//sixth+:
-		c.gridy = 5;
+		//Obstacles
+		JPanel obstaclePane = new JPanel();
+		obstaclePane.setLayout(new GridBagLayout());
 		c.gridx = 0;
-		formPane.add(labelTORA, c);
-		c.gridy = 6;
-		formPane.add(labelTODA, c);
-		c.gridy = 7;
-		formPane.add(labelASDA, c);
-		c.gridy = 8;
-		formPane.add(labelLDA, c);
+		c.gridy = 1;
+		formPane.add(obstaclePane, c);
+		obstaclePane.setBorder(BorderFactory.createTitledBorder("Obstacle"));
+		c.gridwidth = 3;
+		c.gridy = 0;
+		obstaclePane.add(obstacleComboBox, c);
+		c.gridwidth = 1;
+		c.gridy = 1;
+		obstaclePane.add(new AddObstacleButton(), c);
+		c.gridx = 1;
+		obstaclePane.add(new EditObstacleButton(), c);
+		c.gridx = 2;
+		obstaclePane.add(new RmvObstacleButton(), c);
+		
+		//Display
+		JPanel displayPane = new JPanel();
+		displayPane.setLayout(new GridBagLayout());
+		c.gridx = 0;
+		c.gridy = 2;
+		formPane.add(displayPane, c);
+		displayPane.setBorder(BorderFactory.createTitledBorder("Display"));
+		c.gridwidth = 1;
+		c.gridy = 0;
+		displayPane.add(new View2DButton(), c);
+		c.gridx = 1;
+		displayPane.add(new JButton("Open Side-on 2D View"), c);
+		c.gridx = 2;
+		displayPane.add(new JButton("Open 3D View"), c);
+		
+		
+//		c.anchor = c.NORTHEAST;
+//		mainPane.add(formPane, c);
+//		//c.gridx = 1;
+//		//c.fill = c.BOTH;
+//		//mainPane.add(displayPane, c);
+//		//form pane:
+//		//first line:
+//		
+//		c.gridx = 0; c.gridy = 1;
+//		c.fill = GridBagConstraints.HORIZONTAL;
+//		c.weightx = 1;
+//		c.gridwidth = 3;
+//		formPane.add(runwayComboBox, c);
+//		this.updateRunways();
+//		
+//		//second line
+//		c.gridy = 2;
+//		formPane.add(obstacleComboBox, c);
+//		this.updateObstacles();
+//		
+//		//third line:
+//		c.gridwidth = 1;
+//		c.gridy = 3;
+//		c.gridx = 0;
+//		formPane.add(new AddRunwayButton(), c);
+//		c.gridx = 1;
+//		formPane.add(new AddObstacleButton(), c);
+//		c.gridx = 2;
+//		formPane.add(new View2DButton(), c);
+//
+//		//forth line:
+//		c.gridy = 4;
+//		c.gridx = 0;
+//		formPane.add(new RmvRunwayButton(), c);
+//		c.gridx = 1;
+//		formPane.add(new RmvObstacleButton(), c);
+//		c.gridx = 2;
+//		formPane.add(new JButton("Open Side-on 2D View"), c);
+//
+//		//fith line:
+//		c.weighty = 1;
+//		c.gridy = 5;
+//		c.gridx = 0;
+//		formPane.add(new EditRunwayButton(), c);
+//		c.gridx = 1;
+//		formPane.add(new EditObstacleButton(), c);
+//		c.gridx = 2;
+//		formPane.add(new JButton("Open 3D View"), c);
+//		
+//		//sixth+:
+//		c.gridy = 6;
+//		c.gridx = 0;
+//		formPane.add(labelTORA, c);
+//		c.gridy = 6;
+//		formPane.add(labelTODA, c);
+//		c.gridy = 7;
+//		formPane.add(labelASDA, c);
+//		c.gridy = 8;
+//		formPane.add(labelLDA, c);
 		
 //		//display pane:
 //		displayPane.setLayout(new GridBagLayout());
