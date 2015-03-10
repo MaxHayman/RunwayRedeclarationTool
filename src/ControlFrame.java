@@ -14,6 +14,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 
 
 public class ControlFrame extends JFrame { //implements ComponentListener {
@@ -23,6 +24,7 @@ public class ControlFrame extends JFrame { //implements ComponentListener {
 	//Display display;
 	JPanel formPane = new JPanel(), calculationsPane = new JPanel();//, displayPane = new JPanel();
 	JLabel labelTORA = new JLabel("TORA: "), labelTODA = new JLabel("TODA: "), labelASDA = new JLabel("ASDA: "), labelLDA = new JLabel("LDA: ");
+	JTextArea calculationsBox = new JTextArea();
 	RunwayComboBox runwayComboBox;
 	ObstacleComboBox obstacleComboBox;
 	ArrayList<Obstacle> savedObstacles = new ArrayList<Obstacle>();
@@ -59,8 +61,6 @@ public class ControlFrame extends JFrame { //implements ComponentListener {
 		//Runway
 		JPanel runwayPane = new JPanel();
 		runwayPane.setLayout(new GridBagLayout());
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.weightx = 1;
 		c.gridy = 0;
 		c.gridx = 0;
 		formPane.add(runwayPane, c);
@@ -112,6 +112,15 @@ public class ControlFrame extends JFrame { //implements ComponentListener {
 		calculationsPane.setBorder(BorderFactory.createTitledBorder("Calculations"));
 		c.gridx = 0;
 		c.gridy = 0;
+		c.fill = c.BOTH;
+		c.weightx = 1;
+		c.weighty = 1;
+		calculationsBox.setPreferredSize(new Dimension(200, 100));
+		calculationsBox.setEditable(false);
+		calculationsPane.add(calculationsBox, c);
+		c.weightx = 0;
+		c.weighty = 0;
+		c.gridy++;
 		calculationsPane.add(labelTORA, c);
 		c.gridy++;
 		calculationsPane.add(labelTODA, c);
@@ -220,6 +229,14 @@ public class ControlFrame extends JFrame { //implements ComponentListener {
 			labelASDA.setText("ASDA: " + runway.getASDA());
 			labelLDA.setText("LDA: " + runway.getLDA());
 		}
+	}
+	
+	public void printToCalculations(String s){
+		calculationsBox.append(s + "\n");
+	}
+	
+	public void clearCalculations(){
+		calculationsBox.setText("");
 	}
 	
 	public void addDefaultSavedObstacles(){
