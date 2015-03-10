@@ -90,9 +90,9 @@ public class ControlFrame extends JFrame { //implements ComponentListener {
 		c.gridy = 0;
 		displayPane.add(new View2DButton(), c);
 		c.gridx = 1;
-		displayPane.add(new JButton("Open Side-on 2D View"), c);
+		displayPane.add(new JButton("Side-on 2D View"), c);
 		c.gridx = 2;
-		displayPane.add(new JButton("Open 3D View"), c);
+		displayPane.add(new JButton("3D View"), c);
 		
 		
 //		c.anchor = c.NORTHEAST;
@@ -258,7 +258,7 @@ public class ControlFrame extends JFrame { //implements ComponentListener {
 	private class View2DButton extends JButton implements ActionListener{
 
 		public View2DButton() {
-			super("Open Top-down 2D View");
+			super("Top-down 2D View");
 			this.addActionListener(this);
 		}
 
@@ -316,7 +316,7 @@ public class ControlFrame extends JFrame { //implements ComponentListener {
 		}
 
 		public void actionPerformed(ActionEvent e) {
-			new EditObstacleFrame(controller, (Obstacle) obstacleComboBox.getSelectedItem());
+			new EditObstacleFrame(controller, (Obstacle) obstacleComboBox.getSelectedItem(), savedObstacles);
 		}
 
 	}

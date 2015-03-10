@@ -55,7 +55,7 @@ public class AddObstacleFrame extends JFrame{
 		gbc.gridy++;
 		pane.add(new SaveButton(), gbc);
 
-		this.setSize(300, 200);
+		this.pack();
 		this.setVisible(true);
 	}
 
@@ -143,7 +143,7 @@ public class AddObstacleFrame extends JFrame{
 	
 	//ObstacleComboBox wasn't abstract enough, relied on controller
 	//Could make abstract by passing arraylist in
-	public class SavedObstacleComboBox extends JComboBox<Obstacle> implements ActionListener{
+	private class SavedObstacleComboBox extends JComboBox<Obstacle> implements ActionListener{
 		
 		public SavedObstacleComboBox() {
 			super();
