@@ -14,6 +14,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 
@@ -61,6 +62,7 @@ public class ControlFrame extends JFrame { //implements ComponentListener {
 		//Runway
 		JPanel runwayPane = new JPanel();
 		runwayPane.setLayout(new GridBagLayout());
+		c.weightx = 1;
 		c.gridy = 0;
 		c.gridx = 0;
 		formPane.add(runwayPane, c);
@@ -117,7 +119,10 @@ public class ControlFrame extends JFrame { //implements ComponentListener {
 		c.weighty = 1;
 		calculationsBox.setPreferredSize(new Dimension(200, 100));
 		calculationsBox.setEditable(false);
-		calculationsPane.add(calculationsBox, c);
+		calculationsBox.setLineWrap(true);
+		JScrollPane calculationsScroll = new JScrollPane(calculationsBox);
+		calculationsScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		calculationsPane.add(calculationsScroll, c);
 		c.weightx = 0;
 		c.weighty = 0;
 		c.gridy++;
