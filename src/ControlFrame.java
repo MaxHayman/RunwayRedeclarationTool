@@ -1,5 +1,6 @@
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
@@ -20,7 +21,7 @@ public class ControlFrame extends JFrame { //implements ComponentListener {
 	Controller controller;
 	World world;
 	//Display display;
-	Container formPane = new JPanel();//, displayPane = new JPanel();
+	JPanel formPane = new JPanel(), calculationsPane = new JPanel();//, displayPane = new JPanel();
 	JLabel labelTORA = new JLabel("TORA: "), labelTODA = new JLabel("TODA: "), labelASDA = new JLabel("ASDA: "), labelLDA = new JLabel("LDA: ");
 	RunwayComboBox runwayComboBox;
 	ObstacleComboBox obstacleComboBox;
@@ -42,13 +43,26 @@ public class ControlFrame extends JFrame { //implements ComponentListener {
 
 		mainPane.setLayout(new GridBagLayout());
 		formPane.setLayout(new GridBagLayout());
+		calculationsPane.setLayout(new GridBagLayout());
+		JLabel titleLabel = new JLabel("Runway Redeclaration Program");
+		titleLabel.setFont(titleLabel.getFont().deriveFont(32.0f));
+		c.gridwidth = c.REMAINDER;
+		mainPane.add(titleLabel, c);
+		c.gridwidth = 1;
+		c.gridy = 1;
+		c.fill = c.BOTH;
 		mainPane.add(formPane, c);
+		c.gridx = 1;
+		mainPane.add(calculationsPane, c);
 		
+		//Form panel
 		//Runway
 		JPanel runwayPane = new JPanel();
 		runwayPane.setLayout(new GridBagLayout());
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.weightx = 1;
+		c.gridy = 0;
+		c.gridx = 0;
 		formPane.add(runwayPane, c);
 		runwayPane.setBorder(BorderFactory.createTitledBorder("Runway"));
 		c.gridwidth = 3;
@@ -93,6 +107,18 @@ public class ControlFrame extends JFrame { //implements ComponentListener {
 		displayPane.add(new JButton("Side-on 2D View"), c);
 		c.gridx = 2;
 		displayPane.add(new JButton("3D View"), c);
+		
+		//Calculations Panel
+		calculationsPane.setBorder(BorderFactory.createTitledBorder("Calculations"));
+		c.gridx = 0;
+		c.gridy = 0;
+		calculationsPane.add(labelTORA, c);
+		c.gridy++;
+		calculationsPane.add(labelTODA, c);
+		c.gridy++;
+		calculationsPane.add(labelASDA, c);
+		c.gridy++;
+		calculationsPane.add(labelLDA, c);
 		
 		
 //		c.anchor = c.NORTHEAST;
