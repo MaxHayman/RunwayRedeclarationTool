@@ -10,6 +10,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 
@@ -19,7 +20,7 @@ public class EditObstacleFrame extends JFrame{
 	Obstacle obstacle;
 	Container pane;
 	JTextField nameField, xSizeField, ySizeField, zSizeField, xLocField, yLocField, angleField;
-	GridBagConstraints gbc;
+	GridBagConstraints c;
 	JFrame frame;
 	ArrayList<Obstacle> savedObstacles;
 	SavedObstacleComboBox savedObstacleComboBox;
@@ -35,27 +36,34 @@ public class EditObstacleFrame extends JFrame{
 		pane = new Container();
 		this.setContentPane(pane);
 		pane.setLayout(new GridBagLayout());
-		gbc = new GridBagConstraints();
-		gbc.gridy = 0;
-		gbc.fill = GridBagConstraints.HORIZONTAL;
-		gbc.gridwidth = GridBagConstraints.REMAINDER;
-		pane.add(savedObstacleComboBox, gbc);
+		c = new GridBagConstraints();
+		c.gridy = 0;
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridwidth = GridBagConstraints.REMAINDER;
+		pane.add(savedObstacleComboBox, c);
 
 		nameField = addField("Name:");
-		xSizeField = addField("X Size:");
-		ySizeField = addField("Y Size:");
-		zSizeField = addField("Z Size:");
+		xSizeField = addField("Width(m):");
+		ySizeField = addField("Length(m):");
+		zSizeField = addField("Height(m)");
 		xLocField = addField("X Location:");
 		yLocField = addField("Y Location");
 		angleField = addField("Angle:");
+		nameField.setText(obstacle.getName());
+		xSizeField.setText(String.valueOf(obstacle.getxSize()));
+		ySizeField.setText(String.valueOf(obstacle.getySize()));
+		zSizeField.setText(String.valueOf(obstacle.getzSize()));
+		xLocField.setText(String.valueOf(obstacle.getxLocation()));
+		yLocField.setText(String.valueOf(obstacle.getyLocation()));
+		angleField.setText(String.valueOf(obstacle.getAngle()));
 
-		gbc.gridx = 0;
-		gbc.fill = GridBagConstraints.HORIZONTAL;
-		gbc.gridwidth = GridBagConstraints.REMAINDER;
-		gbc.gridy++;
-		pane.add(new EditButton(), gbc);
-		gbc.gridy++;
-		pane.add(new SaveButton(), gbc);
+		c.gridx = 0;
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridwidth = GridBagConstraints.REMAINDER;
+		c.gridy++;
+		pane.add(new EditButton(), c);
+		c.gridy++;
+		pane.add(new SaveButton(), c);
 
 		this.pack();
 		this.setVisible(true);
@@ -68,17 +76,17 @@ public class EditObstacleFrame extends JFrame{
 		textField.setEditable(true);
 
 		//add to pane:
-		gbc.gridx = 0;
-		gbc.gridy++;
-		gbc.fill = GridBagConstraints.NONE;
-		gbc.weightx = 0;
-		gbc.gridwidth = 1;
-		pane.add(new JLabel(fieldLabel), gbc);
+		c.gridx = 0;
+		c.gridy++;
+		c.fill = GridBagConstraints.NONE;
+		c.weightx = 0;
+		c.gridwidth = 1;
+		pane.add(new JLabel(fieldLabel), c);
 
-		gbc.fill = GridBagConstraints.HORIZONTAL;
-		gbc.weightx = 1;
-		gbc.gridx = 1;
-		pane.add(textField, gbc);
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.weightx = 1;
+		c.gridx = 1;
+		pane.add(textField, c);
 		return textField;
 	}
 
