@@ -2,6 +2,9 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 
 import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 
 public class Frame2D extends JFrame implements ComponentListener {
 	
@@ -20,6 +23,8 @@ public class Frame2D extends JFrame implements ComponentListener {
 		this.addComponentListener(this);
 		
 		Controller.eventManager.addEventNotify(EventManager.EventName.UPDATE_DISPLAY, this, "updateDisplay");
+
+		this.setJMenuBar(new DisplayMenuBar(this));
 	}
 	
 	public void updateDisplay() {

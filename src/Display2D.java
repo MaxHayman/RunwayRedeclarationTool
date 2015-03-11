@@ -5,8 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Display2D extends Display {
-	
-	private BufferedImage image = null;
+
 	private Vector camera;//= new Vector(300, 2500, 1000);
 	private int cameraAngle = 0;
 	private int cameraZoom = 100;
