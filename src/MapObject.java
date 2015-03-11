@@ -7,20 +7,33 @@ public class MapObject {
 	String name = "";
 	int x = 0;
 	int y = 0;
+	int z = 0;
 	int height = 0;
 	int width = 0;
+	int length = 0;
 	Color color = Color.black;
 	
-	void draw(int[][] map) {
-		//System.out.println("Drawing: " + name);
+	void drawTop(int[][] map) {
 		for(int i = x; i < (x + width); i++) {
-			for(int j = y; j < (y + height); j++) {
+			for(int j = y; j < (y + length); j++) {
 				map[i][j] = color.getRGB();
 			}
 		}
 		
 		for(MapObject o : objects) {
-			o.draw(map);
+			o.drawTop(map);
+		}
+	}
+	
+	void drawSide(int[][] map) {
+		for(int i = x; i < (x + width); i++) {
+			for(int j = z; j < (z + height); j++) {
+				map[i][(int)(map.length/2)-1-j] = color.getRGB();
+			}
+		}
+		
+		for(MapObject o : objects) {
+			//o.drawSide(map);
 		}
 	}
 }

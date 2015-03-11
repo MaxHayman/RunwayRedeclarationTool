@@ -7,10 +7,10 @@ public class Frame2D extends JFrame implements ComponentListener {
 	
 	Display display;
 	
-	public Frame2D (World map, Controller controller) {
+	public Frame2D (World map, Controller controller, World.View view) {
 		super("Runway Redeclaration Tool");
 		
-		display = new Display2D(map);
+		display = new Display2D(map, view);
 		
 		//view:
 		this.setContentPane(display);

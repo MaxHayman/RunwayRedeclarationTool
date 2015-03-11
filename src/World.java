@@ -2,9 +2,15 @@ import java.awt.Color;
 import java.util.ArrayList;
 
 public class World {
-
+	
+	public enum View {
+		SIDE_VIEW,
+		TOP_VIEW,
+	}
+	
 	private static final int OFFSET_X = 0, OFFSET_Y = 0;
-	public int[][] map = null;
+	public int[][] mapSide = null;
+	public int[][] mapTop = null;
 	public int size = 2500;
 	public ArrayList<MapObject> objects = new ArrayList<MapObject>();
 	private Controller controller;
@@ -12,9 +18,14 @@ public class World {
 	public World(Controller controller) {
 		this.controller = controller;
 		
-		map = new int[size][];
-		for(int i = 0; i < map.length; i++) {
-			map[i] = new int[size];
+		mapTop = new int[size][];
+		for(int i = 0; i < mapTop.length; i++) {
+			mapTop[i] = new int[size];
+		}
+		
+		mapSide = new int[size][];
+		for(int i = 0; i < mapSide.length; i++) {
+			mapSide[i] = new int[size];
 		}
 		
 		update();
@@ -30,12 +41,12 @@ public class World {
 			objects.clear();
 			
 			//add the runway:
-			objects.add(MapObjectFactory.buildRunway(OFFSET_X, OFFSET_Y, (int)controller.getRunwayLength(), (int)controller.getRunwayWidth()));
+			objects.add(MapObjectFactory.buildRunway(OFFSET_X, OFFSET_Y, (int)controller.getRunwayLength(), (int)controller.getRunwayWidth(), 0));
 		
 			//add any obstacles on the runway:
 			//I want to find a way to do this that doesn't give the view the Obstacle instances
 			for(Obstacle o : controller.getObstacleList()) {
-				objects.add(MapObjectFactory.buildBadArea((int)o.getxLocation()+OFFSET_X, (int)o.getyLocation()+OFFSET_Y, (int)o.getxSize(), (int)o.getySize()));
+				objects.add(MapObjectFactory.buildBadArea((int)o.getxLocation()+OFFSET_X, (int)o.getyLocation()+OFFSET_Y, 0, (int)o.getxSize(), (int)o.getySize(), 0));
 			}
 		}
 		
@@ -45,14 +56,22 @@ public class World {
 	
 	public void draw() {
 		
-		for(int i = 0; i < map.length; i++) {
-			for(int j = 0; j < map.length; j++) {
-				map[i][j] = Color.GREEN.getRGB();
+		for(int i = 0; i < mapTop.length; i++) {
+			for(int j = 0; j < mapTop.length; j++) {
+
+				mapTop[i][j] = Color.GREEN.getRGB();
+
+				if(j < mapTop.length / 2)
+					mapSide[i][j] = Color.CYAN.getRGB();
+				else
+					mapSide[i][j] = Color.GREEN.getRGB();
 			}
 		}
 		
+
 		for(MapObject o : objects) {
-			o.draw(map);
+				o.drawTop(mapTop);
+				o.drawSide(mapSide);
 		}
 	}
 	

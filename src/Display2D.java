@@ -4,19 +4,24 @@ import java.awt.image.BufferedImage;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.swing.JPanel;
-
-
 public class Display2D extends Display {
 	
 	private BufferedImage image = null;
-	private Vector camera = new Vector(300, 300, 1000);
+	private Vector camera;//= new Vector(300, 2500, 1000);
 	private int cameraAngle = 0;
 	private int cameraZoom = 100;
+	public World.View view = World.View.TOP_VIEW;
 
-	public Display2D(World map) {
+	public Display2D(World map, World.View view) {
 		super(map);
 		this.addMouseWheelListener(this);
+		
+		this.view = view;
+		
+		if(view == World.View.TOP_VIEW)
+			camera = new Vector(300, 300, 1000);
+		else if (view == World.View.SIDE_VIEW)
+			camera = new Vector(300, map.size/2, 1000);
 	}
 
 	public void init() {
@@ -32,30 +37,59 @@ public class Display2D extends Display {
 	}
 	 
 	public void redrawImage() {
-		image = new BufferedImage(this.getWidth(), this.getHeight(), BufferedImage.TYPE_INT_RGB);
-		int startx = (int) (camera.x - Math.floor(this.getWidth() / 2));
-		int starty = (int) (camera.y - Math.floor(this.getHeight() / 2));
 		
-		int theColor, tempi, tempj, newi, newj = 0;
-		System.out.println("Camera X: " + camera.x + "\t Y: " + camera.y + "\t O: " + cameraAngle);
+		if(view == World.View.TOP_VIEW)
+		{
+			image = new BufferedImage(this.getWidth(), this.getHeight(), BufferedImage.TYPE_INT_RGB);
+			int startx = (int) (camera.x - Math.floor(this.getWidth() / 2));
+			int starty = (int) (camera.y - Math.floor(this.getHeight() / 2));
 			
-			for (int i = 0; i < this.getWidth(); i++){
-				for (int j =0 ; j < this.getHeight(); j++){
-					
-					tempi = i*cameraZoom/100;
-					tempj = j*cameraZoom/100;
-					newi = (int) ((startx + tempi) * Math.cos(Math.toRadians((cameraAngle))) + (starty + tempj) * Math.sin(Math.toRadians((cameraAngle))));
-					newj = (int) (-(startx + tempi) * Math.sin(Math.toRadians((cameraAngle))) + (starty + tempj) * Math.cos(Math.toRadians((cameraAngle))));
-
-					if(newi < 0 || (newj) < 0 || (newi) >= this.getWorld().size || (newj) >= this.getWorld().size)
-						theColor = Color.BLACK.getRGB();
-					else
-						theColor = this.getWorld().map[newi][newj];
-					
-					image.setRGB(i, j, theColor);
+			int theColor, tempi, tempj, newi, newj = 0;
+			System.out.println("Camera X: " + camera.x + "\t Y: " + camera.y + "\t O: " + cameraAngle);
+				
+				for (int i = 0; i < this.getWidth(); i++){
+					for (int j =0 ; j < this.getHeight(); j++){
+						
+						tempi = i*cameraZoom/100;
+						tempj = j*cameraZoom/100;
+						newi = (int) ((startx + tempi) * Math.cos(Math.toRadians((cameraAngle))) + (starty + tempj) * Math.sin(Math.toRadians((cameraAngle))));
+						newj = (int) (-(startx + tempi) * Math.sin(Math.toRadians((cameraAngle))) + (starty + tempj) * Math.cos(Math.toRadians((cameraAngle))));
+	
+						if(newi < 0 || (newj) < 0 || (newi) >= this.getWorld().size || (newj) >= this.getWorld().size)
+							theColor = Color.BLACK.getRGB();
+						else
+							theColor = this.getWorld().mapTop[newi][newj];
+						
+						image.setRGB(i, j, theColor);
+					}
 				}
-			}
-
+		}
+		else if (view == World.View.SIDE_VIEW)
+		{
+			image = new BufferedImage(this.getWidth(), this.getHeight(), BufferedImage.TYPE_INT_RGB);
+			int startx = (int) (camera.x - Math.floor(this.getWidth() / 2));
+			int starty = (int) (camera.y - Math.floor(this.getHeight() / 2));
+			
+			int theColor, tempi, tempj, newi, newj = 0;
+			System.out.println("Camera X: " + camera.x + "\t Y: " + camera.y + "\t O: " + cameraAngle);
+				
+				for (int i = 0; i < this.getWidth(); i++){
+					for (int j =0 ; j < this.getHeight(); j++){
+						
+						tempi = i*cameraZoom/100;
+						tempj = j*cameraZoom/100;
+						newi = (int) ((startx + tempi) * Math.cos(Math.toRadians((cameraAngle))) + (starty + tempj) * Math.sin(Math.toRadians((cameraAngle))));
+						newj = (int) (-(startx + tempi) * Math.sin(Math.toRadians((cameraAngle))) + (starty + tempj) * Math.cos(Math.toRadians((cameraAngle))));
+	
+						if(newi < 0 || (newj) < 0 || (newi) >= this.getWorld().size || (newj) >= this.getWorld().size)
+							theColor = Color.white.getRGB();
+						else
+							theColor = this.getWorld().mapSide[newi][newj];
+						
+						image.setRGB(i, j, theColor);
+					}
+				}
+		}
 	}
 	
 	private final Set<Integer> pressed = new HashSet<Integer>();

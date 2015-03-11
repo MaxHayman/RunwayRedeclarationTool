@@ -104,9 +104,9 @@ public class ControlFrame extends JFrame { //implements ComponentListener {
 		displayPane.setBorder(BorderFactory.createTitledBorder("Display"));
 		c.gridwidth = 1;
 		c.gridy = 0;
-		displayPane.add(new View2DButton(), c);
+		displayPane.add(new View2DTopButton(), c);
 		c.gridx = 1;
-		displayPane.add(new JButton("Side-on 2D View"), c);
+		displayPane.add(new View2DSideButton(), c);
 		c.gridx = 2;
 		displayPane.add(new JButton("3D View"), c);
 		
@@ -303,15 +303,28 @@ public class ControlFrame extends JFrame { //implements ComponentListener {
 
 	}
 
-	private class View2DButton extends JButton implements ActionListener{
+	private class View2DTopButton extends JButton implements ActionListener{
 
-		public View2DButton() {
+		public View2DTopButton() {
 			super("Top-down 2D View");
 			this.addActionListener(this);
 		}
 
 		public void actionPerformed(ActionEvent e) {
-			new Frame2D(world, controller);
+			new Frame2D(world, controller, World.View.TOP_VIEW);
+		}
+
+	}
+	
+	private class View2DSideButton extends JButton implements ActionListener{
+
+		public View2DSideButton() {
+			super("Side-on 2D View");
+			this.addActionListener(this);
+		}
+
+		public void actionPerformed(ActionEvent e) {
+			new Frame2D(world, controller, World.View.SIDE_VIEW);
 		}
 
 	}

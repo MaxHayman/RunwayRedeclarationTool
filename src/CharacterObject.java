@@ -39,7 +39,7 @@ public class CharacterObject extends MapObject{
 		
 		BufferedImage hugeImage = null;
 		try {
-			hugeImage = ImageIO.read(new File("Text.png"));//getClass().getResource("Text.png"));
+			hugeImage = ImageIO.read(new File(/*getClass().getResource(*/"Text.png"));
 		} catch (IOException e) {
 			
 			e.printStackTrace();

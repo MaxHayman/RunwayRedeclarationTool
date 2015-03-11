@@ -8,7 +8,7 @@ import javax.swing.JPanel;
 public abstract class Display extends JPanel implements KeyListener, MouseWheelListener{
 	
 	//protected int width, height;
-	private World world;
+	public World world;
 	
 	public Display(World world) {
 		super();
