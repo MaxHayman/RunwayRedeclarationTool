@@ -66,6 +66,7 @@ public class EditObstacleFrame extends JFrame{
 		pane.add(new SaveButton(), c);
 
 		this.pack();
+		this.setLocationRelativeTo(null);
 		this.setVisible(true);
 	}
 

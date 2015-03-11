@@ -45,6 +45,7 @@ public class EditRunwayFrame extends JFrame{
 		pane.add(new EditButton(), gbc);
 		
 		this.setSize(300, 150);
+		this.setLocationRelativeTo(null);
 		this.setVisible(true);
 	}
 	

@@ -44,6 +44,7 @@ public class AddRunwayFrame extends JFrame{
 		pane.add(new AddButton(), gbc);
 		
 		this.setSize(300, 150);
+		this.setLocationRelativeTo(null);
 		this.setVisible(true);
 	}
 	

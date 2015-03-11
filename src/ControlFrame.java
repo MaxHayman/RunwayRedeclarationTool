@@ -215,6 +215,7 @@ public class ControlFrame extends JFrame { //implements ComponentListener {
 
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.pack();
+		this.setLocationRelativeTo(null);
 		this.setVisible(true);
 	}
 

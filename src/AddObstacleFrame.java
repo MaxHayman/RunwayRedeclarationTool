@@ -76,6 +76,7 @@ public class AddObstacleFrame extends JFrame{
 //		pane.add(new SaveButton(), gbc);
 
 		this.pack();
+		this.setLocationRelativeTo(null);
 		this.setVisible(true);
 	}
 
@@ -237,6 +238,7 @@ public class AddObstacleFrame extends JFrame{
 			mainPane.add(new SaveButton(this), c);
 			
 			this.pack();
+			this.setLocationRelativeTo(null);
 			this.setVisible(true);
 		}
 	}
