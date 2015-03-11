@@ -12,7 +12,7 @@ public class MapObjectFactory {
 		o.y = y;
 		o.width = width;
 		o.length = length;
-		o.height = 10;
+		o.height = 3;
 		o.name = "Runway Tarmac";
 		/* Lines */
 		{
@@ -29,7 +29,7 @@ public class MapObjectFactory {
 							s.y = (int) (y + j);
 							s.width = (int) (width * 0.02);
 							s.length = 1;
-							s.height = 10;
+							s.height = 3;
 							s.name = "Big Runway Line";
 							o.objects.add(s);
 						}
@@ -40,7 +40,7 @@ public class MapObjectFactory {
 							s.y = (int)  (y + length - j) - 1;
 							s.width = (int) (width * 0.02);
 							s.length = 1;
-							s.height = 10;
+							s.height = 3;
 							s.name = "Small Runway Line";
 							o.objects.add(s);
 						}
@@ -56,7 +56,7 @@ public class MapObjectFactory {
 							s.y = (int) (y + j);
 							s.width = (int) (width * 0.02);
 							s.length = 1;
-							s.height = 10;
+							s.height = 3;
 							s.name = "Small Runway Line";
 							o.objects.add(s);
 						}
@@ -67,7 +67,7 @@ public class MapObjectFactory {
 							s.y = (int)  (y + length - j) - 1;
 							s.width = (int) (width * 0.02);
 							s.length = 1;
-							s.height = 10;
+							s.height = 3;
 							s.name = "Small Runway Line";
 							o.objects.add(s);
 						}
@@ -82,7 +82,7 @@ public class MapObjectFactory {
 					s.y = (int) (y + Math.floor(length/2));
 					s.width = (int) (((x + i + 80) > (width/* * 0.95*/)) ? ((width/* * 0.95*/) - i) : 80);
 					s.length = 1;
-					s.height = 10;
+					s.height = 3;
 					s.name = "Center Runway Line";
 					o.objects.add(s);
 				}
@@ -118,7 +118,7 @@ public class MapObjectFactory {
 						s.y = (int) (y + j);
 						s.width = (int) (width * 0.02);
 						s.length = 1;
-						s.height = 10;
+						s.height = 3;
 						s.name = "Start Runway Line";
 						o.objects.add(s);
 					}
@@ -129,7 +129,7 @@ public class MapObjectFactory {
 						s.y = (int) (y + length - j - 1);
 						s.width = (int) (width * 0.02);
 						s.length = 1;
-						s.height = 10;
+						s.height = 3;
 						s.name = "Start Runway Line";
 						o.objects.add(s);
 					}
@@ -149,7 +149,7 @@ public class MapObjectFactory {
 		o.z = z;
 		o.width = width;
 		o.length = length;
-		o.height = 50;
+		o.height = height;
 		o.name = "Bad";
 		
 		return o;

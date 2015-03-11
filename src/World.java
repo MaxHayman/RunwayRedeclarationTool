@@ -46,7 +46,18 @@ public class World {
 			//add any obstacles on the runway:
 			//I want to find a way to do this that doesn't give the view the Obstacle instances
 			for(Obstacle o : controller.getObstacleList()) {
-				objects.add(MapObjectFactory.buildBadArea((int)o.getxLocation()+OFFSET_X, (int)o.getyLocation()+OFFSET_Y, 0, (int)o.getxSize(), (int)o.getySize(), 0));
+				objects.add(MapObjectFactory.buildBadArea((int)o.getxLocation()+OFFSET_X, (int)o.getyLocation()+OFFSET_Y, 0, (int)o.getxSize(), (int)o.getySize(), (int)o.getzSize()));
+				
+				// Example landing slope code, will generate a landing slope starting at the top of the Obstacle touching the ground 300m further.
+				MapObjectLandingSlope m = new MapObjectLandingSlope();
+				m.x = (int)(o.getxLocation()+OFFSET_X + o.getxSize());
+				m.y = 0;
+				m.z = 0;
+				m.height = (int)o.getzSize();
+				m.length = 0;
+				m.width = 300;
+				m.color = Color.red;
+				objects.add(m);
 			}
 		}
 		
