@@ -18,10 +18,10 @@ public class RunwayCalculationsTest {
 	@Before
 	public void setUp() {
 		//heathrow09R = new Runway(9, 'R', (float)3902.0, (float)50.0, (float)0.0, (float)0.0, (float)0.0, testController);
-		heathrow09L = new Runway(9, 'L', (float)3902.0, (float)50.0, (float)0.0, (float)0.0, (float)0.0, testController);
+		heathrow09L = new Runway(9, 'L', (float)3902.0, (float)50.0, (float)0.0, (float)0.0, (float)306.0, testController);
 		//heathrow27L = new Runway(27, 'L', (float)3902.0, (float)50.0, (float)0.0, (float)0.0, (float)0.0, testController);
 		//heathrow27R = new Runway(27, 'R', (float)3902.0, (float)50.0, (float)0.0, (float)0.0, (float)0.0, testController);
-		heathrow09L.addObstacle(new Obstacle(10, 10, 12, 100, 75, 0, "ob"));
+		heathrow09L.addObstacle(new Obstacle(0, 0, 12, 257, 25, 0, "ob"));
 		//heathrow27L.addObstacle(new Obstacle(0, 0, 12, 3646, 25, 0, ""));
 	}
 

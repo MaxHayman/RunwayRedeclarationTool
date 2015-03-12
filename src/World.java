@@ -11,7 +11,7 @@ public class World {
 	private static final int OFFSET_X = 0, OFFSET_Y = 0;
 	public int[][] mapSide = null;
 	public int[][] mapTop = null;
-	public int size = 2500;
+	public int size = 4000;
 	public ArrayList<MapObject> objects = new ArrayList<MapObject>();
 	private Controller controller;
 	
