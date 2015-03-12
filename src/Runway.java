@@ -11,7 +11,8 @@ public class Runway {
 	private Controller controller;
 	private int orientation;
 	private Character designation;
-	private float length, width, clearway, stopway, displacementStart, displacementEnd, TORA, TODA, ASDA, LDA, RESA = 240;
+	private float length, width, clearway, stopway, TORA, TODA, ASDA, LDA, RESA = 240;
+	private float takeoffDisplacementStart, takeoffDisplacementEnd, landingDisplacementStart, landingDisplacementEnd;
 	private static final int SLOPE_RATIO = 50;
 	private float blastProtection = 300;
 
@@ -25,7 +26,7 @@ public class Runway {
 		this.width = width;
 		this.clearway = clearway;
 		this.stopway = stopway;
-		this.displacementStart = displacedThreshold;
+		this.takeoffDisplacementStart = displacedThreshold;
 		this.controller = controller;
 		obstacleList = new ArrayList<Obstacle>();
 		recalculate();
@@ -62,7 +63,7 @@ public class Runway {
 	public void setLength(float length){this.length = length; recalculate();}
 	public void setClearway(float clearway){this.clearway = clearway; recalculate();}
 	public void setStopway(float stopway){this.stopway = stopway; recalculate();}
-	public void setDisplacedThreshold(float displacedThreshold){this.displacementEnd = displacedThreshold; recalculate();}
+	public void setDisplacedThreshold(float displacedThreshold){this.takeoffDisplacementEnd = displacedThreshold; recalculate();}
 	public float getTORA(){return this.TORA;}
 	public float getTODA(){return this.TODA;}
 	public float getASDA(){return this.ASDA;}
@@ -100,13 +101,13 @@ public class Runway {
 		//base TODA = length + clearway
 		//base ASDA = length + stopway
 		//base LDA = length - displacedThreshold
-		
-		List<UsableLength> lengthList = new ArrayList<UsableLength>();
-		//add a length containing the entire runway minus displacement to the length list:
-		lengthList.add(new UsableLength((float)0 + this.displacementStart, this.length-this.displacementEnd, true));
 
 		//take-off iteration
-		//this needs to be done separately to account for the blast protection after the obstacle rather than the slope
+		//this needs to be done separately to account for the blast protection after the obstacle rather than the slope		
+		List<UsableLength> lengthList = new ArrayList<UsableLength>();
+		//add a length containing the entire runway minus displacement to the length list:
+		lengthList.add(new UsableLength((float)0 + this.takeoffDisplacementStart, this.length-this.takeoffDisplacementEnd, true));
+		
 		for (Obstacle o: obstacleList){
 			//obstacleStart and obstacleEnd represent the start and end of the unusable area for a plane
 			float obstacleStart = o.getxLocation() - (o.getzSize()*SLOPE_RATIO);
@@ -116,7 +117,7 @@ public class Runway {
 			List<UsableLength> addList = new ArrayList<UsableLength>();
 			List<UsableLength> removeList = new ArrayList<UsableLength>();
 
-			//itterate through lengths
+			//Iterate through lengths
 			for(Iterator<UsableLength> it = lengthList.iterator(); it.hasNext(); ) {
 				UsableLength currentLength = it.next();
 				boolean removed = false;
@@ -159,7 +160,7 @@ public class Runway {
 		//now we calculate the landing stuff:
 		//here we don't need to worry about blast protection but we do need to consider the slope after an obstacle
 		lengthList = new ArrayList<UsableLength>();
-		lengthList.add(new UsableLength(0, this.length, true));
+		lengthList.add(new UsableLength(this.landingDisplacementStart, this.length-this.landingDisplacementEnd, true));
 		for(Obstacle o : obstacleList) {
 			//calculate how much area this obstacle obstructs:
 			float obstacleStart = o.getxLocation();

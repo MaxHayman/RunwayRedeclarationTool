@@ -73,7 +73,7 @@ public class EditObstacleFrame extends JFrame{
 	private JTextField addField(String fieldLabel) {
 		//initialise text field and make it editable:
 		JTextField textField;
-		textField = new JTextField();
+		textField = new JTextField(20);
 		textField.setEditable(true);
 
 		//add to pane:
