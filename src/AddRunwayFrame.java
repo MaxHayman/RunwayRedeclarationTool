@@ -43,7 +43,8 @@ public class AddRunwayFrame extends JFrame{
 		gbc.gridwidth = GridBagConstraints.REMAINDER;
 		pane.add(new AddButton(), gbc);
 		
-		this.setSize(300, 150);
+		this.pack();
+		//this.setSize(300, 150);
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);
 	}
@@ -51,7 +52,7 @@ public class AddRunwayFrame extends JFrame{
 	private JTextField addField(String fieldLabel, String tooltip) {
 		//initialise text field and make it editable:
 		JTextField textField;
-		textField = new JTextField();
+		textField = new JTextField(20);
 		textField.setEditable(true);
 		
 		//add to pane:
