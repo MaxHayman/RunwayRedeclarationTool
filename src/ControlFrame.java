@@ -246,7 +246,9 @@ public class ControlFrame extends JFrame { //implements ComponentListener {
 	}
 	
 	public void addDefaultSavedObstacles(){
-		savedObstacles.add(new Obstacle(5, 5, 5, 5, 5, 5, "Five"));
+		savedObstacles.add(new Obstacle(42, 15, 15, 100, 100, 0, "Airplane"));
+		savedObstacles.add(new Obstacle(15, 15, 15, 50, 100, 0, "Box"));
+		savedObstacles.add(new Obstacle(10, 10, 30, 150, 100, 0, "Tree"));
 	}
 	
 //	public void updateDisplay() {
