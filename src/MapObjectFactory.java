@@ -143,7 +143,7 @@ public class MapObjectFactory {
 		return o;
 	}
 
-	public static MapObject buildBadArea(int x, int y, int z, int width, int length, int height) {
+	public static MapObject buildBadArea(int x, int y, int z, int width, int length, int height, String name) {
 		/* Tarmac */
 		MapObject o = new MapObjectBad();
 		o.color = Color.red;
@@ -153,17 +153,20 @@ public class MapObjectFactory {
 		o.width = width;
 		o.length = length;
 		o.height = height;
-		o.name = "Bad";
+		o.name = name;
+		
+		o.objects.add(buildString(x + width + 2, y < 9 ? 0 : y - 9, z +height + 9, Color.RED, o.name));
 		
 		return o;
 	}
 	
-	public static MapObject buildString(int x, int y, String string) {
+	public static MapObject buildString(int x, int y, int z, Color color, String string) {
 		StringObject o = new StringObject(string);
 		o.x = x;
 		o.y = y;
+		o.z = z;
+		o.color = color;
 		o.init();
-		o.color = Color.cyan;
 		return o;
 	}
 }

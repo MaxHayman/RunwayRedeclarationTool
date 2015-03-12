@@ -90,4 +90,16 @@ public class CharacterObject extends MapObject{
 			}
 		}
 	}
+	
+	void drawSide(int[][] map) {
+		if(z == 0)
+			return;
+		for(int i = x; i < x + 8; i++) {
+			for(int j = z; j < z + 8; j++) {
+				//if(i >= x && j >= z)
+					if(pixels[(i - x)][j - z])
+						map[i][(int)(map.length/2)-1-z*2+j] = color.getRGB();
+			}
+		}
+	}
 }

@@ -13,6 +13,7 @@ public class StringObject extends MapObject{
 		    MapObject co = new CharacterObject(c);
 		    co.x = this.x + 8*i;
 		    co.y = this.y;
+		    co.z = this.z;
 		    co.color = this.color;
 			this.objects.add(co);
 		}
@@ -21,6 +22,12 @@ public class StringObject extends MapObject{
 	void drawTop(int[][] map) {
 		for(MapObject o : objects) {
 			o.drawTop(map);
+		}
+	}
+	
+	void drawSide(int[][] map) {
+		for(MapObject o : objects) {
+			o.drawSide(map);
 		}
 	}
 }
