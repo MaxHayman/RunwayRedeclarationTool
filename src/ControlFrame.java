@@ -50,19 +50,23 @@ public class ControlFrame extends JFrame { //implements ComponentListener {
 		JLabel titleLabel = new JLabel("Runway Redeclaration Program");
 		titleLabel.setFont(titleLabel.getFont().deriveFont(32.0f));
 		c.gridwidth = c.REMAINDER;
+		c.anchor = c.PAGE_START;
+		c.weightx = 0;
+		c.weighty = 0;
 		mainPane.add(titleLabel, c);
 		c.gridwidth = 1;
 		c.gridy = 1;
-		c.fill = c.BOTH;
 		mainPane.add(formPane, c);
+		c.fill = c.BOTH;
 		c.gridx = 1;
+		c.weightx = 1;
+		c.weighty = 1;
 		mainPane.add(calculationsPane, c);
 		
 		//Form panel
 		//Runway
 		JPanel runwayPane = new JPanel();
 		runwayPane.setLayout(new GridBagLayout());
-		c.weightx = 1;
 		c.gridy = 0;
 		c.gridx = 0;
 		formPane.add(runwayPane, c);
@@ -234,6 +238,9 @@ public class ControlFrame extends JFrame { //implements ComponentListener {
 			labelTODA.setText("TODA: " + runway.getTODA());
 			labelASDA.setText("ASDA: " + runway.getASDA());
 			labelLDA.setText("LDA: " + runway.getLDA());
+			
+			clearCalculations();
+			printToCalculations(runway.getCalculationString());
 		}
 	}
 	

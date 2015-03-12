@@ -15,6 +15,7 @@ public class Runway {
 	private float takeoffDisplacementStart, takeoffDisplacementEnd, landingDisplacementStart, landingDisplacementEnd;
 	private static final int SLOPE_RATIO = 50;
 	private float blastProtection = 300;
+	private String calculationString;
 
 	//============================================
 	//CONSTRUCTORS:
@@ -68,6 +69,7 @@ public class Runway {
 	public float getTODA(){return this.TODA;}
 	public float getASDA(){return this.ASDA;}
 	public float getLDA(){return this.LDA;}
+	public String getCalculationString() {return this.calculationString;}
 
 	public List<Obstacle> getObstacleList() {
 		return obstacleList;
@@ -108,10 +110,10 @@ public class Runway {
 		//add a length containing the entire runway minus displacement to the length list:
 		lengthList.add(new UsableLength((float)0 + this.takeoffDisplacementStart, this.length-this.takeoffDisplacementEnd, true));
 		
-		for (Obstacle o: obstacleList){
+		for (Obstacle currentObstacle : obstacleList){
 			//obstacleStart and obstacleEnd represent the start and end of the unusable area for a plane
-			float obstacleStart = o.getxLocation() - (o.getzSize()*SLOPE_RATIO);
-			float obstacleEnd = o.getxLocation() + o.getxSize() + blastProtection;
+			float obstacleStart = currentObstacle.getxLocation() - (currentObstacle.getzSize()*SLOPE_RATIO);
+			float obstacleEnd = currentObstacle.getxLocation() + currentObstacle.getxSize() + blastProtection;
 			
 			//make lists of things to be added and removed to prevent doing this during iteration
 			List<UsableLength> addList = new ArrayList<UsableLength>();
@@ -125,13 +127,16 @@ public class Runway {
 				//if the length contains the start of the obstructed area:
 				if(obstacleStart >= currentLength.getStart() && obstacleStart <= currentLength.getEnd()) {
 					removeList.add(currentLength);
-					addList.add(new UsableLength(currentLength.getStart(), obstacleStart, false)); //replace it with a new one
+					//replace it with a new one
+					//the end obstacle is changed to be the current obstacle
+					addList.add(new UsableLength(currentLength.getStart(), obstacleStart, false, currentLength.getStartObstacle(), currentObstacle));
 				}
 
 				//if the length contains the end of the obstructed area:
 				if(obstacleEnd >= currentLength.getStart() && obstacleEnd <= currentLength.getEnd()) {
 					removeList.add(currentLength);
-					addList.add(new UsableLength(obstacleEnd, currentLength.getEnd(), currentLength.isEnd()));
+					//the start obstacle is now the current obstacle
+					addList.add(new UsableLength(obstacleEnd, currentLength.getEnd(), currentLength.isEnd(), currentObstacle, currentLength.getEndObstacle()));
 				}
 			}
 			
@@ -157,14 +162,23 @@ public class Runway {
 			ASDA = maxTakeoffLength.getLength();
 		}
 		
+		//calculation string part 1:
+		calculationString = "";
+		if(maxTakeoffLength.getStartObstacle() != null) {
+			calculationString += ("Takeoff area start: " + maxTakeoffLength.getStart() + "\n");
+			calculationString += ("Preceding obstacle: " + maxTakeoffLength.getStartObstacle().getName() + "\n");
+			calculationString += ("obstacle x-location + obstacle x-size + blast protection\n");
+			calculationString += (maxTakeoffLength.getStartObstacle().getxLocation() + " + " + maxTakeoffLength.getStartObstacle().getxSize() + " + " + blastProtection + "\n");
+		}
+		
 		//now we calculate the landing stuff:
 		//here we don't need to worry about blast protection but we do need to consider the slope after an obstacle
 		lengthList = new ArrayList<UsableLength>();
 		lengthList.add(new UsableLength(this.landingDisplacementStart, this.length-this.landingDisplacementEnd, true));
-		for(Obstacle o : obstacleList) {
+		for(Obstacle currentObstacle : obstacleList) {
 			//calculate how much area this obstacle obstructs:
-			float obstacleStart = o.getxLocation();
-			float obstacleEnd = o.getxLocation() + o.getxSize() + (o.getzSize() * SLOPE_RATIO);
+			float obstacleStart = currentObstacle.getxLocation();
+			float obstacleEnd = currentObstacle.getxLocation() + currentObstacle.getxSize() + (currentObstacle.getzSize() * SLOPE_RATIO);
 			
 			//make lists of things to be added and removed to prevent doing this during iteration
 			List<UsableLength> addList = new ArrayList<UsableLength>();
@@ -176,13 +190,13 @@ public class Runway {
 				//if the length contains the start of the obstructed area:
 				if(obstacleStart >= currentLength.getStart() && obstacleStart <= currentLength.getEnd()) {
 					removeList.add(currentLength);
-					addList.add(new UsableLength(currentLength.getStart(), obstacleStart, false)); //replace it with a new one
+					addList.add(new UsableLength(currentLength.getStart(), obstacleStart, false, currentLength.getStartObstacle(), currentObstacle));
 				}
 				
 				//if the length contains the end of the obstructed area:
 				if(obstacleEnd >= currentLength.getStart() && obstacleEnd <= currentLength.getEnd()) {
 					removeList.add(currentLength);
-					addList.add(new UsableLength(obstacleEnd, currentLength.getEnd(), currentLength.isEnd()));
+					addList.add(new UsableLength(obstacleEnd, currentLength.getEnd(), currentLength.isEnd(), currentObstacle, currentLength.getEndObstacle()));
 				}
 			}
 			
@@ -197,17 +211,28 @@ public class Runway {
 	private class UsableLength implements Comparable<UsableLength>{
 		private float start, end;
 		private boolean endOfRunway;
+		private Obstacle startObstacle, endObstacle;
 
 		public UsableLength(float start, float end, boolean endOfRunway) {
 			this.start = start;
 			this.end = end;
 			this.endOfRunway = endOfRunway;
 		}
+		
+		public UsableLength(float start, float end, boolean endOfRunway, Obstacle startObstacle, Obstacle endObstacle) {
+			this.start = start;
+			this.end = end;
+			this.endOfRunway = endOfRunway;
+			this.startObstacle = startObstacle;
+			this.endObstacle = endObstacle;
+		}
 
 		public float getStart() { return start; }
 		public float getEnd() { return end; }
 		public float getLength() { return (end - start); }
 		public boolean isEnd() { return endOfRunway; }
+		public Obstacle getStartObstacle() { return startObstacle; }
+		public Obstacle getEndObstacle() { return endObstacle; }
 
 		public int compareTo(UsableLength that) {
 			//I don't subtract the two lengths because that would require a cast from float to int
