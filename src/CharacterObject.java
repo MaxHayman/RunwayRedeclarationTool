@@ -36,6 +36,7 @@ public class CharacterObject extends MapObject{
 		else if (characterCode == 39) { y = 3 * 8; x = 5 * 8; } // '
 		else if (characterCode == 58) { y = 3 * 8; x = 6 * 8; } // :
 		else if (characterCode == 63) { y = 3 * 8; x = 7 * 8; } // ?
+		else if (characterCode == 32) { y = 3 * 8; x = 8 * 8; } // (space
 		
 		BufferedImage hugeImage = null;
 		try {
@@ -47,8 +48,11 @@ public class CharacterObject extends MapObject{
 		pixels = convertTo2DUsingGetRGB(hugeImage, x, y);
 		color = Color.white;
 	         
-		pixels = RotateMatrix(RotateMatrix(RotateMatrix(pixels, 8), 8), 8);
-		
+	}
+	public void rotate(int times) {
+		for (int i = 0; i < times; i++) {
+			pixels = RotateMatrix(pixels, 8);
+		}
 	}
 	static boolean[][] RotateMatrix(boolean[][] matrix, int n) {
 		boolean[][] ret = new boolean[n][n];
@@ -77,12 +81,24 @@ public class CharacterObject extends MapObject{
 	      return result;
 	   }
 	 
-	void draw(int[][] map) {
+	void drawTop(int[][] map) {
 		for(int i = x; i < x + 8; i++) {
 			for(int j = y; j < y + 8; j++) {
 				if(i >= x && j >= y)
 					if(pixels[(i - x)][j - y])
 						map[i][j] = color.getRGB();
+			}
+		}
+	}
+	
+	void drawSide(int[][] map) {
+		if(z == 0)
+			return;
+		for(int i = x; i < x + 8; i++) {
+			for(int j = z; j < z + 8; j++) {
+				//if(i >= x && j >= z)
+					if(pixels[(i - x)][j - z])
+						map[i][(int)(map.length/2)-1-z*2+j] = color.getRGB();
 			}
 		}
 	}
