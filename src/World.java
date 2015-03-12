@@ -55,7 +55,7 @@ public class World {
 				m.z = 0;
 				m.height = (int)o.getzSize();
 				m.length = 0;
-				m.width = 300;
+				m.width = (int)o.getzSize()*50;
 				m.color = Color.red;
 				objects.add(m);
 			}
