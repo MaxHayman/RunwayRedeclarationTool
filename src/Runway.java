@@ -167,9 +167,36 @@ public class Runway {
 		if(maxTakeoffLength.getStartObstacle() != null) {
 			calculationString += ("Takeoff area start: " + maxTakeoffLength.getStart() + "\n");
 			calculationString += ("Preceding obstacle: " + maxTakeoffLength.getStartObstacle().getName() + "\n");
-			calculationString += ("obstacle x-location + obstacle x-size + blast protection\n");
-			calculationString += (maxTakeoffLength.getStartObstacle().getxLocation() + " + " + maxTakeoffLength.getStartObstacle().getxSize() + " + " + blastProtection + "\n");
+			calculationString += ("obstacle x-location + obstacle x-size + blast protection =\n");
+			calculationString += (maxTakeoffLength.getStartObstacle().getxLocation() + " + " + maxTakeoffLength.getStartObstacle().getxSize() + " + " + blastProtection + " = " + maxTakeoffLength.getStart() + "\n");
+			calculationString += "\n";
+		} else if (this.takeoffDisplacementStart > 0) {
+			calculationString += ("Takeoff area start " + maxTakeoffLength.getStart() + "due to displacement\n");
+			calculationString += "\n";
 		}
+		
+		if(maxTakeoffLength.getEndObstacle() != null) {
+			calculationString += ("Takeoff area end: " + maxTakeoffLength.getEnd() + "\n");
+			calculationString += ("Following obstacle: " + maxTakeoffLength.getEndObstacle().getName() + "\n");
+			calculationString += ("obstacle x-location - (obstacle z-size * " + SLOPE_RATIO + ") =\n");
+			calculationString += (maxTakeoffLength.getEndObstacle().getxLocation() + " - (" + maxTakeoffLength.getEndObstacle().getzSize() + " * " + SLOPE_RATIO + ") = " + maxTakeoffLength.getEnd() + "\n");
+			calculationString += "\n";
+		} else if (this.takeoffDisplacementEnd > 0) {
+			calculationString += ("Takeoff area end " + maxTakeoffLength.getEnd() + "due to displacement\n");
+			calculationString += "\n";
+		}
+		
+		calculationString += ("usable takeoff area length = area end - area start = " + maxTakeoffLength.getEnd() + " - " + maxTakeoffLength.getStart() + "\n");
+		
+		//declarations calculations:
+		calculationString += ("TORA = usable takeoff area length = " + TORA + "\n");
+		calculationString += ("TODA = length of runway + clearway - usable takeoff area start = " + this.length + " + " + this.clearway + " - " + maxTakeoffLength.getStart() + "\n");
+		if(maxTakeoffLength.isEnd()) {
+			calculationString += ("ASDA = usable takeoff area length + stopway = " + maxTakeoffLength.getLength() + " + " + this.stopway + "\n");
+		} else {
+			calculationString += ("ASDA = usable takeoff area length = " + maxTakeoffLength.getLength() + "\n");
+		}
+		calculationString += "\n";
 		
 		//now we calculate the landing stuff:
 		//here we don't need to worry about blast protection but we do need to consider the slope after an obstacle
@@ -205,7 +232,36 @@ public class Runway {
 			lengthList.addAll(addList);
 		}
 		
-		LDA = Collections.max(lengthList).getLength();
+		maxTakeoffLength = Collections.max(lengthList);
+		LDA = maxTakeoffLength.getLength();
+		
+		//calculation string stuff part 2: landing
+		if(maxTakeoffLength.getStartObstacle() != null) {
+			calculationString += ("Landing area start: " + maxTakeoffLength.getStart() + "\n");
+			calculationString += ("Preceding obstacle: " + maxTakeoffLength.getStartObstacle().getName() + "\n");
+			calculationString += ("obstacle x-location + obstacle x-size + (obstacle z-size * " + SLOPE_RATIO + ") =\n");
+			calculationString += (maxTakeoffLength.getStartObstacle().getxLocation() + " + "
+								+ maxTakeoffLength.getStartObstacle().getxSize() + " + ("
+								+ maxTakeoffLength.getStartObstacle().getzSize() + " * " + SLOPE_RATIO +") = "
+								+ maxTakeoffLength.getStart() + "\n");
+			calculationString += "\n";
+		} else if (this.landingDisplacementStart > 0) {
+			calculationString += ("landing area start " + maxTakeoffLength.getStart() + "due to displacement\n");
+			calculationString += "\n";
+		}
+		
+		if(maxTakeoffLength.getEndObstacle() != null) {
+			calculationString += ("Landing area end: " + maxTakeoffLength.getEnd() + "\n");
+			calculationString += ("Following obstacle: " + maxTakeoffLength.getEndObstacle().getName() + "\n");
+			calculationString += ("obstacle x-location = " + maxTakeoffLength.getEndObstacle().getxLocation() + "\n");
+			calculationString += "\n";
+		} else if (this.landingDisplacementEnd > 0) {
+			calculationString += ("Takeoff area end " + maxTakeoffLength.getEnd() + "due to displacement\n");
+			calculationString += "\n";
+		}
+		
+		calculationString += ("usable landing area length = area end - area start = " + maxTakeoffLength.getEnd() + " - " + maxTakeoffLength.getStart() + "\n");
+		calculationString += ("LDA = usable landing area length = " + maxTakeoffLength.getLength() + "\n");
 	}
 
 	private class UsableLength implements Comparable<UsableLength>{
