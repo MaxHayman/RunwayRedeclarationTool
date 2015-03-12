@@ -123,5 +123,9 @@ public class Controller {
 	public float getRunwayWidth() {
 		return currentRunway.getWidth();
 	}
+	
+	public Runway getCurrentRunway() {
+		return currentRunway;
+	}
 
 }

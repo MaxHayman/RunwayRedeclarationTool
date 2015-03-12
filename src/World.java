@@ -59,6 +59,10 @@ public class World {
 				m.color = Color.red;
 				objects.add(m);
 			}
+			objects.add(MapObjectFactory.buildString(50, (int)(50 + OFFSET_Y + controller.getRunwayWidth()), "TORA: " + controller.getCurrentRunway().getTORA()));
+			objects.add(MapObjectFactory.buildString(50, (int)(59 + OFFSET_Y + controller.getRunwayWidth()), "TODA: " + controller.getCurrentRunway().getTODA()));
+			objects.add(MapObjectFactory.buildString(50, (int)(68 + OFFSET_Y + controller.getRunwayWidth()), "ASDA: " + controller.getCurrentRunway().getASDA()));
+			objects.add(MapObjectFactory.buildString(50, (int)(77 + OFFSET_Y + controller.getRunwayWidth()), "LDA: " + controller.getCurrentRunway().getLDA()));
 		}
 		
 		//redraw after updating:

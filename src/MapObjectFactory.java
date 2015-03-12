@@ -89,22 +89,25 @@ public class MapObjectFactory {
 			}
 			
 			{
-				MapObject s = new CharacterObject('0');
+				CharacterObject s = new CharacterObject('0');
 				s.x = (int) (width  *0.055);
 				s.y = (int) (y + Math.floor(length/2)) - 6;
+				s.rotate(3);
 				o.objects.add(s);
 			}
 			{
-				MapObject s = new CharacterObject('9');
+				CharacterObject s = new CharacterObject('9');
 				s.x = (int) (width * 0.055);
 				s.y = (int) (y + Math.floor(length/2)) + 2;
+				s.rotate(3);
 				o.objects.add(s);
 			}
 			
 			{
-				MapObject s = new CharacterObject('L');
+				CharacterObject s = new CharacterObject('L');
 				s.x = (int) (width * 0.045);
 				s.y = (int) (y + Math.floor(length/2)) - 2;
+				s.rotate(3);
 				o.objects.add(s);
 			}
 			
@@ -152,6 +155,15 @@ public class MapObjectFactory {
 		o.height = height;
 		o.name = "Bad";
 		
+		return o;
+	}
+	
+	public static MapObject buildString(int x, int y, String string) {
+		StringObject o = new StringObject(string);
+		o.x = x;
+		o.y = y;
+		o.init();
+		o.color = Color.cyan;
 		return o;
 	}
 }
