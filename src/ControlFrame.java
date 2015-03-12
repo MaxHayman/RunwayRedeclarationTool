@@ -217,6 +217,11 @@ public class ControlFrame extends JFrame { //implements ComponentListener {
 		this.pack();
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);
+		
+		labelTORA.setToolTipText("Takeoff Run Available");
+		labelTODA.setToolTipText("Take off distance avaiable");
+		labelASDA.setToolTipText("Accelerate stop distance avaiable");
+		labelLDA.setToolTipText("Landing Distance Available");
 	}
 
 	public void updateRunways() {

@@ -30,13 +30,13 @@ public class AddRunwayFrame extends JFrame{
 		gbc = new GridBagConstraints();
 		gbc.gridy = 0;
 		
-		orientationField = addField("Orientation:");
-		designationField = addField("Designation:");
-		lengthField = addField("Length:");
-		widthField = addField("Width:");
-		clearwayField = addField("Clearway:");
-		stopwayField = addField("Stopway:");
-		displacedThresholdField = addField("Displaced Threshold:");
+		orientationField = addField("Orientation:", "The orientation of the in tens of degrees. (e.g. 09 for 90 degrees)");
+		designationField = addField("Designation:", "If there is more than 1 runway, specifiy if its the left or right runway. (e.g R for right)");
+		lengthField = addField("Length:", "The length of the runway.");
+		widthField = addField("Width:", "How wide the runway is.");
+		clearwayField = addField("Clearway:", "The amount of clearway the runway has.");
+		stopwayField = addField("Stopway:", "The amount of stopway the runway has.");
+		displacedThresholdField = addField("Displaced Threshold:", "The displaced threshold the runway has.");
 		
 		gbc.gridx = 0;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -48,7 +48,7 @@ public class AddRunwayFrame extends JFrame{
 		this.setVisible(true);
 	}
 	
-	private JTextField addField(String fieldLabel) {
+	private JTextField addField(String fieldLabel, String tooltip) {
 		//initialise text field and make it editable:
 		JTextField textField;
 		textField = new JTextField();
@@ -58,7 +58,10 @@ public class AddRunwayFrame extends JFrame{
 		gbc.gridx = 0;
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.weightx = 0;
-		pane.add(new JLabel(fieldLabel), gbc);
+		JLabel label = new JLabel(fieldLabel);
+		if(tooltip.length() > 0)
+			label.setToolTipText(tooltip);
+		pane.add(label, gbc);
 		
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.weightx = 1;
