@@ -8,12 +8,12 @@ import javax.swing.JMenuItem;
 
 public class Frame2D extends JFrame implements ComponentListener {
 	
-	Display display;
+	Display2D display;
 	
-	public Frame2D (World map, Controller controller, World.View view) {
+	public Frame2D (MainFrame mainFrame, Display2D.View view) {
 		super("Runway Redeclaration Tool");
 		
-		display = new Display2D(map, view);
+		display = new Display2D(mainFrame, view);
 		
 		//view:
 		this.setContentPane(display);
@@ -23,7 +23,7 @@ public class Frame2D extends JFrame implements ComponentListener {
 		this.setSize(720, 450);
 		this.addComponentListener(this);
 		
-		Controller.eventManager.addEventNotify(EventManager.EventName.UPDATE_DISPLAY, this, "updateDisplay");
+		//Controller.eventManager.addEventNotify(EventManager.EventName.UPDATE_DISPLAY, this, "updateDisplay");
 
 		this.setJMenuBar(new DisplayMenuBar(this));
 	}

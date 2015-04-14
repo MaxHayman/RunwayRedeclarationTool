@@ -49,7 +49,7 @@ public class DisplayMenuBar extends JMenuBar {
 		}
 
 		public void actionPerformed(ActionEvent e) {
-			frame.display.saveFractal(format);
+			//frame.display.saveFractal(format);
 		}
 	}
 	

@@ -1,246 +1,180 @@
-import java.awt.Container;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.event.ChangeEvent;
 
 
-public class AddObstacleFrame extends JFrame{
+/**
+ *
+ * @author Max
+ */
+public class AddObstacleFrame extends javax.swing.JFrame {
 
-	Controller controller;
-	Container pane;
-	JTextField nameField, xSizeField, ySizeField, zSizeField, xLocField, yLocField, angleField;
-	GridBagConstraints c;
-	JFrame frame;
-	ArrayList<Obstacle> savedObstacles;
-	SavedObstacleComboBox savedObstacleComboBox;
-
-	public AddObstacleFrame(Controller controller, ArrayList<Obstacle> savedObstacles) {
-		super("Add Obstacle");
-		this.controller = controller;
-		this.savedObstacles = savedObstacles;
-		savedObstacleComboBox = new SavedObstacleComboBox();
-		frame = this;
-		
-		JPanel mainPane = (JPanel) this.getContentPane();
-		mainPane.setLayout(new GridBagLayout());
-		c = new GridBagConstraints();
-		c.gridy = 0;
-		JLabel title = new JLabel("Add an obstacle");
-		title.setFont(title.getFont().deriveFont(24.0f));
-		mainPane.add(title);
-		c.gridy++;
-		mainPane.add(new JLabel("Select an obstacle:"), c);
-		c.gridy++;
-		c.fill = c.HORIZONTAL;
-		mainPane.add(savedObstacleComboBox, c);
-		c.gridy++;
-		mainPane.add(new AddButton(), c);
-		c.gridy++;
-		mainPane.add(new NewObstacleButton(), c);
-		
-		
-
-//		pane = new Container();
-//		this.setContentPane(pane);
-//		pane.setLayout(new GridBagLayout());
-//		gbc = new GridBagConstraints();
-//		gbc.gridy = 0;
-//		gbc.fill = GridBagConstraints.HORIZONTAL;
-//		gbc.gridwidth = GridBagConstraints.REMAINDER;
-//		pane.add(savedObstacleComboBox, gbc);
-//
-//		nameField = addField("Name:");
-//		xSizeField = addField("X Size:");
-//		ySizeField = addField("Y Size:");
-//		zSizeField = addField("Z Size:");
-//		xLocField = addField("X Location:");
-//		yLocField = addField("Y Location");
-//		angleField = addField("Angle:");
-//
-//		gbc.gridx = 0;
-//		gbc.fill = GridBagConstraints.HORIZONTAL;
-//		gbc.gridwidth = GridBagConstraints.REMAINDER;
-//		gbc.gridy++;
-//		pane.add(new AddButton(), gbc);
-//		gbc.gridy++;
-//		pane.add(new SaveButton(), gbc);
-
-		this.pack();
-		this.setLocationRelativeTo(null);
-		this.setVisible(true);
-	}
-
-	private JTextField addField(JPanel pane, String fieldLabel) {
-		//initialise text field and make it editable:
-		JTextField textField;
-		textField = new JTextField(20);
-		textField.setEditable(true);
-
-		//add to pane:
-		c.gridx = 0;
-		c.gridy++;
-		c.fill = GridBagConstraints.NONE;
-		c.weightx = 0;
-		c.gridwidth = 1;
-		pane.add(new JLabel(fieldLabel), c);
-
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.weightx = 1;
-		c.gridx = 1;
-		pane.add(textField, c);
-		return textField;
-	}
-
-	private class AddButton extends JButton implements ActionListener{
-
-		public AddButton() {
-			super("Use this obstacle");
-			this.addActionListener(this);
-		}
-
-		public void actionPerformed(ActionEvent e) {
-			
-			controller.addObstacle((Obstacle) savedObstacleComboBox.getSelectedItem());
-			frame.dispose();
-			
-//			//bad code inc
-//			float xSize = 0, ySize = 0, zSize = 0, xLoc = 0, yLoc = 0, angle = 0;
-//
-//			//put this in a try to catch an exception due to poor format:
-//			try {
-//				//parse all the values:
-//				xSize = Float.parseFloat(xSizeField.getText());
-//				ySize = Float.parseFloat(ySizeField.getText());
-//				zSize = Float.parseFloat(zSizeField.getText());
-//				xLoc = Float.parseFloat(xLocField.getText());
-//				yLoc = Float.parseFloat(yLocField.getText());
-//				angle = Float.parseFloat(angleField.getText());
-//				
-//				//make and add the obstacle:
-//				controller.addObstacle(new Obstacle(xSize, ySize, zSize, xLoc, yLoc, angle, nameField.getText()));
-//				frame.dispose();
-//			} catch(NumberFormatException ex) {
-//				//ex.printStackTrace();
-//				JOptionPane.showMessageDialog(frame, "Error: poorly formatted values");
-//			}
-		}		
-	}
+	MainFrame mainFrame;
+	Obstacle o = null;
 	
-	private class NewObstacleButton extends JButton implements ActionListener{
+    public AddObstacleFrame(MainFrame mainFrame, Obstacle o) {
+    	super(o == null ? "Add Obstacle" : "Edit Obstacle");
 
-		public NewObstacleButton() {
-			super("Create new obstacle");
-			this.addActionListener(this);
-		}
+        initComponents();
+        this.mainFrame = mainFrame;
+        
+        distanceFromThresholdLabel.setText("Distance from " + mainFrame.runway.pair.runways[0].toString() + " threshold");
+        
+        distanceFromOtherThresholdLabel.setText("Distance from " + mainFrame.runway.pair.runways[1].toString() + " threshold");
 
-		public void actionPerformed(ActionEvent e) {
-			new NewObstacleFrame();
-		}		
-	}
-	
-	private class SaveButton extends JButton implements ActionListener{
-		JFrame frame;
-		public SaveButton(JFrame frame) {
-			super("Save");
-			this.frame = frame;
-			this.addActionListener(this);
-		}
+        if(o != null) {
+        	this.o = o;
+        	obstacleNameTextField.setText(o.name);
+        	distanceFromThresholdSpinner.setValue(mainFrame.runway.pair.runways[0].obsticles.get(o));
+        	distanceFromOtherThresholdSpinner.setValue(mainFrame.runway.pair.runways[1].obsticles.get(o));
+        	obstacleHeightTextField.setText("" + o.height);
+        }
+    }
 
-		public void actionPerformed(ActionEvent e) {
-			//bad code inc
-			float xSize = 0, ySize = 0, zSize = 0, xLoc = 0, yLoc = 0, angle = 0;
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
+    private void initComponents() {
 
-			//put this in a try to catch an exception due to poor format:
-			try {
-				//parse all the values:
-				xSize = Float.parseFloat(xSizeField.getText());
-				ySize = Float.parseFloat(ySizeField.getText());
-				zSize = Float.parseFloat(zSizeField.getText());
-				xLoc = Float.parseFloat(xLocField.getText());
-				yLoc = Float.parseFloat(yLocField.getText());
-				angle = Float.parseFloat(angleField.getText());
-				
-				savedObstacles.add(new Obstacle(xSize, ySize, zSize, xLoc, yLoc, angle, nameField.getText()));
-				savedObstacleComboBox.update();
-				frame.dispose();
-				
-			} catch(NumberFormatException ex) {
-				//ex.printStackTrace();
-				JOptionPane.showMessageDialog(frame, "Error: poorly formatted values");
+        obstacleNameLabel = new javax.swing.JLabel();
+        obstacleNameTextField = new javax.swing.JTextField();
+        obstacleHeightLabel = new javax.swing.JLabel();
+        obstacleHeightTextField = new javax.swing.JTextField();
+        distanceFromThresholdSpinner = new javax.swing.JSpinner();
+        distanceFromThresholdLabel = new javax.swing.JLabel();
+        distanceFromOtherThresholdSpinner = new javax.swing.JSpinner();
+        distanceFromOtherThresholdLabel = new javax.swing.JLabel();
+        saveButton = new javax.swing.JButton();
+        obstacleTemplateComboBox = new javax.swing.JComboBox();
+        obstacleTempaltesLabel = new javax.swing.JLabel();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+        obstacleNameLabel.setText(" Name");
+
+        obstacleHeightLabel.setText("Height");
+
+        distanceFromThresholdSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				distanceFromThresholdSpinnerStateChanged(e);
 			}
-		}		
-	}
-	
-	//ObstacleComboBox wasn't abstract enough, relied on controller
-	//Could make abstract by passing arraylist in
-	private class SavedObstacleComboBox extends JComboBox<Obstacle> implements ActionListener{
-		
-		public SavedObstacleComboBox() {
-			super();
-			this.update();
-			this.addActionListener(this);
-		}
-		
-		public void update() {
-			this.removeAllItems();
-			for(Obstacle o : savedObstacles) {
-				this.addItem(o);
+        });
+
+        distanceFromThresholdLabel.setText("Distance from 09L threshold");
+
+        distanceFromOtherThresholdSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				distanceFromOtherThresholdSpinnerStateChanged(e);
 			}
-		}
-		
-		public void actionPerformed(ActionEvent e) {
-//			System.out.println("new Obstacle selected");
-//			Obstacle selected = (Obstacle) this.getSelectedItem();
-//			if(selected != null){
-//				nameField.setText(String.valueOf(selected.getName()));
-//				xSizeField.setText(String.valueOf(selected.getxSize()));
-//				ySizeField.setText(String.valueOf(selected.getySize()));
-//				zSizeField.setText(String.valueOf(selected.getzSize()));
-//				xLocField.setText(String.valueOf(selected.getxLocation()));
-//				yLocField.setText(String.valueOf(selected.getyLocation()));
-//				angleField.setText(String.valueOf(selected.getAngle()));
-//			}
-		}
+        });
 
-	}
-	
-	private class NewObstacleFrame extends JFrame{
-		public NewObstacleFrame(){
-			super("New obstacle");
-			init();
-		}
-	
-		public void init(){
-			JPanel mainPane = (JPanel) this.getContentPane();
-			mainPane.setLayout(new GridBagLayout());
-			c.gridx = 0;
-			c.gridy = 0;
-			nameField = addField(mainPane, "Name:");
-			xSizeField = addField(mainPane, "Length(m):");
-			ySizeField = addField(mainPane, "Width(m):");
-			zSizeField = addField(mainPane, "Height(m):");
-			xLocField = addField(mainPane, "X Location:");
-			yLocField = addField(mainPane, "Y Location");
-			angleField = addField(mainPane, "Angle:");
-			c.gridy++;
-			c.gridwidth = 2;
-			c.gridx = 0;
-			mainPane.add(new SaveButton(this), c);
-			
-			this.pack();
-			this.setLocationRelativeTo(null);
-			this.setVisible(true);
-		}
-	}
+        distanceFromOtherThresholdLabel.setText("Distance from 27R threshold");
 
+        saveButton.setText("Add");
+        saveButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveButtonActionPerformed(evt);
+            }
+        });
+
+        obstacleTemplateComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        obstacleTempaltesLabel.setText("Obstacle Templates");
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(35, 35, 35)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(obstacleTempaltesLabel)
+                    .addComponent(distanceFromOtherThresholdLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(35, 35, 35)
+                        .addComponent(saveButton))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(obstacleTemplateComboBox, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(obstacleNameLabel, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(obstacleNameTextField, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(obstacleHeightLabel, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(obstacleHeightTextField, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(distanceFromThresholdLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(distanceFromThresholdSpinner, javax.swing.GroupLayout.Alignment.LEADING))
+                    .addComponent(distanceFromOtherThresholdSpinner))
+                .addContainerGap(41, Short.MAX_VALUE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(12, Short.MAX_VALUE)
+                .addComponent(obstacleTempaltesLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(obstacleTemplateComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(29, 29, 29)
+                .addComponent(obstacleNameLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(obstacleNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(obstacleHeightLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(obstacleHeightTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(distanceFromThresholdLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(distanceFromThresholdSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(distanceFromOtherThresholdLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(distanceFromOtherThresholdSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(saveButton)
+                .addGap(24, 24, 24))
+        );
+
+        pack();
+    }// </editor-fold>                        
+
+    private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {       
+    	
+    	if(o == null)
+    		o = new Obstacle();
+    	
+    	o.height = Integer.parseInt(obstacleHeightTextField.getText());
+    	o.name = obstacleNameTextField.getText();
+    	mainFrame.runway.pair.runways[0].obsticles.put(o, (Integer) distanceFromThresholdSpinner.getValue());
+    	mainFrame.runway.pair.runways[1].obsticles.put(o, (Integer) distanceFromOtherThresholdSpinner.getValue());
+    	mainFrame.updateObstacles();
+        this.dispose();
+    }                                         
+
+    private void distanceFromThresholdSpinnerStateChanged (ChangeEvent evt) {                                                      
+        if((int)distanceFromOtherThresholdSpinner.getValue() == 0) {
+        	int dis = Math.min(mainFrame.runway.pair.runways[0].LDA, mainFrame.runway.pair.runways[1].LDA);
+        	distanceFromOtherThresholdSpinner.setValue(dis - (int)distanceFromThresholdSpinner.getValue() + 1);
+        }
+    }                                                     
+
+    private void distanceFromOtherThresholdSpinnerStateChanged(ChangeEvent evt) {                                                           
+        if((int)distanceFromThresholdSpinner.getValue() == 0) {
+        	int dis = Math.min(mainFrame.runway.pair.runways[0].LDA, mainFrame.runway.pair.runways[1].LDA);
+        	distanceFromThresholdSpinner.setValue(dis - (int)distanceFromOtherThresholdSpinner.getValue() + 1);
+        }
+    }
+
+    // Variables declaration - do not modify                     
+    private javax.swing.JButton saveButton;
+    private javax.swing.JLabel distanceFromOtherThresholdLabel;
+    private javax.swing.JSpinner distanceFromOtherThresholdSpinner;
+    private javax.swing.JLabel distanceFromThresholdLabel;
+    private javax.swing.JSpinner distanceFromThresholdSpinner;
+    private javax.swing.JLabel obstacleHeightLabel;
+    private javax.swing.JTextField obstacleHeightTextField;
+    private javax.swing.JLabel obstacleNameLabel;
+    private javax.swing.JTextField obstacleNameTextField;
+    private javax.swing.JLabel obstacleTempaltesLabel;
+    private javax.swing.JComboBox obstacleTemplateComboBox;
+    // End of variables declaration                   
 }
