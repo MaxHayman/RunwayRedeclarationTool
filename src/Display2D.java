@@ -27,8 +27,17 @@ public class Display2D extends JPanel implements KeyListener, MouseWheelListener
 		System.out.println("doin my ting");
 		this.setVisible(true);
 		this.addMouseWheelListener(this);
+<<<<<<< HEAD
 		this.mainFrame = mainFrame;
 		this.view = view;
+=======
+		
+		Controller.eventManager.addEventNotify(EventManager.EventName.UPDATE_DISPLAY, this, "update");
+	}
+	
+	public void update() {
+		this.repaint();
+>>>>>>> 0fc7acfb83d571cb752ef991ffc51e4a897d67dc
 	}
 
 	public void init() {
