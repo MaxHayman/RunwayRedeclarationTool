@@ -51,7 +51,7 @@ public class Runway {
 
 	//override this for display in the ComboBox:
 	public String toString() {
-		return this.getName();
+		return "Runway " + this.getName() + " of size " + length + "*" + width + " with clearway " + clearway + " and stopway " + stopway;
 	}
 
 
