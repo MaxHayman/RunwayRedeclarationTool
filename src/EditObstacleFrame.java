@@ -113,6 +113,7 @@ public class EditObstacleFrame extends JFrame{
 				angle = Float.parseFloat(angleField.getText());
 				
 				//edit the obstacle:
+				controller.printToNotification("Edited obstacle " + obstacle.toString());
 				obstacle.setxSize(xSize);
 				obstacle.setySize(ySize);
 				obstacle.setzSize(zSize);
@@ -120,6 +121,7 @@ public class EditObstacleFrame extends JFrame{
 				obstacle.setyLocation(yLoc);
 				obstacle.setAngle(angle);
 				controller.updateObstacles();
+				controller.printToNotification("Obstacle changed to " + obstacle.toString());
 				frame.dispose();
 			} catch(NumberFormatException ex) {
 				//ex.printStackTrace();
@@ -149,8 +151,11 @@ public class EditObstacleFrame extends JFrame{
 				yLoc = Float.parseFloat(yLocField.getText());
 				angle = Float.parseFloat(angleField.getText());
 				
+				controller.printToNotification("Editing custom obstacle " + savedObstacleComboBox.getSelectedItem().toString());
 				savedObstacles.remove(savedObstacleComboBox.getSelectedItem());
-				savedObstacles.add(new Obstacle(xSize, ySize, zSize, xLoc, yLoc, angle, nameField.getText()));
+				Obstacle newObstacle = new Obstacle(xSize, ySize, zSize, xLoc, yLoc, angle, nameField.getText());
+				savedObstacles.add(newObstacle);
+				controller.printToNotification("Custom obstacle changed to " + newObstacle.toString());
 				savedObstacleComboBox.update();
 			} catch(NumberFormatException ex) {
 				//ex.printStackTrace();

@@ -96,6 +96,7 @@ public class EditRunwayFrame extends JFrame{
 				stopway = Float.parseFloat(stopwayField.getText());
 				displacedThreshold = Float.parseFloat(displacedThresholdField.getText());
 				//edit the runway:
+				controller.printToNotification("Editing runway " + runway.toString());
 				runway.setOrientation(orientation);
 				runway.setDesignation(designation);
 				runway.setLength(length);
@@ -103,6 +104,7 @@ public class EditRunwayFrame extends JFrame{
 				runway.setClearway(clearway);
 				runway.setStopway(stopway);
 				runway.setDisplacedThreshold(displacedThreshold);
+				controller.printToNotification("Runway changed to " + runway.toString());
 				controller.updateRunways();
 				frame.dispose();
 			} catch(NumberFormatException ex) {

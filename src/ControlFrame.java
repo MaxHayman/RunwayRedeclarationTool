@@ -277,11 +277,11 @@ public class ControlFrame extends JFrame { //implements ComponentListener {
 		calculationsBox.setText("");
 	}
 	
-	public void printToConsole(String s){
+	public void printToNotification(String s){
 		notificationBox.append(s + "\n");
 	}
 	
-	public void clearConsole(){
+	public void clearNotification(){
 		notificationBox.setText("");
 	}
 	
@@ -380,6 +380,7 @@ public class ControlFrame extends JFrame { //implements ComponentListener {
 		}
 
 		public void actionPerformed(ActionEvent e) {
+			controller.printToNotification("Removing runway " + runwayComboBox.getSelectedItem().toString());
 			controller.removeRunway((Runway) runwayComboBox.getSelectedItem()); 
 		}
 
@@ -406,6 +407,7 @@ public class ControlFrame extends JFrame { //implements ComponentListener {
 		}
 
 		public void actionPerformed(ActionEvent e) {
+			controller.printToNotification("Removing obstacle " + obstacleComboBox.getSelectedItem().toString() + " in runway " + runwayComboBox.getSelectedItem().toString());
 			controller.removeObstacle((Obstacle) obstacleComboBox.getSelectedItem()); 
 			controller.updateLabels();
 		}

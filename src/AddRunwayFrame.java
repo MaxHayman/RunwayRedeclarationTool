@@ -99,7 +99,9 @@ public class AddRunwayFrame extends JFrame{
 				stopway = Float.parseFloat(stopwayField.getText());
 				displacedThreshold = Float.parseFloat(displacedThresholdField.getText());
 				//add the runway to the controller:
-				controller.addRunway(new Runway(orientation, designation, length, width, clearway, stopway, displacedThreshold, controller));
+				Runway newRunway = new Runway(orientation, designation, length, width, clearway, stopway, displacedThreshold, controller);
+				controller.addRunway(newRunway);
+				controller.printToNotification("Added new runway " + newRunway.toString());
 				frame.dispose();
 			} catch(NumberFormatException ex) {
 				//ex.printStackTrace();

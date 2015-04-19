@@ -81,6 +81,14 @@ public class Controller {
 	public boolean viewingRunway() {
 		return (currentRunway != null);
 	}
+	
+	public void printToNotification(String s){
+		frame.printToNotification(s);
+	}
+	
+	public void clearNotification(){
+		frame.clearNotification();;
+	}
 
 	//============================================
 	//PRIVATE METHODS:

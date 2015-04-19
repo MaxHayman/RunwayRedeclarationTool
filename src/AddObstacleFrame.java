@@ -111,6 +111,7 @@ public class AddObstacleFrame extends JFrame{
 		public void actionPerformed(ActionEvent e) {
 			
 			controller.addObstacle((Obstacle) savedObstacleComboBox.getSelectedItem());
+			controller.printToNotification("Added obstacle " + (Obstacle) savedObstacleComboBox.getSelectedItem() + " to runway " + controller.getCurrentRunway().toString());
 			frame.dispose();
 			
 //			//bad code inc
@@ -170,8 +171,10 @@ public class AddObstacleFrame extends JFrame{
 				yLoc = Float.parseFloat(yLocField.getText());
 				angle = Float.parseFloat(angleField.getText());
 				
-				savedObstacles.add(new Obstacle(xSize, ySize, zSize, xLoc, yLoc, angle, nameField.getText()));
+				Obstacle newObstacle = new Obstacle(xSize, ySize, zSize, xLoc, yLoc, angle, nameField.getText());
+				savedObstacles.add(newObstacle);
 				savedObstacleComboBox.update();
+				controller.printToNotification("Saved new custom obstacle " + newObstacle.toString());
 				frame.dispose();
 				
 			} catch(NumberFormatException ex) {
