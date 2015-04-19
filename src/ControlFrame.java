@@ -23,9 +23,9 @@ public class ControlFrame extends JFrame { //implements ComponentListener {
 	Controller controller;
 	World world;
 	//Display display;
-	JPanel formPane = new JPanel(), calculationsPane = new JPanel();//, displayPane = new JPanel();
+	JPanel formPane = new JPanel(), calculationsPane = new JPanel(), notificationPane = new JPanel();//, displayPane = new JPanel();
 	JLabel labelTORA = new JLabel("TORA: "), labelTODA = new JLabel("TODA: "), labelASDA = new JLabel("ASDA: "), labelLDA = new JLabel("LDA: ");
-	JTextArea calculationsBox = new JTextArea();
+	JTextArea calculationsBox = new JTextArea(), notificationBox = new JTextArea();
 	RunwayComboBox runwayComboBox;
 	ObstacleComboBox obstacleComboBox;
 	ArrayList<Obstacle> savedObstacles = new ArrayList<Obstacle>();
@@ -47,6 +47,7 @@ public class ControlFrame extends JFrame { //implements ComponentListener {
 		mainPane.setLayout(new GridBagLayout());
 		formPane.setLayout(new GridBagLayout());
 		calculationsPane.setLayout(new GridBagLayout());
+		notificationPane.setLayout(new GridBagLayout());
 		JLabel titleLabel = new JLabel("Runway Redeclaration Program");
 		titleLabel.setFont(titleLabel.getFont().deriveFont(32.0f));
 		c.gridwidth = c.REMAINDER;
@@ -62,6 +63,11 @@ public class ControlFrame extends JFrame { //implements ComponentListener {
 		c.weightx = 1;
 		c.weighty = 1;
 		mainPane.add(calculationsPane, c);
+		c.gridx = 0;
+		c.gridy = 2;
+		c.gridwidth = 2;
+		mainPane.add(notificationPane, c);
+		c.gridwidth = 1;
 		
 		//Form panel
 		//Runway
@@ -137,6 +143,20 @@ public class ControlFrame extends JFrame { //implements ComponentListener {
 		calculationsPane.add(labelASDA, c);
 		c.gridy++;
 		calculationsPane.add(labelLDA, c);
+		
+		//Notification Panel
+		notificationPane.setBorder(BorderFactory.createTitledBorder("Notifications"));
+		notificationBox.setEditable(false);
+		notificationBox.setLineWrap(true);
+		notificationBox.setPreferredSize(new Dimension(300, 300));
+		JScrollPane notificationScroll = new JScrollPane(notificationBox);
+		notificationScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		c.gridx = 0;
+		c.gridy = 0;
+		c.weightx = 5;
+		c.weighty = 5;
+		c.fill = c.BOTH;
+		notificationPane.add(notificationScroll, c);
 		
 		
 //		c.anchor = c.NORTHEAST;
@@ -255,6 +275,14 @@ public class ControlFrame extends JFrame { //implements ComponentListener {
 	
 	public void clearCalculations(){
 		calculationsBox.setText("");
+	}
+	
+	public void printToConsole(String s){
+		notificationBox.append(s + "\n");
+	}
+	
+	public void clearConsole(){
+		notificationBox.setText("");
 	}
 	
 	public void addDefaultSavedObstacles(){
