@@ -34,7 +34,6 @@ public class XMLHandler {
 		    int returnVal = chooser.showSaveDialog(null);
 
 		    if(returnVal != JFileChooser.APPROVE_OPTION) {
-		    	JOptionPane.showMessageDialog(null, "You must select a location to save.");
 		    	return;
 		    }
 		    
@@ -101,12 +100,19 @@ public class XMLHandler {
 
 	private static BufferedReader br = null;
 	static int lineCount = 0;
-	public static Airport loadXML() {
+	
+	public static Airport loadXML(File file) {
 		Airport airport = new Airport();
 
-		File f = null;
+		File f = file;
+		
 		boolean foundFile = false;
-		do {
+		
+		if(file != null)
+			foundFile = true;
+		
+		
+		while (!foundFile){
 			File workingDirectory = new File(System.getProperty("user.dir") + "/airports");
 	
 			JFileChooser chooser = new JFileChooser();
@@ -117,8 +123,7 @@ public class XMLHandler {
 		    int returnVal = chooser.showOpenDialog(null);
 
 		    if(returnVal != JFileChooser.APPROVE_OPTION) {
-		    	JOptionPane.showMessageDialog(null, "You must select a file to open.");
-		    	return airport;
+		    	return null;
 		    }
 		    
 		    f = new File(chooser.getSelectedFile().getAbsolutePath());
@@ -128,8 +133,8 @@ public class XMLHandler {
 		    else
 		    	JOptionPane.showMessageDialog(null, "That is an invalid file.");
 		    
-		} while (!foundFile);
-			
+		}
+
 		try {
 			br = new BufferedReader(new FileReader(f));
 		} catch (FileNotFoundException e1) {

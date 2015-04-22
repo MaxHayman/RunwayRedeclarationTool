@@ -62,6 +62,19 @@ public class Runway {
 		return null;
 
 	}
+	
+	public int bestOption() {
+		Obstacle o = getObstacle();
+
+		if(o == null) {
+			return 0;
+		}
+
+		if(obstacles.get(o) < TODA/2)
+			return 0;
+		else
+			return 1;
+	}
 
 	public void calculate(int calcType, int blastProtectionAllowance) {
 		int THRESHOLD;

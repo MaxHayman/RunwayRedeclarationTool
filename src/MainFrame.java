@@ -1,5 +1,7 @@
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 
 import javax.swing.ButtonGroup;
 import javax.swing.ComboBoxModel;
@@ -29,6 +31,9 @@ public class MainFrame extends javax.swing.JFrame {
 	public MainFrame(Airport airport) {
 		initComponents();
 
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setLocation(dim.width/8-this.getSize().width/2, dim.height/2-this.getSize().height/2);
+        
 		ButtonGroup group = new ButtonGroup();
 		group.add(takeOffAwayMenuItem);
 		group.add(takeOffTowardsMenuItem);
@@ -49,6 +54,19 @@ public class MainFrame extends javax.swing.JFrame {
 
 	public void setRunway(Runway runway) {
 		this.runway = runway;
+		
+		calculationsType = this.runway.calcType = this.runway.bestOption();
+		System.out.println(this.runway.calcType);
+		if(this.runway.calcType == 0) {
+			takeOffAwayMenuItem.setSelected(true);
+			takeOffTowardsMenuItem.setSelected(false);
+			calcualtionsTypeLabel.setText("Take Off Away, Landing Over");
+		} else if (this.runway.calcType == 1){
+			takeOffAwayMenuItem.setSelected(false);
+			takeOffTowardsMenuItem.setSelected(true);
+			calcualtionsTypeLabel.setText("Take Off Towards, Landing Towards");
+		}
+		
 		updateObstacles();
 	}
 
