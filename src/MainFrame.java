@@ -33,8 +33,11 @@ public class MainFrame extends javax.swing.JFrame {
 		group.add(takeOffTowardsMenuItem);
 
 		this.airport = airport;
-		this.runway = airport.runways.get(0).runways[0];
-		setRunway(runway);
+		
+		if(airport.runways.size() > 0) {
+			this.runway = airport.runways.get(0).runways[0];
+			setRunway(runway);
+		}
 		setAirport(airport);
 		
 		obstacleTemplateModel.addElement(new Obstacle("Plane", 20));

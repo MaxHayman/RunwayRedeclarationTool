@@ -11,6 +11,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.io.File;
+
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 
 public class XMLHandler {
@@ -67,7 +72,6 @@ public class XMLHandler {
 
 		out.println("<Airport/>");
 		out.close();
-		loadXML();
 	}
 
 	private static BufferedReader br = null;
@@ -75,8 +79,34 @@ public class XMLHandler {
 	public static Airport loadXML() {
 		Airport airport = new Airport();
 
+		File f = null;
+		boolean foundFile = false;
+		do {
+			File workingDirectory = new File(System.getProperty("user.dir"));
+	
+			JFileChooser chooser = new JFileChooser();
+			chooser.setCurrentDirectory(workingDirectory);
+		    FileNameExtensionFilter filter = new FileNameExtensionFilter(
+		        "Airport XML files", "xml");
+		    chooser.setFileFilter(filter);
+		    int returnVal = chooser.showOpenDialog(null);
+
+		    if(returnVal != JFileChooser.APPROVE_OPTION) {
+		    	JOptionPane.showMessageDialog(null, "You must select a file to open.");
+		    	return airport;
+		    }
+		    
+		    f = new File(chooser.getSelectedFile().getName());
+		    
+		    if(f.exists() && !f.isDirectory())
+		    	foundFile = true;
+		    else
+		    	JOptionPane.showMessageDialog(null, "That is an invalid file.");
+		    
+		} while (!foundFile);
+			
 		try {
-			br = new BufferedReader(new FileReader("filename.txt"));
+			br = new BufferedReader(new FileReader(f));
 		} catch (FileNotFoundException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();

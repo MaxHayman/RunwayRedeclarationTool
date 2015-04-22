@@ -10,4 +10,10 @@ public abstract class Display extends JPanel implements KeyListener, MouseWheelL
 		TOP_VIEW,
 		SIDE_VIEW,
 	}
+	
+	MainFrame mainFrame;
+	
+	public Display(MainFrame mainFrame) {
+		this.mainFrame = mainFrame;
+	}
 }

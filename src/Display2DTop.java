@@ -13,17 +13,13 @@ public class Display2DTop extends Display {
 	private int cameraAngle = 0;
 	private float cameraZoom = 0.5f;
 	public BufferedImage image = null;
-	MainFrame mainFrame;
 
 	public Display2DTop(MainFrame mainFrame) {
-		super();
+		super(mainFrame);
 
-		System.out.println("doin my ting");
 		this.setVisible(true);
 		this.addMouseWheelListener(this);
 
-		this.mainFrame = mainFrame;
-		
 		EventManager.getEventManager().addEventNotify(EventManager.EventName.UPDATE, this, "repaint");
 
 	}
@@ -51,6 +47,9 @@ public class Display2DTop extends Display {
 		g2.setColor(Color.BLACK);
 		g2.fillRect((int)(cameraZoom*startx), (int)(cameraZoom*starty), (int)(cameraZoom*width), (int)(cameraZoom*height));
 
+		if(mainFrame.runway == null)
+			return;
+		
 		//LDA
 		Obstacle o = mainFrame.runway.getObstacle();
 		

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public class Display2DSide extends Display {
@@ -13,17 +14,14 @@ public class Display2DSide extends Display {
 	private int cameraAngle = 0;
 	private float cameraZoom = 0.5f;
 	public BufferedImage image = null;
-	MainFrame mainFrame;
 
 	public Display2DSide(MainFrame mainFrame) {
-		super();
+		super(mainFrame);
 
-		System.out.println("doin my ting");
 		this.setVisible(true);
 		this.addMouseWheelListener(this);
 
-		this.mainFrame = mainFrame;
-		
+	
 		EventManager.getEventManager().addEventNotify(EventManager.EventName.UPDATE, this, "repaint");
 
 	}
@@ -95,6 +93,9 @@ public class Display2DSide extends Display {
 		g2.setColor(Color.BLACK);
 		g2.fillRect((int)(startx), this.getHeight()/2, (int)(width), (int)(5));
 
+		if(mainFrame.runway == null)
+			return;
+		
 		g2.setColor(Color.red);
 		Obstacle o = mainFrame.runway.pair.runways[0].getObstacle();
 		if(o != null) {
