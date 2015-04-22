@@ -11,7 +11,7 @@ import javax.swing.JPanel;
 public class Display2DTop extends Display {
 
 	private int cameraAngle = 0;
-	private float cameraZoom = 0.5f;
+	private float cameraZoom = 0.34f;
 	public BufferedImage image = null;
 
 	public Display2DTop(MainFrame mainFrame) {
@@ -32,7 +32,7 @@ public class Display2DTop extends Display {
 	}
 
 	int startx = 150;
-	int starty = 150;
+	int starty = 250;
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 		int width = 3000;
@@ -141,13 +141,16 @@ public class Display2DTop extends Display {
 		g2.setTransform(at);
 		g2.setColor(Color.WHITE);
 
-		g2.drawString(mainFrame.runway.pair.runways[0].orientation, (cameraZoom*(starty+height/2-10)), -(cameraZoom*(startx+200)));
-		g2.drawString(mainFrame.runway.pair.runways[0].designation, (cameraZoom*(starty+height/2-5)), -(cameraZoom*(startx+170)));
+		Runway one = mainFrame.runway;
+		Runway two = mainFrame.runway.pair.runways[0] == mainFrame.runway ? mainFrame.runway.pair.runways[1] : mainFrame.runway.pair.runways[0];
+		
+		g2.drawString(one.orientation, (cameraZoom*(starty+height/2-10)), -(cameraZoom*(startx+200)));
+		g2.drawString(one.designation, (cameraZoom*(starty+height/2-5)), -(cameraZoom*(startx+170)));
 		AffineTransform at2 = new AffineTransform();
 		at2.rotate(- Math.PI / 2);
 		g2.setTransform(at2);
-		g2.drawString(mainFrame.runway.pair.runways[1].orientation, -(cameraZoom*(starty+height/2+10)), +(cameraZoom*(startx+width-220)));
-		g2.drawString(mainFrame.runway.pair.runways[1].designation, -(cameraZoom*(starty+height/2+5)), +(cameraZoom*(startx+width-190)));
+		g2.drawString(two.orientation, -(cameraZoom*(starty+height/2+10)), +(cameraZoom*(startx+width-220)));
+		g2.drawString(two.designation, -(cameraZoom*(starty+height/2+5)), +(cameraZoom*(startx+width-190)));
 		g2.setTransform(orig);
 		//g2.drawImage(image, 0,0, null);
 	}
