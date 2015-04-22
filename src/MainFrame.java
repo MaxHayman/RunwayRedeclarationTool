@@ -34,7 +34,7 @@ public class MainFrame extends javax.swing.JFrame {
         setRunway(runway);
         setAirport(airport);
         
-        EventManager.getEventManager().addEventNotify(EventManager.EventName.UPDATE, this, "updateDisplay");
+        EventManager.getEventManager().addEventNotify(EventManager.EventName.UPDATE, this, "updateObstacles");
     }
           
     public void setRunway(Runway runway) {
