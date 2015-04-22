@@ -66,6 +66,10 @@ public class Runway {
 	public Set<Obstacle> getObstacles() {
 		return obsticles.keySet();
 	}
+	
+	public int getObstacleDistance(Obstacle o) {
+		return obsticles.get(o);
+	}
 
 	public Obstacle getObstacle() {
 		double grad = 0.02;

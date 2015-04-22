@@ -28,7 +28,7 @@ public class MapObject {
 	void drawSide(int[][] map) {
 		for(int i = 0; i < width; i++) {
 			for(int j = 0; j < height; j++) {
-				map[i + x][(int)(map.length/2)-1-(j + z)] = color.getRGB();
+			//	map[i + x][(int)(map.length/2)-1-(j + z)] = color.getRGB();
 			}
 		}
 		

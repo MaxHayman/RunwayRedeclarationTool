@@ -21,13 +21,13 @@ public class StringObject extends MapObject{
 	 
 	void drawTop(int[][] map) {
 		for(MapObject o : objects) {
-			o.drawTop(map);
+			//o.drawTop(map);
 		}
 	}
 	
 	void drawSide(int[][] map) {
 		for(MapObject o : objects) {
-			o.drawSide(map);
+			//o.drawSide(map);
 		}
 	}
 }
