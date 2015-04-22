@@ -39,7 +39,8 @@ public class Display2DSide extends Display {
 	
 	public void drawCacl(Graphics2D g2, Color color, int side, int depth, String type, int value, int displaced) {
 		int length = (value * width) / mainFrame.runway.TODA ;
-		int start = side == displaced ? startx : startx + width - length - displaced;
+		displaced = (displaced * width) / mainFrame.runway.TODA ;
+		int start = side == 0 ? startx + displaced : startx + width - length - displaced;
 		g2.setColor(color);
 		g2.fillRect(start, (int)(getHeight()/2)+5, 3, depth);
 		g2.fillRect(start, (int)(getHeight()/2)+5+depth, length, 3);
