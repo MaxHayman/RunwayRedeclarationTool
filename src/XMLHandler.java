@@ -21,9 +21,34 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 public class XMLHandler {
 
 	public static void saveXML(Airport airport) {
+		File f = null;
+
+		{
+			File workingDirectory = new File(System.getProperty("user.dir") + "/airports");
+	
+			JFileChooser chooser = new JFileChooser();
+			chooser.setCurrentDirectory(workingDirectory);
+		    FileNameExtensionFilter filter = new FileNameExtensionFilter(
+		        "Airport XML files", "xml");
+		    chooser.setFileFilter(filter);
+		    int returnVal = chooser.showSaveDialog(null);
+
+		    if(returnVal != JFileChooser.APPROVE_OPTION) {
+		    	JOptionPane.showMessageDialog(null, "You must select a location to save.");
+		    	return;
+		    }
+		    
+		    String name = chooser.getSelectedFile().getAbsolutePath();
+		    if(!name.endsWith(".xml"))
+		    	name += ".xml";
+		    
+		    f = new File(name);
+		    
+		} 
+		
 		PrintWriter out = null;
 		try {
-			out = new PrintWriter("filename.txt");
+			out = new PrintWriter(f);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -82,7 +107,7 @@ public class XMLHandler {
 		File f = null;
 		boolean foundFile = false;
 		do {
-			File workingDirectory = new File(System.getProperty("user.dir"));
+			File workingDirectory = new File(System.getProperty("user.dir") + "/airports");
 	
 			JFileChooser chooser = new JFileChooser();
 			chooser.setCurrentDirectory(workingDirectory);
@@ -96,7 +121,7 @@ public class XMLHandler {
 		    	return airport;
 		    }
 		    
-		    f = new File(chooser.getSelectedFile().getName());
+		    f = new File(chooser.getSelectedFile().getAbsolutePath());
 		    
 		    if(f.exists() && !f.isDirectory())
 		    	foundFile = true;
