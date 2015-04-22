@@ -144,13 +144,13 @@ public class Display2D extends JPanel implements KeyListener, MouseWheelListener
 		g2.setTransform(at);
 		g2.setColor(Color.WHITE);
 
-		g2.drawString(mainFrame.runway.pair.runways[0].name.substring(0, 2), (cameraZoom*(starty+height/2-10)), -(cameraZoom*(startx+200)));
-		g2.drawString(mainFrame.runway.pair.runways[0].name.substring(2, 3), (cameraZoom*(starty+height/2-5)), -(cameraZoom*(startx+170)));
+		g2.drawString(mainFrame.runway.pair.runways[0].orientation, (cameraZoom*(starty+height/2-10)), -(cameraZoom*(startx+200)));
+		g2.drawString(mainFrame.runway.pair.runways[0].designation, (cameraZoom*(starty+height/2-5)), -(cameraZoom*(startx+170)));
 		AffineTransform at2 = new AffineTransform();
 		at2.rotate(- Math.PI / 2);
 		g2.setTransform(at2);
-		g2.drawString(mainFrame.runway.pair.runways[1].name.substring(0, 2), -(cameraZoom*(starty+height/2+10)), +(cameraZoom*(startx+width-220)));
-		g2.drawString(mainFrame.runway.pair.runways[1].name.substring(2, 3), -(cameraZoom*(starty+height/2+5)), +(cameraZoom*(startx+width-190)));
+		g2.drawString(mainFrame.runway.pair.runways[1].orientation, -(cameraZoom*(starty+height/2+10)), +(cameraZoom*(startx+width-220)));
+		g2.drawString(mainFrame.runway.pair.runways[1].designation, -(cameraZoom*(starty+height/2+5)), +(cameraZoom*(startx+width-190)));
 		g2.setTransform(orig);
 		//g2.drawImage(image, 0,0, null);
 	}

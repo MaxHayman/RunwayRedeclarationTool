@@ -3,15 +3,15 @@ public class Main {
 	public static void main(String args[]) {
 		Airport heathrow = new Airport("Heathrow");
 		
-		Runway r09R = new Runway("09R", 3660, 3660, 3660, 3353);
+		Runway r09R = new Runway("09", "R", 3660, 3660, 3660, 3353);
 		r09R.setDisplacedThreshold(307);
 
-		Runway r27L = new Runway("27L", 3660, 3660, 3660, 3660);
+		Runway r27L = new Runway("27", "L", 3660, 3660, 3660, 3660);
 
-		Runway r09L = new Runway("09L", 3902, 3902, 3902, 3595);
+		Runway r09L = new Runway("09", "L", 3902, 3902, 3902, 3595);
 		r09L.setDisplacedThreshold(306);
 		
-		Runway r27R = new Runway("27R", 3884, 3962, 3884, 3884);
+		Runway r27R = new Runway("27", "R", 3884, 3962, 3884, 3884);
 		
 		RunwayPair north = new RunwayPair();
 		north.add(0, r09R);

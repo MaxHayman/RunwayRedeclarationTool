@@ -94,7 +94,8 @@ public class MainFrame extends javax.swing.JFrame {
         exitMenuItem = new javax.swing.JMenuItem();
         editMenu = new javax.swing.JMenu();
         editRunwayMenuItem = new javax.swing.JMenuItem();
-        editAirpornMenuItem = new javax.swing.JMenuItem();
+        addRunwayMenuItem = new javax.swing.JMenuItem();
+        removeRunwayMenuItem = new javax.swing.JMenuItem();
         viewMenu = new javax.swing.JMenu();
         topDownMenuItem = new javax.swing.JMenuItem();
         sideMenuItem = new javax.swing.JMenuItem();
@@ -195,6 +196,14 @@ public class MainFrame extends javax.swing.JFrame {
 
         editMenu.setText("Edit");
 
+        addRunwayMenuItem.setText("Add Runway");
+        addRunwayMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            	addRunwayMenuItemActionPerformed(evt);
+            }
+        });
+        editMenu.add(addRunwayMenuItem);
+        
         editRunwayMenuItem.setText("Edit Runway");
         editRunwayMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -203,13 +212,13 @@ public class MainFrame extends javax.swing.JFrame {
         });
         editMenu.add(editRunwayMenuItem);
 
-        editAirpornMenuItem.setText("Edit Airport");
-        editAirpornMenuItem.addActionListener(new java.awt.event.ActionListener() {
+        removeRunwayMenuItem.setText("Edit Airport");
+        removeRunwayMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                editAirpornMenuItemActionPerformed(evt);
+            	removeRunwayMenuItemActionPerformed(evt);
             }
         });
-        editMenu.add(editAirpornMenuItem);
+        editMenu.add(removeRunwayMenuItem);
 
         menuBar.add(editMenu);
 
@@ -339,13 +348,17 @@ Obstacle o = obstaclesList.getSelectedValue();
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) { 
     	if(jComboBox1.getSelectedItem() != null)
     		setRunway((Runway)jComboBox1.getSelectedItem());
-    }                                          
+    }           
+    
+    private void addRunwayMenuItemActionPerformed(java.awt.event.ActionEvent evt) {                                                   
+    	new AddRunwayFrame(this, null).setVisible(true);
+    }     
 
     private void editRunwayMenuItemActionPerformed(java.awt.event.ActionEvent evt) {                                                   
-        // TODO add your handling code here:
+        new AddRunwayFrame(this, this.runway.pair).setVisible(true);
     }                                                  
 
-    private void editAirpornMenuItemActionPerformed(java.awt.event.ActionEvent evt) {                                                    
+    private void removeRunwayMenuItemActionPerformed(java.awt.event.ActionEvent evt) {                                                    
         // TODO add your handling code here:
     }                                                   
 
@@ -358,7 +371,6 @@ Obstacle o = obstaclesList.getSelectedValue();
     }                                            
 
     private void changeCalculationsItemActionPerformed(java.awt.event.ActionEvent evt) { 
-    	System.out.println("FIRED");
         if(takeOffAwayMenuItem.isSelected()) {
         	calculationsType = 0;
         	 calcualtionsTypeLabel.setText("Take Off Away, Landing Over");
@@ -377,7 +389,8 @@ Obstacle o = obstaclesList.getSelectedValue();
     private javax.swing.JMenu calculationsMenu;
     private javax.swing.JScrollPane calculationsScrollPane;
     private javax.swing.JTable calculationsTable;
-    private javax.swing.JMenuItem editAirpornMenuItem;
+    private javax.swing.JMenuItem addRunwayMenuItem;
+    private javax.swing.JMenuItem removeRunwayMenuItem;
     private javax.swing.JMenu editMenu;
     private javax.swing.JMenuItem editRunwayMenuItem;
     private javax.swing.JMenuItem exitMenuItem;

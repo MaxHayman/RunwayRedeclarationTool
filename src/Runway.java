@@ -14,15 +14,15 @@ public class Runway {
 	int nASDA;
 	int nTODA;
 	
-	String name;
-	
 	int displacedThreshold = 0;
 	Map<Obstacle, Integer> obsticles = new HashMap<Obstacle, Integer>();
 	public int calcType;
 	public RunwayPair pair;
-	
-	public Runway(String name, int TORA, int TODA, int ASDA, int LDA) {
-		this.name = name;
+	public String orientation;
+	public String designation;
+	public Runway(String orientation, String designation, int TORA, int TODA, int ASDA, int LDA) {
+		this.orientation = orientation;
+		this.designation = designation;
 		this.TORA = nTORA = TORA;
 		this.TODA = nTODA = TODA;
 		this.ASDA = nASDA = ASDA;
@@ -122,6 +122,6 @@ public class Runway {
 	}
 	
 	public String toString() {
-		return name;
+		return orientation+designation;
 	}
 }
