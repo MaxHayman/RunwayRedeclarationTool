@@ -21,7 +21,7 @@ public class CalculationsFrame extends JFrame{
 		this.setVisible(true);
 	}
 	
-	private void updateText() {
+	public void updateText() {
 		text.setText(mainFrame.runway.getCalculationsString());
 	}
 	
