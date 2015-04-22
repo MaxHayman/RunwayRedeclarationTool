@@ -49,6 +49,21 @@ public class Display2DSide extends Display {
 
 	}
 	
+	public void drawLandingSlope(Graphics2D g2, Obstacle o, int start) {
+		int size = ((mainFrame.runway.TODA - mainFrame.runway.obstacles.get(o) - mainFrame.runway.nLDA)* width) / mainFrame.runway.TODA ;
+
+		AffineTransform orig = g2.getTransform();
+		AffineTransform at = new AffineTransform();
+		at.translate((startx+start), (int)((this.getHeight()/2)-o.height));
+		at.rotate(Math.PI / 45);
+		
+		g2.setTransform(at);
+		
+		g2.fillRect(0, 0, (int)(size), (int)(1));
+		g2.setTransform(orig);
+		
+	}
+	
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 	
@@ -72,6 +87,7 @@ public class Display2DSide extends Display {
 			int start = (mainFrame.runway.obstacles.get(o) * width) / mainFrame.runway.TODA ;
 			//float start = ((float)mainFrame.runway.obstacles.get(o) / (float)mainFrame.runway.LDA);
 			g2.fillRect((int)(startx+start), (int)((this.getHeight()/2)-o.height), (int)(5), (int)(o.height));
+			drawLandingSlope(g2, o, start);
 		}
 		
 		int calc = mainFrame.runway.calcType;
@@ -79,6 +95,8 @@ public class Display2DSide extends Display {
 		drawCacl(g2, Color.BLUE, calc, 75, "ASDA", mainFrame.runway.nASDA, 0);
 		drawCacl(g2, Color.RED, calc, 50, "TODA", mainFrame.runway.nTODA, 0);
 		drawCacl(g2, Color.ORANGE, calc, 25, "TORA", mainFrame.runway.nTORA, 0);
+		
+		
 		/*g2.setColor(Color.yellow);
 		g2.fillRect(startx, (int)(getHeight()/2)+5, 3, 50);
 		g2.fillRect(startx, (int)(getHeight()/2)+5+50, width, 3);

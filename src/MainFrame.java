@@ -228,6 +228,11 @@ public class MainFrame extends javax.swing.JFrame {
         viewMenu.setText("View");
 
         topDownMenuItem.setText("2D Top-down");
+        topDownMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            	topDownMenuItemActionPerformed(evt);
+            }
+        });
         viewMenu.add(topDownMenuItem);
 
         sideMenuItem.setText("2D Side");
@@ -373,8 +378,12 @@ Obstacle o = obstaclesList.getSelectedValue();
         // TODO add your handling code here:
     }                                                   
 
+    private void topDownMenuItemActionPerformed(java.awt.event.ActionEvent evt) {                                             
+    	new Frame2D(this, Display2DTop.View.TOP_VIEW);
+    }
+    
     private void sideMenuItemActionPerformed(java.awt.event.ActionEvent evt) {                                             
-        // TODO add your handling code here:
+    	new Frame2D(this, Display2DTop.View.SIDE_VIEW);
     }
     
     private void calculationsMenuItemActionPerformed(java.awt.event.ActionEvent evt) {
