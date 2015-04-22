@@ -23,8 +23,8 @@ public class AddObstacleFrame extends javax.swing.JFrame {
         if(o != null) {
         	this.o = o;
         	obstacleNameTextField.setText(o.name);
-        	distanceFromThresholdSpinner.setValue(mainFrame.runway.pair.runways[0].obsticles.get(o));
-        	distanceFromOtherThresholdSpinner.setValue(mainFrame.runway.pair.runways[1].obsticles.get(o));
+        	distanceFromThresholdSpinner.setValue(mainFrame.runway.pair.runways[0].obstacles.get(o));
+        	distanceFromOtherThresholdSpinner.setValue(mainFrame.runway.pair.runways[1].obstacles.get(o));
         	obstacleHeightTextField.setText("" + o.height);
         }
     }
@@ -144,9 +144,10 @@ public class AddObstacleFrame extends javax.swing.JFrame {
     	
     	o.height = Integer.parseInt(obstacleHeightTextField.getText());
     	o.name = obstacleNameTextField.getText();
-    	mainFrame.runway.pair.runways[0].obsticles.put(o, (Integer) distanceFromThresholdSpinner.getValue());
-    	mainFrame.runway.pair.runways[1].obsticles.put(o, (Integer) distanceFromOtherThresholdSpinner.getValue());
-    	mainFrame.updateObstacles();
+    	mainFrame.runway.pair.runways[0].obstacles.put(o, (Integer) distanceFromThresholdSpinner.getValue());
+    	mainFrame.runway.pair.runways[1].obstacles.put(o, (Integer) distanceFromOtherThresholdSpinner.getValue());
+    	//mainFrame.updateObstacles();
+    	EventManager.getEventManager().notify(EventManager.EventName.UPDATE);
         this.dispose();
     }                                         
 

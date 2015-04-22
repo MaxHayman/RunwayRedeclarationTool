@@ -33,6 +33,8 @@ public class MainFrame extends javax.swing.JFrame {
         this.runway = airport.runways.get(0).runways[0];
         setRunway(runway);
         setAirport(airport);
+        
+        EventManager.getEventManager().addEventNotify(EventManager.EventName.UPDATE, this, "updateDisplay");
     }
           
     public void setRunway(Runway runway) {
@@ -42,16 +44,16 @@ public class MainFrame extends javax.swing.JFrame {
     
     public void updateObstacles() {
     	DefaultListModel<Obstacle> model = new DefaultListModel<Obstacle>();
-        for(Obstacle o : runway.obsticles.keySet()){
+        for(Obstacle o : runway.obstacles.keySet()){
              model.addElement(o);
         }    
         obstaclesList.setModel(model);     
         obstaclesList.setSelectedIndex(0);
         
         if(calculationsType == 1 ) {
-        	runway.calcualte(0, 300);
+        	runway.calculate(0, 300);
         } else {
-        	runway.calcualte(1, 300);
+        	runway.calculate(1, 300);
         }
     	calculationsTable.getModel().setValueAt(runway.TORA, 0, 1);
     	calculationsTable.getModel().setValueAt(runway.TODA, 1, 1);
@@ -98,6 +100,7 @@ public class MainFrame extends javax.swing.JFrame {
         viewMenu = new javax.swing.JMenu();
         topDownMenuItem = new javax.swing.JMenuItem();
         sideMenuItem = new javax.swing.JMenuItem();
+        calculationsMenuItem = new javax.swing.JMenuItem();
         calculationsMenu = new javax.swing.JMenu();
         takeOffAwayMenuItem = new javax.swing.JRadioButtonMenuItem();
         takeOffTowardsMenuItem = new javax.swing.JRadioButtonMenuItem();
@@ -225,7 +228,15 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
         viewMenu.add(sideMenuItem);
-
+        
+        calculationsMenuItem.setText("Calculations Text");
+        calculationsMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                calculationsMenuItemActionPerformed(evt);
+            }
+        });
+        viewMenu.add(calculationsMenuItem);
+        
         menuBar.add(viewMenu);
 
         calculationsMenu.setText("Calculations");
@@ -351,7 +362,11 @@ Obstacle o = obstaclesList.getSelectedValue();
 
     private void sideMenuItemActionPerformed(java.awt.event.ActionEvent evt) {                                             
         // TODO add your handling code here:
-    }                                            
+    }
+    
+    private void calculationsMenuItemActionPerformed(java.awt.event.ActionEvent evt) {
+    	new CalculationsFrame(this);
+    }
 
     private void exitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {                                             
         // TODO add your handling code here:
@@ -397,6 +412,7 @@ Obstacle o = obstaclesList.getSelectedValue();
     private javax.swing.JRadioButtonMenuItem takeOffTowardsMenuItem;
     private javax.swing.JLabel titleLabel;
     private javax.swing.JMenuItem topDownMenuItem;
+    private javax.swing.JMenuItem calculationsMenuItem;
     private javax.swing.JMenu viewMenu;
     // End of variables declaration       
     
