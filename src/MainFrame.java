@@ -2,6 +2,8 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 
 import javax.swing.ButtonGroup;
+import javax.swing.ComboBoxModel;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.JPanel;
@@ -21,6 +23,7 @@ public class MainFrame extends javax.swing.JFrame {
 	Airport airport;
 	Runway runway;
 	int calculationsType = 0;
+	public DefaultComboBoxModel<Obstacle> obstacleTemplateModel = new DefaultComboBoxModel<Obstacle>();
 
 	public MainFrame(Airport airport) {
 		initComponents();
@@ -33,6 +36,9 @@ public class MainFrame extends javax.swing.JFrame {
 		this.runway = airport.runways.get(0).runways[0];
 		setRunway(runway);
 		setAirport(airport);
+		
+		obstacleTemplateModel.addElement(new Obstacle("Plane", 20));
+        obstacleTemplateModel.addElement(new Obstacle ("Box", 1));
 
 		EventManager.getEventManager().addEventNotify(EventManager.EventName.UPDATE, this, "updateObstacles");
 	}
@@ -336,8 +342,10 @@ public class MainFrame extends javax.swing.JFrame {
 		pack();
 	}// </editor-fold>                        
 
-	private void addObstacleButtonActionPerformed(java.awt.event.ActionEvent evt) {                                           
-		new AddObstacleFrame(this, null).setVisible(true);
+	private void addObstacleButtonActionPerformed(java.awt.event.ActionEvent evt) {   
+		AddObstacleFrame frame = new AddObstacleFrame(this, null);
+		frame.obstacleTemplateComboBox.setModel(obstacleTemplateModel);
+		frame.setVisible(true);
 	}  
 
 	private void removeObstacleButtonActionPerformed(java.awt.event.ActionEvent evt) {    

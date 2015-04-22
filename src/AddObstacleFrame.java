@@ -1,3 +1,5 @@
+import javax.swing.DefaultListModel;
+import javax.swing.JComboBox;
 import javax.swing.event.ChangeEvent;
 
 
@@ -9,6 +11,8 @@ public class AddObstacleFrame extends javax.swing.JFrame {
 
 	MainFrame mainFrame;
 	Obstacle o = null;
+	DefaultListModel<Obstacle> templateModel = new DefaultListModel<Obstacle>();
+	public javax.swing.JComboBox obstacleTemplateComboBox;
 	
     public AddObstacleFrame(MainFrame mainFrame, Obstacle o) {
     	super(o == null ? "Add Obstacle" : "Edit Obstacle");
@@ -79,8 +83,6 @@ public class AddObstacleFrame extends javax.swing.JFrame {
             }
         });
 
-        obstacleTemplateComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         obstacleTempaltesLabel.setText("Obstacle Templates");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -137,7 +139,7 @@ public class AddObstacleFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>                        
 
-    private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {       
+    private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {       
     	
     	if(o == null)
     		o = new Obstacle();
@@ -149,7 +151,14 @@ public class AddObstacleFrame extends javax.swing.JFrame {
     	//mainFrame.updateObstacles();
     	EventManager.getEventManager().notify(EventManager.EventName.UPDATE);
         this.dispose();
-    }                                         
+    }
+    
+    private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {
+    	Obstacle o = new Obstacle();
+    	o.height = Integer.parseInt(obstacleHeightTextField.getText());
+    	o.name = obstacleNameTextField.getText();
+    	mainFrame.obstacleTemplateModel.addElement(o);
+    }
 
     private void distanceFromThresholdSpinnerStateChanged (ChangeEvent evt) {                                                      
         if((int)distanceFromOtherThresholdSpinner.getValue() == 0) {
@@ -176,6 +185,5 @@ public class AddObstacleFrame extends javax.swing.JFrame {
     private javax.swing.JLabel obstacleNameLabel;
     private javax.swing.JTextField obstacleNameTextField;
     private javax.swing.JLabel obstacleTempaltesLabel;
-    private javax.swing.JComboBox obstacleTemplateComboBox;
     // End of variables declaration                   
 }
