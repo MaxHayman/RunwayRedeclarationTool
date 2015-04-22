@@ -67,7 +67,7 @@ public class Runway {
 		int THRESHOLD;
 		String limitingFactor = "";
 		calculationsString = "";
-		
+
 		Obstacle o = getObstacle();
 		this.calcType = calcType;
 		if(o == null) {
@@ -75,12 +75,13 @@ public class Runway {
 			nTODA = TODA;
 			nASDA = ASDA;
 			nLDA = LDA;
-			calculationsString += "No obstacles: TORA, TODA, ASDA and LDA unchanged\n";
+			calculationsString += "No obstacles: TORA, TODA, ASDA and LDA unchanged";
 			return;
 		}
-		
+
 		if(calcType == 0) {
 			// Take-off Towards
+			calculationsString += "TAKE-OFF TOWARDS\n";
 			THRESHOLD = (o.height * 50);
 			if(THRESHOLD < 240) {
 				THRESHOLD = 240;
@@ -89,45 +90,81 @@ public class Runway {
 				limitingFactor = "slope calculation";
 			}
 			THRESHOLD += 60;
-			calculationsString += "Take-off threshold before obstacle = " + THRESHOLD + "\n";
+			calculationsString += limitingFactor + " = " + THRESHOLD + "\n";
 			nASDA = nTODA = nTORA = obstacles.get(o) + displacedThreshold - THRESHOLD;
 			calculationsString += "TORA\t= obstacle distance from threshold + displaced threshold - " + limitingFactor + "\n";
 			calculationsString += "\t= " + obstacles.get(o) + " + " + displacedThreshold + " - " + THRESHOLD + "\n";
+			calculationsString += "\n";
 
-			// Landing towards 
-			
+			calculationsString += "TODA\t= obstacle distance from threshold + displaced threshold - " + limitingFactor + "\n";
+			calculationsString += "\t= " + obstacles.get(o) + " + " + displacedThreshold + " - " + THRESHOLD + "\n";
+			calculationsString += "\n";
+
+			calculationsString += "ASDA\t= obstacle distance from threshold + displaced threshold - " + limitingFactor + "\n";
+			calculationsString += "\t= " + obstacles.get(o) + " + " + displacedThreshold + " - " + THRESHOLD + "\n";
+			calculationsString += "\n";
+
+			// Landing towards
+			calculationsString += "LANDING TOWARDS\n";
+
 			nLDA = obstacles.get(o) - 240 /*RESA*/ - 60 /*Strip end*/;
+			calculationsString += "LDA\t= distance from threshold - RESA - strip end\n";
+			calculationsString += "\t= " + obstacles.get(o) + " - 240  - 60"; 
 		} else if (calcType == 1) {
 			// Take-off Away
-			
+			calculationsString += "TAKE-OFF AWAY\n";
+
 			THRESHOLD = (o.height * 50);
-			if(THRESHOLD < 240)
+			if(THRESHOLD < 240) {
 				THRESHOLD = 240;
+				limitingFactor = "RESA";
+			} else {
+				limitingFactor = "slope calculations";
+			}
 			THRESHOLD += 60;
 
 			nTORA = TORA - obstacles.get(o) - blastProtectionAllowance - displacedThreshold;
 			nASDA = ASDA - obstacles.get(o) - blastProtectionAllowance - displacedThreshold;
 			nTODA = TODA - obstacles.get(o) - blastProtectionAllowance - displacedThreshold;
-			
+
+			calculationsString += "TORA\t= obstacle distance from threshold - blast allowance - displaced threshold";
+			calculationsString += "\t= " + obstacles.get(o) + " - " + blastProtectionAllowance + " - " + displacedThreshold;
+			calculationsString += "\n";
+
+			calculationsString += "TODA\t= obstacle distance from threshold - blast allowance - displaced threshold";
+			calculationsString += "\t= " + obstacles.get(o) + " - " + blastProtectionAllowance + " - " + displacedThreshold;
+			calculationsString += "\n";
+
+			calculationsString += "ASDA\t= obstacle distance from threshold - blast allowance - displaced threshold";
+			calculationsString += "\t= " + obstacles.get(o) + " - " + blastProtectionAllowance + " - " + displacedThreshold;
+			calculationsString += "\n";
+
 			// Landing over
-			
+			calculationsString += "LANDING OVER\n";
+
 			THRESHOLD = (o.height * 50);
-			if(THRESHOLD < 240)
+			if(THRESHOLD < 240) {
 				THRESHOLD = 240;
+				limitingFactor = "RESA";
+			} else {
+				limitingFactor = "slope calculation";
+			}
 			THRESHOLD += 60;
 
 			nLDA = LDA - obstacles.get(o) - THRESHOLD;
+			calculationsString += "LDA\t= original LDA - obstacle distance from threshold - " + limitingFactor;
+			calculationsString += "\t= " + LDA + " - " + obstacles.get(o) + " - " + THRESHOLD;
 		}
-		
+
 		if(nTORA < 0)
 			nTORA = 0;
-		
+
 		if(nASDA < 0)
 			nASDA = 0;
-		
+
 		if(nTODA < 0)
 			nTODA = 0;
-		
+
 		if(nLDA < 0)
 			nLDA = 0;
 	}
