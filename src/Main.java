@@ -26,6 +26,7 @@ public class Main {
 		
     	MainFrame mainFrame = new MainFrame(heathrow);
     	mainFrame.setVisible(true);
-    	new Frame2D(mainFrame, Display2D.View.TOP_VIEW);
+    	new Frame2D(mainFrame, Display2DTop.View.TOP_VIEW);
+    	new Frame2D(mainFrame, Display2DTop.View.SIDE_VIEW);
     }
 }

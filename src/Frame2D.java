@@ -8,12 +8,15 @@ import javax.swing.JMenuItem;
 
 public class Frame2D extends JFrame implements ComponentListener {
 	
-	Display2D display;
+	Display display;
 	
-	public Frame2D (MainFrame mainFrame, Display2D.View view) {
+	public Frame2D (MainFrame mainFrame, Display.View view) {
 		super("Runway Redeclaration Tool");
 		
-		display = new Display2D(mainFrame, view);
+		if(view == Display.View.TOP_VIEW)
+			display = new Display2DTop(mainFrame);
+		else if (view == Display.View.SIDE_VIEW)
+			display = new Display2DSide(mainFrame);
 		
 		//view:
 		this.setContentPane(display);

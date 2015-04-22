@@ -8,20 +8,14 @@ import java.util.Set;
 
 import javax.swing.JPanel;
 
-public class Display2D extends JPanel implements KeyListener, MouseWheelListener {
-
-	public enum View {
-		TOP_VIEW,
-		SIDE_VIEW,
-	}
+public class Display2DSide extends Display {
 
 	private int cameraAngle = 0;
 	private float cameraZoom = 0.5f;
-	public View view = View.TOP_VIEW;
 	public BufferedImage image = null;
 	MainFrame mainFrame;
 
-	public Display2D(MainFrame mainFrame, View view) {
+	public Display2DSide(MainFrame mainFrame) {
 		super();
 
 		System.out.println("doin my ting");
@@ -29,7 +23,6 @@ public class Display2D extends JPanel implements KeyListener, MouseWheelListener
 		this.addMouseWheelListener(this);
 
 		this.mainFrame = mainFrame;
-		this.view = view;
 		
 		EventManager.getEventManager().addEventNotify(EventManager.EventName.UPDATE, this, "repaint");
 
@@ -41,24 +34,61 @@ public class Display2D extends JPanel implements KeyListener, MouseWheelListener
 
 	int startx = 150;
 	int starty = 150;
+	
+	int width = 1000;
+	
+	public void drawCacl(Graphics2D g2, Color color, int side, int depth, String type, int value, int displaced) {
+		int length = (value * width) / mainFrame.runway.TODA ;
+		int start = side == displaced ? startx : startx + width - length - displaced;
+		g2.setColor(color);
+		g2.fillRect(start, (int)(getHeight()/2)+5, 3, depth);
+		g2.fillRect(start, (int)(getHeight()/2)+5+depth, length, 3);
+		g2.fillRect(start+length-3, (int)(getHeight()/2)+5, 3, depth);
+		g2.drawString(type + ": " + value, start + (int)(length/2), (getHeight()/2)+5+depth-10);
+
+	}
+	
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
-		int width = 3000;
-		int height = 350;
-
+	
 
 		redrawImage();
 		Graphics2D g2 = (Graphics2D) g ;
 
 		//Grass
-		g2.setColor(Color.GREEN.darker());
-		g2.fillRect(0, 0, this.getWidth(), this.getHeight());
-
+		g2.setColor(Color.blue.darker());
+		g2.fillRect(0, 0, this.getWidth(), this.getHeight()/2);
+		g2.setColor(Color.green.darker());
+		g2.fillRect(0, this.getHeight()/2, this.getWidth(), this.getHeight()/2);
+		
 		//Tarmac
 		g2.setColor(Color.BLACK);
-		g2.fillRect((int)(cameraZoom*startx), (int)(cameraZoom*starty), (int)(cameraZoom*width), (int)(cameraZoom*height));
+		g2.fillRect((int)(startx), this.getHeight()/2, (int)(width), (int)(5));
 
+		g2.setColor(Color.red);
+		Obstacle o = mainFrame.runway.pair.runways[0].getObstacle();
+		if(o != null) {
+			int start = (mainFrame.runway.obstacles.get(o) * width) / mainFrame.runway.TODA ;
+			//float start = ((float)mainFrame.runway.obstacles.get(o) / (float)mainFrame.runway.LDA);
+			g2.fillRect((int)(startx+start), (int)((this.getHeight()/2)-o.height), (int)(5), (int)(o.height));
+		}
+		
+		int calc = mainFrame.runway.calcType;
+		drawCacl(g2, Color.yellow, calc, 100, "LDA", mainFrame.runway.nLDA, mainFrame.runway.displacedThreshold);
+		drawCacl(g2, Color.BLUE, calc, 75, "ASDA", mainFrame.runway.nASDA, 0);
+		drawCacl(g2, Color.RED, calc, 50, "TODA", mainFrame.runway.nTODA, 0);
+		drawCacl(g2, Color.ORANGE, calc, 25, "TORA", mainFrame.runway.nTORA, 0);
+		/*g2.setColor(Color.yellow);
+		g2.fillRect(startx, (int)(getHeight()/2)+5, 3, 50);
+		g2.fillRect(startx, (int)(getHeight()/2)+5+50, width, 3);
+		g2.fillRect(startx+width-3, (int)(getHeight()/2)+5, 3, 50);*/
+		//g2.fillRect((int)(cameraZoom*(ldaStartRight+startx+10)), (int)(cameraZoom*(starty-200)), (int)(cameraZoom*5), (int)(cameraZoom*200));
+		//g2.fillRect((int)(cameraZoom*(ldaStartRight+startx+(width-10)*ldaPercRight)), (int)(cameraZoom*(starty-200)), (int)(cameraZoom*5), (int)(cameraZoom*200));
+		//g2.drawString("LDA: " + mainFrame.runway.nLDA, (int)(cameraZoom*(ldaStartRight+startx+(width/2)*ldaPercRight)), (cameraZoom*(starty-210)));
+
+		
 		//LDA
+		/*
 		Obstacle o = mainFrame.runway.getObstacle();
 		
 		float displacedThresholdRight = ((float)mainFrame.runway.TORA - (float)mainFrame.runway.LDA) *width / (float)mainFrame.runway.TORA;
@@ -120,10 +150,10 @@ public class Display2D extends JPanel implements KeyListener, MouseWheelListener
 		g2.fillRect((int)(cameraZoom*(toraStartRight+startx+10)), (int)(cameraZoom*(starty-50)), (int)(cameraZoom*5), (int)(cameraZoom*50));
 		g2.fillRect((int)(cameraZoom*(toraStartRight+startx+(width-10)*toraPercRight)), (int)(cameraZoom*(starty-50)), (int)(cameraZoom*5), (int)(cameraZoom*50));
 		g2.drawString("TODA: " + mainFrame.runway.nTORA, (int)(cameraZoom*(toraStartRight+startx+(width/2)*toraPercRight)), (cameraZoom*(starty-60)));
-
+*/
 		g2.setColor(Color.red);
 		//Obstacle o = mainFrame.runway.pair.runways[1].getObstacle();
-		if(o != null) {
+		/*if(o != null) {
 			float start = ((float)mainFrame.runway.obstacles.get(o) / (float)mainFrame.runway.LDA);
 			g2.fillRect((int)(cameraZoom*(startx+(width*start-25))), (int)(cameraZoom*(starty+height/2-10)), (int)(cameraZoom*(20)), (int)(cameraZoom*(20)));
 		}
@@ -154,7 +184,7 @@ public class Display2D extends JPanel implements KeyListener, MouseWheelListener
 		g2.drawString(mainFrame.runway.pair.runways[1].orientation, -(cameraZoom*(starty+height/2+10)), +(cameraZoom*(startx+width-220)));
 		g2.drawString(mainFrame.runway.pair.runways[1].designation, -(cameraZoom*(starty+height/2+5)), +(cameraZoom*(startx+width-190)));
 		g2.setTransform(orig);
-		//g2.drawImage(image, 0,0, null);
+		//g2.drawImage(image, 0,0, null);*/
 	}
 
 	public void redrawImage() {
@@ -172,11 +202,11 @@ public class Display2D extends JPanel implements KeyListener, MouseWheelListener
 		boolean changed = false;
 		if (pressed.size() > 0) {
 			if (pressed.contains(KeyEvent.VK_UP)) {
-				starty += 4/ cameraZoom;
+				//starty += 4/ cameraZoom;
 				changed = true;
 			}
 			if (pressed.contains(KeyEvent.VK_DOWN)) {
-				starty -= 4/ cameraZoom;
+				//starty -= 4/ cameraZoom;
 				changed = true;
 			}
 			if (pressed.contains(KeyEvent.VK_RIGHT)) {
