@@ -8,7 +8,7 @@ public class RunwayPair {
 	}
 	
 	public void removeObstacle(Obstacle o) {
-		runways[0].obsticles.remove(o);
-		runways[1].obsticles.remove(o);
+		runways[0].obstacles.remove(o);
+		runways[1].obstacles.remove(o);
 	}
 }

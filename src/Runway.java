@@ -15,14 +15,19 @@ public class Runway {
 	int nTODA;
 	
 	int displacedThreshold = 0;
-	Map<Obstacle, Integer> obsticles = new HashMap<Obstacle, Integer>();
+	Map<Obstacle, Integer> obstacles = new HashMap<Obstacle, Integer>();
 	public int calcType;
 	public RunwayPair pair;
+
 	public String orientation;
 	public String designation;
+	
+	private String calculationsString = "";
+	
 	public Runway(String orientation, String designation, int TORA, int TODA, int ASDA, int LDA) {
 		this.orientation = orientation;
 		this.designation = designation;
+
 		this.TORA = nTORA = TORA;
 		this.TODA = nTODA = TODA;
 		this.ASDA = nASDA = ASDA;
@@ -36,11 +41,11 @@ public class Runway {
 	public Obstacle getObstacle() {
 		double grad = 0.02;
 
-		for(Obstacle o : obsticles.keySet()) {
-			int dist = obsticles.get(o);
+		for(Obstacle o : obstacles.keySet()) {
+			int dist = obstacles.get(o);
 			boolean passed = true;
-			for(Obstacle j : obsticles.keySet()) {
-				int otherDist = obsticles.get(j);
+			for(Obstacle j : obstacles.keySet()) {
+				int otherDist = obstacles.get(j);
 				int dif = otherDist - dist;
 				double height = o.height + dif*grad;
 				if (height < j.height) {
@@ -58,8 +63,10 @@ public class Runway {
 
 	}
 
-	public void calcualte(int calcType, int blastProtectionAllowance) {
+	public void calculate(int calcType, int blastProtectionAllowance) {
 		int THRESHOLD;
+		String limitingFactor = "";
+		calculationsString = "";
 		
 		Obstacle o = getObstacle();
 		this.calcType = calcType;
@@ -68,20 +75,28 @@ public class Runway {
 			nTODA = TODA;
 			nASDA = ASDA;
 			nLDA = LDA;
+			calculationsString += "No obstacles: TORA, TODA, ASDA and LDA unchanged\n";
 			return;
 		}
 		
 		if(calcType == 0) {
 			// Take-off Towards
 			THRESHOLD = (o.height * 50);
-			if(THRESHOLD < 240)
+			if(THRESHOLD < 240) {
 				THRESHOLD = 240;
+				limitingFactor = "RESA";
+			} else {
+				limitingFactor = "slope calculation";
+			}
 			THRESHOLD += 60;
-			nASDA = nTODA = nTORA = obsticles.get(o) + displacedThreshold - THRESHOLD;
+			calculationsString += "Take-off threshold before obstacle = " + THRESHOLD + "\n";
+			nASDA = nTODA = nTORA = obstacles.get(o) + displacedThreshold - THRESHOLD;
+			calculationsString += "TORA\t= obstacle distance from threshold + displaced threshold - " + limitingFactor + "\n";
+			calculationsString += "\t= " + obstacles.get(o) + " + " + displacedThreshold + " - " + THRESHOLD + "\n";
 
 			// Landing towards 
 			
-			nLDA = obsticles.get(o) - 240 /*RESA*/ - 60 /*Strip end*/;
+			nLDA = obstacles.get(o) - 240 /*RESA*/ - 60 /*Strip end*/;
 		} else if (calcType == 1) {
 			// Take-off Away
 			
@@ -90,9 +105,9 @@ public class Runway {
 				THRESHOLD = 240;
 			THRESHOLD += 60;
 
-			nTORA = TORA - obsticles.get(o) - blastProtectionAllowance - displacedThreshold;
-			nASDA = ASDA - obsticles.get(o) - blastProtectionAllowance - displacedThreshold;
-			nTODA = TODA - obsticles.get(o) - blastProtectionAllowance - displacedThreshold;
+			nTORA = TORA - obstacles.get(o) - blastProtectionAllowance - displacedThreshold;
+			nASDA = ASDA - obstacles.get(o) - blastProtectionAllowance - displacedThreshold;
+			nTODA = TODA - obstacles.get(o) - blastProtectionAllowance - displacedThreshold;
 			
 			// Landing over
 			
@@ -101,7 +116,7 @@ public class Runway {
 				THRESHOLD = 240;
 			THRESHOLD += 60;
 
-			nLDA = LDA - obsticles.get(o) - THRESHOLD;
+			nLDA = LDA - obstacles.get(o) - THRESHOLD;
 		}
 		
 		if(nTORA < 0)
@@ -117,8 +132,12 @@ public class Runway {
 			nLDA = 0;
 	}
 	
+	public String getCalculationsString() {
+		return calculationsString;
+	}
+	
 	public void clear() {
-		obsticles.clear();
+		obstacles.clear();
 	}
 	
 	public String toString() {

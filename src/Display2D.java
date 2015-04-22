@@ -64,10 +64,10 @@ public class Display2D extends JPanel implements KeyListener, MouseWheelListener
 		float ldaStartRight = 0;
 		if(mainFrame.runway.calcType == 0) {
 			System.out.println("lol");
-			ldaStartRight = (o == null || mainFrame.runway.obsticles.get(o) == null) ? displacedThresholdRight : 0;
+			ldaStartRight = (o == null || mainFrame.runway.obstacles.get(o) == null) ? displacedThresholdRight : 0;
 		} else {
 			System.out.println("lol1");
-			ldaStartRight = (o == null || mainFrame.runway.obsticles.get(o) == null) ? displacedThresholdRight : (width*((float)mainFrame.runway.obsticles.get(o) / (float)mainFrame.runway.LDA));
+			ldaStartRight = (o == null || mainFrame.runway.obstacles.get(o) == null) ? displacedThresholdRight : (width*((float)mainFrame.runway.obstacles.get(o) / (float)mainFrame.runway.LDA));
 
 		}
 		g2.setColor(Color.yellow);
@@ -80,9 +80,9 @@ public class Display2D extends JPanel implements KeyListener, MouseWheelListener
 		float asdaPercRight = (float)mainFrame.runway.nASDA / (float)mainFrame.runway.ASDA;
 		float asdaStartRight = 0;
 		if(mainFrame.runway.calcType == 0) {
-			asdaStartRight = (o == null || mainFrame.runway.obsticles.get(o) == null) ? 0 : 0;
+			asdaStartRight = (o == null || mainFrame.runway.obstacles.get(o) == null) ? 0 : 0;
 		} else {
-			asdaStartRight = (o == null || mainFrame.runway.obsticles.get(o) == null) ? 0 : (width*((float)mainFrame.runway.obsticles.get(o) / (float)mainFrame.runway.ASDA));
+			asdaStartRight = (o == null || mainFrame.runway.obstacles.get(o) == null) ? 0 : (width*((float)mainFrame.runway.obstacles.get(o) / (float)mainFrame.runway.ASDA));
 
 		}
 		g2.setColor(Color.blue);
@@ -95,9 +95,9 @@ public class Display2D extends JPanel implements KeyListener, MouseWheelListener
 		float todaPercRight = (float)mainFrame.runway.nTODA / (float)mainFrame.runway.TODA;
 		float todaStartRight = 0;
 		if(mainFrame.runway.calcType == 0) {
-			todaStartRight = (o == null || mainFrame.runway.obsticles.get(o) == null) ? 0 : 0;
+			todaStartRight = (o == null || mainFrame.runway.obstacles.get(o) == null) ? 0 : 0;
 		} else {
-			todaStartRight = (o == null || mainFrame.runway.obsticles.get(o) == null) ? 0 : (width*((float)mainFrame.runway.obsticles.get(o) / (float)mainFrame.runway.TODA));
+			todaStartRight = (o == null || mainFrame.runway.obstacles.get(o) == null) ? 0 : (width*((float)mainFrame.runway.obstacles.get(o) / (float)mainFrame.runway.TODA));
 		}
 		g2.setColor(Color.red);
 		g2.fillRect((int)(cameraZoom*(todaStartRight+startx+10)), (int)(cameraZoom*(starty-100)), (int)(cameraZoom*(width-20)*todaPercRight), (int)(cameraZoom*5));
@@ -109,9 +109,9 @@ public class Display2D extends JPanel implements KeyListener, MouseWheelListener
 		float toraPercRight = (float)mainFrame.runway.nTORA / (float)mainFrame.runway.TORA;
 		float toraStartRight = 0;
 		if(mainFrame.runway.calcType == 0) {
-			toraStartRight = (o == null || mainFrame.runway.obsticles.get(o) == null) ? 0 : 0;
+			toraStartRight = (o == null || mainFrame.runway.obstacles.get(o) == null) ? 0 : 0;
 		} else {
-			toraStartRight = (o == null || mainFrame.runway.obsticles.get(o) == null) ? 0 : (width*((float)mainFrame.runway.obsticles.get(o) / (float)mainFrame.runway.TORA));
+			toraStartRight = (o == null || mainFrame.runway.obstacles.get(o) == null) ? 0 : (width*((float)mainFrame.runway.obstacles.get(o) / (float)mainFrame.runway.TORA));
 		}
 		g2.setColor(Color.orange);
 		g2.fillRect((int)(cameraZoom*(toraStartRight+startx+10)), (int)(cameraZoom*(starty-50)), (int)(cameraZoom*(width-20)*toraPercRight), (int)(cameraZoom*5));
@@ -122,7 +122,7 @@ public class Display2D extends JPanel implements KeyListener, MouseWheelListener
 		g2.setColor(Color.red);
 		//Obstacle o = mainFrame.runway.pair.runways[1].getObstacle();
 		if(o != null) {
-			float start = ((float)mainFrame.runway.obsticles.get(o) / (float)mainFrame.runway.LDA);
+			float start = ((float)mainFrame.runway.obstacles.get(o) / (float)mainFrame.runway.LDA);
 			g2.fillRect((int)(cameraZoom*(startx+(width*start-25))), (int)(cameraZoom*(starty+height/2-10)), (int)(cameraZoom*(20)), (int)(cameraZoom*(20)));
 		}
 
