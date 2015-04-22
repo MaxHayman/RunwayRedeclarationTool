@@ -1,7 +1,8 @@
 
 public class Main {
 	public static void main(String args[]) {
-		Airport heathrow = new Airport("Heathrow");
+		/*
+		Airport heathrow = new Airport();
 		
 		Runway r09R = new Runway("09", "R", 3660, 3660, 3660, 3353);
 		r09R.setDisplacedThreshold(307);
@@ -23,8 +24,8 @@ public class Main {
 		
 		heathrow.runways.add(north);
 		heathrow.runways.add(south);
-		
-    	MainFrame mainFrame = new MainFrame(heathrow);
+		*/
+    	MainFrame mainFrame = new MainFrame(XMLHandler.loadXML());
     	mainFrame.setVisible(true);
     	new Frame2D(mainFrame, Display2DTop.View.TOP_VIEW);
     	new Frame2D(mainFrame, Display2DTop.View.SIDE_VIEW);

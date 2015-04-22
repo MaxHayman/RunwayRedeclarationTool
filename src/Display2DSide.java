@@ -32,8 +32,7 @@ public class Display2DSide extends Display {
 
 	}
 
-	int startx = 150;
-	int starty = 150;
+	int startx = 100;
 	
 	int width = 1000;
 	
@@ -55,7 +54,22 @@ public class Display2DSide extends Display {
 		AffineTransform orig = g2.getTransform();
 		AffineTransform at = new AffineTransform();
 		at.translate((startx+start), (int)((this.getHeight()/2)-o.height));
-		at.rotate(Math.PI / 45);
+		at.rotate(Math.PI / 45/cameraZoom);
+		
+		g2.setTransform(at);
+		
+		g2.fillRect(0, 0, (int)(size), (int)(1));
+		g2.setTransform(orig);
+		
+	}
+	
+	public void drawTakeoffSlope(Graphics2D g2, Obstacle o, int start) {
+		int size = ((mainFrame.runway.obstacles.get(o) - mainFrame.runway.nTODA)* width) / mainFrame.runway.TODA ;
+
+		AffineTransform orig = g2.getTransform();
+		AffineTransform at = new AffineTransform();
+		at.translate((startx+start), (int)((this.getHeight()/2)));
+		at.rotate(-Math.PI / 35/cameraZoom);
 		
 		g2.setTransform(at);
 		
@@ -66,7 +80,7 @@ public class Display2DSide extends Display {
 	
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
-	
+		width = (int) (1000*cameraZoom);
 
 		redrawImage();
 		Graphics2D g2 = (Graphics2D) g ;
@@ -87,7 +101,10 @@ public class Display2DSide extends Display {
 			int start = (mainFrame.runway.obstacles.get(o) * width) / mainFrame.runway.TODA ;
 			//float start = ((float)mainFrame.runway.obstacles.get(o) / (float)mainFrame.runway.LDA);
 			g2.fillRect((int)(startx+start), (int)((this.getHeight()/2)-o.height), (int)(5), (int)(o.height));
-			drawLandingSlope(g2, o, start);
+			if(mainFrame.runway.calcType == 1)
+				drawLandingSlope(g2, o, start);
+			else 
+				drawTakeoffSlope(g2, o, (mainFrame.runway.nTODA * width) / mainFrame.runway.TODA);
 		}
 		
 		int calc = mainFrame.runway.calcType;
@@ -261,6 +278,8 @@ public class Display2DSide extends Display {
 
 		if(cameraZoom > 3)
 			cameraZoom = 3;
+		
+		startx += notches > 0 ? 4 : -4;
 
 		repaint();
 	}

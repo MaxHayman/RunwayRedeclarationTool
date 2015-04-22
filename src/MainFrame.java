@@ -94,6 +94,7 @@ public class MainFrame extends javax.swing.JFrame {
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         exitMenuItem = new javax.swing.JMenuItem();
+        saveMenuItem = new javax.swing.JMenuItem();
         editMenu = new javax.swing.JMenu();
         editRunwayMenuItem = new javax.swing.JMenuItem();
         addRunwayMenuItem = new javax.swing.JMenuItem();
@@ -186,6 +187,14 @@ public class MainFrame extends javax.swing.JFrame {
         titleLabel.setText("Runway Redeclaration");
 
         fileMenu.setText("File");
+        
+        saveMenuItem.setText("Save");
+        saveMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            	saveMenuItemActionPerformed(evt);
+            }
+        });
+        fileMenu.add(saveMenuItem);
 
         exitMenuItem.setText("Exit");
         exitMenuItem.addActionListener(new java.awt.event.ActionListener() {
@@ -389,6 +398,10 @@ Obstacle o = obstaclesList.getSelectedValue();
     private void calculationsMenuItemActionPerformed(java.awt.event.ActionEvent evt) {
     	new CalculationsFrame(this);
     }
+    
+    private void saveMenuItemActionPerformed(java.awt.event.ActionEvent evt) {                                             
+        XMLHandler.saveXML(airport);
+    }     
 
     private void exitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {                                             
         // TODO add your handling code here:
@@ -418,6 +431,7 @@ Obstacle o = obstaclesList.getSelectedValue();
     private javax.swing.JMenu editMenu;
     private javax.swing.JMenuItem editRunwayMenuItem;
     private javax.swing.JMenuItem exitMenuItem;
+    private javax.swing.JMenuItem saveMenuItem;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JComboBox<Runway> jComboBox1;
     private javax.swing.JLabel jLabel4;
