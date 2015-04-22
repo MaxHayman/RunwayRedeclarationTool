@@ -8,6 +8,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -28,7 +30,7 @@ public class ControlFrame extends JFrame { //implements ComponentListener {
 	JTextArea calculationsBox = new JTextArea(), notificationBox = new JTextArea();
 	RunwayComboBox runwayComboBox;
 	ObstacleComboBox obstacleComboBox;
-	ArrayList<Obstacle> savedObstacles = new ArrayList<Obstacle>();
+	Map<Obstacle, Integer> savedObstacles = new HashMap<Obstacle, Integer>();
 
 	public ControlFrame(Controller controller, World world) {
 		super("Runway Redclaration Tool");
@@ -259,13 +261,13 @@ public class ControlFrame extends JFrame { //implements ComponentListener {
 	public void updateLabels(){
 		if (runwayComboBox.getSelectedItem() != null){
 			Runway runway = (Runway) runwayComboBox.getSelectedItem();
-			labelTORA.setText("TORA: " + runway.getTORA());
-			labelTODA.setText("TODA: " + runway.getTODA());
-			labelASDA.setText("ASDA: " + runway.getASDA());
-			labelLDA.setText("LDA: " + runway.getLDA());
+			labelTORA.setText("TORA: " + runway.nTORA);
+			labelTODA.setText("TODA: " + runway.nTODA);
+			labelASDA.setText("ASDA: " + runway.nASDA);
+			labelLDA.setText("LDA: " + runway.nLDA);
 			
 			clearCalculations();
-			printToCalculations(runway.getCalculationString());
+			//printToCalculations(runway.getCalculationString());
 		}
 	}
 	
@@ -286,9 +288,9 @@ public class ControlFrame extends JFrame { //implements ComponentListener {
 	}
 	
 	public void addDefaultSavedObstacles(){
-		savedObstacles.add(new Obstacle(42, 15, 15, 100, 100, 0, "Airplane"));
-		savedObstacles.add(new Obstacle(15, 15, 15, 50, 100, 0, "Box"));
-		savedObstacles.add(new Obstacle(10, 10, 30, 150, 100, 0, "Tree"));
+		savedObstacles.put(new Obstacle("Airplane", 45), 100);
+		savedObstacles.put(new Obstacle("Box", 15), 500);
+		savedObstacles.put(new Obstacle("Tree", 10), 300);
 	}
 	
 //	public void updateDisplay() {

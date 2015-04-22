@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 
 public class Controller {
@@ -52,9 +53,9 @@ public class Controller {
 		}
 	}
 	
-	public void addObstacle(Obstacle o) {
+	public void addObstacle(Obstacle o, int distance) {
 		if(currentRunway != null) {
-			currentRunway.addObstacle(o);
+			currentRunway.addObstacle(o, distance);
 			updateView();
 		}
 		if(frame!=null){
@@ -64,7 +65,7 @@ public class Controller {
 	
 	public void removeObstacle(Obstacle o){
 		if(currentRunway != null){
-			currentRunway.removeObstacle(o);
+			currentRunway.removeObstacle(o);;
 			updateView();
 		}
 		if(frame!=null){
@@ -114,9 +115,9 @@ public class Controller {
 	}
 	
 	//I don't really want to make the obstacles visible to the view but I can't think of a better way to do it:
-	public List<Obstacle> getObstacleList() {
+	public Set<Obstacle> getObstacleList() {
 		if (currentRunway != null){
-			return currentRunway.getObstacleList();
+			return currentRunway.getObstacles();
 		} else {return null;}
 	}
 	
@@ -125,11 +126,11 @@ public class Controller {
 	}
 
 	public float getRunwayLength() {
-		return currentRunway.getLength();
+		return 3000;
 	}
 
 	public float getRunwayWidth() {
-		return currentRunway.getWidth();
+		return 300;
 	}
 	
 	public Runway getCurrentRunway() {

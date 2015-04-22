@@ -4,6 +4,7 @@ import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Map;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -19,13 +20,13 @@ public class EditObstacleFrame extends JFrame{
 	Controller controller;
 	Obstacle obstacle;
 	Container pane;
-	JTextField nameField, xSizeField, ySizeField, zSizeField, xLocField, yLocField, angleField;
+	JTextField nameField, heightField, distanceFromThresholdField;
 	GridBagConstraints c;
 	JFrame frame;
-	ArrayList<Obstacle> savedObstacles;
+	Map<Obstacle, Integer> savedObstacles;
 	SavedObstacleComboBox savedObstacleComboBox;
 
-	public EditObstacleFrame(Controller controller, Obstacle obstacle, ArrayList<Obstacle> savedObstacles) {
+	public EditObstacleFrame(Controller controller, Obstacle obstacle, Map<Obstacle, Integer> savedObstacles) {
 		super("Edit Obstacle");
 		this.controller = controller;
 		this.savedObstacles = savedObstacles;
@@ -43,19 +44,12 @@ public class EditObstacleFrame extends JFrame{
 		pane.add(savedObstacleComboBox, c);
 
 		nameField = addField("Name:");
-		xSizeField = addField("Width(m):");
-		ySizeField = addField("Length(m):");
-		zSizeField = addField("Height(m)");
-		xLocField = addField("X Location:");
-		yLocField = addField("Y Location");
-		angleField = addField("Angle:");
-		nameField.setText(obstacle.getName());
-		xSizeField.setText(String.valueOf(obstacle.getxSize()));
-		ySizeField.setText(String.valueOf(obstacle.getySize()));
-		zSizeField.setText(String.valueOf(obstacle.getzSize()));
-		xLocField.setText(String.valueOf(obstacle.getxLocation()));
-		yLocField.setText(String.valueOf(obstacle.getyLocation()));
-		angleField.setText(String.valueOf(obstacle.getAngle()));
+		heightField = addField("Width(m):");
+		distanceFromThresholdField = addField("Length(m):");
+
+		nameField.setText(obstacle.name);
+		heightField.setText(String.valueOf(obstacle.height));
+		distanceFromThresholdField.setText(String.valueOf(savedObstacles.get(obstacle)));
 
 		c.gridx = 0;
 		c.fill = GridBagConstraints.HORIZONTAL;
@@ -100,26 +94,19 @@ public class EditObstacleFrame extends JFrame{
 
 		public void actionPerformed(ActionEvent e) {
 			//bad code inc
-			float xSize = 0, ySize = 0, zSize = 0, xLoc = 0, yLoc = 0, angle = 0;
+			int height = 0, distanceFromThreshold = 0;
 
 			//put this in a try to catch an exception due to poor format:
 			try {
 				//parse all the values:
-				xSize = Float.parseFloat(xSizeField.getText());
-				ySize = Float.parseFloat(ySizeField.getText());
-				zSize = Float.parseFloat(zSizeField.getText());
-				xLoc = Float.parseFloat(xLocField.getText());
-				yLoc = Float.parseFloat(yLocField.getText());
-				angle = Float.parseFloat(angleField.getText());
+				height = Integer.parseInt(heightField.getText());
+				distanceFromThreshold = Integer.parseInt(distanceFromThresholdField.getText());
 				
 				//edit the obstacle:
 				controller.printToNotification("Edited obstacle " + obstacle.toString());
-				obstacle.setxSize(xSize);
-				obstacle.setySize(ySize);
-				obstacle.setzSize(zSize);
-				obstacle.setxLocation(xLoc);
-				obstacle.setyLocation(yLoc);
-				obstacle.setAngle(angle);
+				obstacle.height = height;
+				savedObstacles.put(obstacle, distanceFromThreshold);
+
 				controller.updateObstacles();
 				controller.printToNotification("Obstacle changed to " + obstacle.toString());
 				frame.dispose();
@@ -139,22 +126,18 @@ public class EditObstacleFrame extends JFrame{
 
 		public void actionPerformed(ActionEvent e) {
 			//bad code inc
-			float xSize = 0, ySize = 0, zSize = 0, xLoc = 0, yLoc = 0, angle = 0;
+			int height = 0, distanceFromThreshold = 0;
 
 			//put this in a try to catch an exception due to poor format:
 			try {
 				//parse all the values:
-				xSize = Float.parseFloat(xSizeField.getText());
-				ySize = Float.parseFloat(ySizeField.getText());
-				zSize = Float.parseFloat(zSizeField.getText());
-				xLoc = Float.parseFloat(xLocField.getText());
-				yLoc = Float.parseFloat(yLocField.getText());
-				angle = Float.parseFloat(angleField.getText());
-				
+				height = Integer.parseInt(heightField.getText());
+				distanceFromThreshold = Integer.parseInt(distanceFromThresholdField.getText());
+
 				controller.printToNotification("Editing custom obstacle " + savedObstacleComboBox.getSelectedItem().toString());
 				savedObstacles.remove(savedObstacleComboBox.getSelectedItem());
-				Obstacle newObstacle = new Obstacle(xSize, ySize, zSize, xLoc, yLoc, angle, nameField.getText());
-				savedObstacles.add(newObstacle);
+				Obstacle newObstacle = new Obstacle(nameField.getText(), height);
+				savedObstacles.put(newObstacle, distanceFromThreshold);
 				controller.printToNotification("Custom obstacle changed to " + newObstacle.toString());
 				savedObstacleComboBox.update();
 			} catch(NumberFormatException ex) {
@@ -176,7 +159,7 @@ public class EditObstacleFrame extends JFrame{
 		
 		public void update() {
 			this.removeAllItems();
-			for(Obstacle o : savedObstacles) {
+			for(Obstacle o : savedObstacles.keySet()) {
 				this.addItem(o);
 			}
 		}
@@ -185,13 +168,9 @@ public class EditObstacleFrame extends JFrame{
 			System.out.println("new Obstacle selected");
 			Obstacle selected = (Obstacle) this.getSelectedItem();
 			if(selected != null){
-				nameField.setText(String.valueOf(selected.getName()));
-				xSizeField.setText(String.valueOf(selected.getxSize()));
-				ySizeField.setText(String.valueOf(selected.getySize()));
-				zSizeField.setText(String.valueOf(selected.getzSize()));
-				xLocField.setText(String.valueOf(selected.getxLocation()));
-				yLocField.setText(String.valueOf(selected.getyLocation()));
-				angleField.setText(String.valueOf(selected.getAngle()));
+				nameField.setText(String.valueOf(selected.name));
+				heightField.setText(String.valueOf(selected.height));
+				distanceFromThresholdField.setText(String.valueOf(savedObstacles.get(selected)));
 			}
 		}
 	}

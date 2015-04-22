@@ -15,7 +15,7 @@ public class AddRunwayFrame extends JFrame{
 	
 	Controller controller;
 	Container pane;
-	JTextField orientationField, designationField, lengthField, widthField, clearwayField, stopwayField, displacedThresholdField;
+	JTextField todaField, toraField, asdaField, ldaField, displacedThresholdField, orientationField, designationField;
 	GridBagConstraints gbc;
 	JFrame frame;
 	
@@ -30,12 +30,12 @@ public class AddRunwayFrame extends JFrame{
 		gbc = new GridBagConstraints();
 		gbc.gridy = 0;
 		
-		orientationField = addField("Orientation:", "The orientation of the in tens of degrees. (e.g. 09 for 90 degrees)");
-		designationField = addField("Designation:", "If there is more than 1 runway, specifiy if its the left or right runway. (e.g R for right)");
-		lengthField = addField("Length:", "The length of the runway.");
-		widthField = addField("Width:", "How wide the runway is.");
-		clearwayField = addField("Clearway:", "The amount of clearway the runway has.");
-		stopwayField = addField("Stopway:", "The amount of stopway the runway has.");
+		todaField = addField("TODA:", "The orientation of the in tens of degrees. (e.g. 09 for 90 degrees)");
+		toraField = addField("TORA:", "If there is more than 1 runway, specifiy if its the left or right runway. (e.g R for right)");
+		asdaField = addField("ASDA:", "The length of the runway.");
+		ldaField = addField("LDA:", "How wide the runway is.");
+		orientationField = addField("Orientation:", "The amount of clearway the runway has.");
+		designationField = addField("Designation:", "The amount of stopway the runway has.");
 		displacedThresholdField = addField("Displaced Threshold:", "The displaced threshold the runway has.");
 		
 		gbc.gridx = 0;
@@ -83,7 +83,7 @@ public class AddRunwayFrame extends JFrame{
 			//bad code inc
 			int orientation = 0;
 			Character designation = null;
-			float length = 0, width = 0, clearway = 0, stopway = 0, displacedThreshold = 0;
+			int toda = 0, tora = 0, asda = 0, lda = 0, displacedThreshold = 0;
 			
 			//put this in a try to catch an exception due to poor format:
 			try {
@@ -93,13 +93,14 @@ public class AddRunwayFrame extends JFrame{
 				if(designationField.getText().length() > 1) {
 					designation = designationField.getText().charAt(0);
 				}
-				length = Float.parseFloat(lengthField.getText());
-				width = Float.parseFloat(widthField.getText());
-				clearway = Float.parseFloat(clearwayField.getText());
-				stopway = Float.parseFloat(stopwayField.getText());
-				displacedThreshold = Float.parseFloat(displacedThresholdField.getText());
+				toda = Integer.parseInt(todaField.getText());
+				tora = Integer.parseInt(toraField.getText());
+				asda = Integer.parseInt(asdaField.getText());
+				lda = Integer.parseInt(ldaField.getText());
+				displacedThreshold = Integer.parseInt(displacedThresholdField.getText());
 				//add the runway to the controller:
-				Runway newRunway = new Runway(orientation, designation, length, width, clearway, stopway, displacedThreshold, controller);
+				Runway newRunway = new Runway("" + orientation + designation, tora, toda, asda, lda);
+				newRunway.setDisplacedThreshold(displacedThreshold);
 				controller.addRunway(newRunway);
 				controller.printToNotification("Added new runway " + newRunway.toString());
 				frame.dispose();

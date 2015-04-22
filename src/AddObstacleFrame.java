@@ -4,6 +4,7 @@ import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Map;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -18,13 +19,13 @@ public class AddObstacleFrame extends JFrame{
 
 	Controller controller;
 	Container pane;
-	JTextField nameField, xSizeField, ySizeField, zSizeField, xLocField, yLocField, angleField;
+	JTextField nameField, heightField, distanceFromThresholdField;
 	GridBagConstraints c;
 	JFrame frame;
-	ArrayList<Obstacle> savedObstacles;
+	Map<Obstacle, Integer> savedObstacles;
 	SavedObstacleComboBox savedObstacleComboBox;
 
-	public AddObstacleFrame(Controller controller, ArrayList<Obstacle> savedObstacles) {
+	public AddObstacleFrame(Controller controller, Map<Obstacle, Integer> savedObstacles) {
 		super("Add Obstacle");
 		this.controller = controller;
 		this.savedObstacles = savedObstacles;
@@ -109,8 +110,8 @@ public class AddObstacleFrame extends JFrame{
 		}
 
 		public void actionPerformed(ActionEvent e) {
-			
-			controller.addObstacle((Obstacle) savedObstacleComboBox.getSelectedItem());
+			Obstacle o = (Obstacle) savedObstacleComboBox.getSelectedItem();
+			controller.addObstacle(o, savedObstacles.get(o));
 			controller.printToNotification("Added obstacle " + (Obstacle) savedObstacleComboBox.getSelectedItem() + " to runway " + controller.getCurrentRunway().toString());
 			frame.dispose();
 			
@@ -159,20 +160,18 @@ public class AddObstacleFrame extends JFrame{
 
 		public void actionPerformed(ActionEvent e) {
 			//bad code inc
-			float xSize = 0, ySize = 0, zSize = 0, xLoc = 0, yLoc = 0, angle = 0;
+			int height = 0, distanceFromThreshold = 0;
 
 			//put this in a try to catch an exception due to poor format:
 			try {
 				//parse all the values:
-				xSize = Float.parseFloat(xSizeField.getText());
-				ySize = Float.parseFloat(ySizeField.getText());
-				zSize = Float.parseFloat(zSizeField.getText());
-				xLoc = Float.parseFloat(xLocField.getText());
-				yLoc = Float.parseFloat(yLocField.getText());
-				angle = Float.parseFloat(angleField.getText());
-				
-				Obstacle newObstacle = new Obstacle(xSize, ySize, zSize, xLoc, yLoc, angle, nameField.getText());
-				savedObstacles.add(newObstacle);
+				height = Integer.parseInt(heightField.getText());
+				distanceFromThreshold = Integer.parseInt(distanceFromThresholdField.getText());
+
+				Obstacle newObstacle = new Obstacle();
+				newObstacle.height = height;
+				newObstacle.name = nameField.getText();
+				savedObstacles.put(newObstacle, distanceFromThreshold);
 				savedObstacleComboBox.update();
 				controller.printToNotification("Saved new custom obstacle " + newObstacle.toString());
 				frame.dispose();
@@ -196,7 +195,7 @@ public class AddObstacleFrame extends JFrame{
 		
 		public void update() {
 			this.removeAllItems();
-			for(Obstacle o : savedObstacles) {
+			for(Obstacle o : savedObstacles.keySet()) {
 				this.addItem(o);
 			}
 		}
@@ -229,12 +228,9 @@ public class AddObstacleFrame extends JFrame{
 			c.gridx = 0;
 			c.gridy = 0;
 			nameField = addField(mainPane, "Name:");
-			xSizeField = addField(mainPane, "Length(m):");
-			ySizeField = addField(mainPane, "Width(m):");
-			zSizeField = addField(mainPane, "Height(m):");
-			xLocField = addField(mainPane, "X Location:");
-			yLocField = addField(mainPane, "Y Location");
-			angleField = addField(mainPane, "Angle:");
+			heightField = addField(mainPane, "Height(m):");
+			distanceFromThresholdField = addField(mainPane, "Distance From Threshold(m):");
+
 			c.gridy++;
 			c.gridwidth = 2;
 			c.gridx = 0;

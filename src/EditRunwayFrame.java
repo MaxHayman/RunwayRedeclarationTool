@@ -80,7 +80,7 @@ public class EditRunwayFrame extends JFrame{
 			//bad code inc
 			int orientation = 0;
 			Character designation = null;
-			float length = 0, width = 0, clearway = 0, stopway = 0, displacedThreshold = 0;
+			int toda = 0, tora = 0, asda = 0, lda = 0, displacedThreshold = 0;
 			
 			//put this in a try to catch an exception due to poor format:
 			try {
@@ -90,19 +90,18 @@ public class EditRunwayFrame extends JFrame{
 				if(designationField.getText().length() > 1) {
 					designation = designationField.getText().charAt(0);
 				}
-				length = Float.parseFloat(lengthField.getText());
-				width = Float.parseFloat(widthField.getText());
-				clearway = Float.parseFloat(clearwayField.getText());
-				stopway = Float.parseFloat(stopwayField.getText());
-				displacedThreshold = Float.parseFloat(displacedThresholdField.getText());
+				toda = Integer.parseInt(lengthField.getText());
+				tora = Integer.parseInt(widthField.getText());
+				asda = Integer.parseInt(clearwayField.getText());
+				lda = Integer.parseInt(stopwayField.getText());
+				displacedThreshold = Integer.parseInt(displacedThresholdField.getText());
 				//edit the runway:
 				controller.printToNotification("Editing runway " + runway.toString());
-				runway.setOrientation(orientation);
-				runway.setDesignation(designation);
-				runway.setLength(length);
-				runway.setWidth(width);
-				runway.setClearway(clearway);
-				runway.setStopway(stopway);
+				runway.name = "" + orientation + designation;
+				runway.setTORA(toda);
+				runway.setTODA(tora);
+				runway.setASDA(asda);
+				runway.setLDA(lda);
 				runway.setDisplacedThreshold(displacedThreshold);
 				controller.printToNotification("Runway changed to " + runway.toString());
 				controller.updateRunways();

@@ -1,4 +1,4 @@
-
+/*
 public class Test {
 	public static void main(String[] args) {
 		Controller testController = new Controller();
@@ -10,3 +10,4 @@ public class Test {
 		//new Frame2D(map);
 	}
 }
+*/
