@@ -6,6 +6,7 @@ import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.ListCellRenderer;
@@ -131,11 +132,11 @@ public class MainFrame extends javax.swing.JFrame {
 
 		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-		obstaclesList.setModel(new javax.swing.AbstractListModel() {
+		/*obstaclesList.setModel(new javax.swing.AbstractListModel() {
 			String[] strings = { "09R", "27L", "<<SEPERATOR>>", "09L", "27R" };
 			public int getSize() { return strings.length; }
 			public Object getElementAt(int i) { return strings[i]; }
-		});
+		});*/
 		obstaclesScrollPane.setViewportView(obstaclesList);
 
 		obstaclesLabel.setText("Obstacles");
@@ -167,7 +168,7 @@ public class MainFrame extends javax.swing.JFrame {
 
 		jLabel4.setText("Heathrow");
 
-		jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "09R", "27L", "<<SEPERATOR>>", "09L", "27R" }));
+		//jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "09R", "27L", "<<SEPERATOR>>", "09L", "27R" }));
 		jComboBox1.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				jComboBox1ActionPerformed(evt);
@@ -355,12 +356,22 @@ public class MainFrame extends javax.swing.JFrame {
 	}// </editor-fold>                        
 
 	private void addObstacleButtonActionPerformed(java.awt.event.ActionEvent evt) {   
+		if(runway == null) {
+			JOptionPane.showMessageDialog(null, "You must select a runway to be able to add obstacles to it.");
+			return;
+		}
+		
 		AddObstacleFrame frame = new AddObstacleFrame(this, null);
 		frame.obstacleTemplateComboBox.setModel(obstacleTemplateModel);
 		frame.setVisible(true);
 	}  
 
-	private void removeObstacleButtonActionPerformed(java.awt.event.ActionEvent evt) {    
+	private void removeObstacleButtonActionPerformed(java.awt.event.ActionEvent evt) {   
+		if(runway == null) {
+			JOptionPane.showMessageDialog(null, "You must select a runway to be able to remove obstacles from it.");
+			return;
+		}
+		
 		Obstacle o = obstaclesList.getSelectedValue();
 
 		if(o == null) {
@@ -371,7 +382,12 @@ public class MainFrame extends javax.swing.JFrame {
 		}
 	} 
 
-	private void modifyObstacleButtonActionPerformed(java.awt.event.ActionEvent evt) {                                           
+	private void modifyObstacleButtonActionPerformed(java.awt.event.ActionEvent evt) {       
+		if(runway == null) {
+			JOptionPane.showMessageDialog(null, "You must select a runway to be able to modify obstacles to it.");
+			return;
+		}
+		
 		Obstacle o = obstaclesList.getSelectedValue();
 
 		if(o == null) {
@@ -388,12 +404,16 @@ public class MainFrame extends javax.swing.JFrame {
 		}
 	}           
 
-	private void addRunwayMenuItemActionPerformed(java.awt.event.ActionEvent evt) {                                                   
+	private void addRunwayMenuItemActionPerformed(java.awt.event.ActionEvent evt) {       
 		new AddRunwayFrame(this, null).setVisible(true);
-	}     
+	}    
 
-	private void editRunwayMenuItemActionPerformed(java.awt.event.ActionEvent evt) {                                                   
-		new AddRunwayFrame(this, this.runway.pair).setVisible(true);
+	private void editRunwayMenuItemActionPerformed(java.awt.event.ActionEvent evt) {        
+		if(runway == null) {
+			JOptionPane.showMessageDialog(null, "You must select a runway to be able to edit it.");
+		} else {
+			new AddRunwayFrame(this, this.runway.pair).setVisible(true);
+		}
 	}                                                  
 
 	private void removeRunwayMenuItemActionPerformed(java.awt.event.ActionEvent evt) {                                                    
