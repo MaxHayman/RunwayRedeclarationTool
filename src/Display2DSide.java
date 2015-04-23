@@ -23,10 +23,6 @@ public class Display2DSide extends Display {
 		
 		this.setVisible(true);
 		this.addMouseWheelListener(this);
-
-	
-		EventManager.getEventManager().addEventNotify(EventManager.EventName.UPDATE, this, "repaint");
-
 	}
 
 	public void init() {

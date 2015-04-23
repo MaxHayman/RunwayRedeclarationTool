@@ -56,7 +56,7 @@ public class MainFrame extends javax.swing.JFrame {
 		this.runway = runway;
 		
 		calculationsType = this.runway.calcType = this.runway.bestOption();
-		System.out.println(this.runway.calcType);
+
 		if(this.runway.calcType == 0) {
 			takeOffAwayMenuItem.setSelected(true);
 			takeOffTowardsMenuItem.setSelected(false);
@@ -393,10 +393,11 @@ public class MainFrame extends javax.swing.JFrame {
 		Obstacle o = obstaclesList.getSelectedValue();
 
 		if(o == null) {
-			System.out.println("Please select an obstace.");
+			JOptionPane.showMessageDialog(null, "Please select an obstace.");
 		} else {
 			runway.pair.removeObstacle(obstaclesList.getSelectedValue());
 			updateObstacles();
+			EventManager.getEventManager().notify(EventManager.EventName.UPDATE);
 		}
 	} 
 
@@ -409,7 +410,7 @@ public class MainFrame extends javax.swing.JFrame {
 		Obstacle o = obstaclesList.getSelectedValue();
 
 		if(o == null) {
-			System.out.println("Please select an obstace.");
+			JOptionPane.showMessageDialog(null, "Please select an obstace.");
 		} else {
 			new AddObstacleFrame(this, o).setVisible(true);
 		}

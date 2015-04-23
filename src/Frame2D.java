@@ -26,20 +26,16 @@ public class Frame2D extends JFrame implements ComponentListener {
 		this.setSize(720, 450);
 		this.addComponentListener(this);
 		
-		//Controller.eventManager.addEventNotify(EventManager.EventName.UPDATE_DISPLAY, this, "updateDisplay");
+		EventManager.getEventManager().addEventNotify(EventManager.EventName.UPDATE, this, "updateDisplay");
 
 		this.setJMenuBar(new DisplayMenuBar(this));
 	}
 	
 	public void updateDisplay() {
-		System.out.println("updating display");
 		display.repaint();
 	}
 
-	public void componentResized(ComponentEvent e) {
-		System.out.println("Resized: " + display.getWidth() + " " + display.getHeight());
-	}
-
+	public void componentResized(ComponentEvent e) { }
 	public void componentMoved(ComponentEvent e) { }
 	public void componentShown(ComponentEvent e) { }
 	public void componentHidden(ComponentEvent e) {	}
