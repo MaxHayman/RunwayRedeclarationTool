@@ -177,8 +177,8 @@ public class XMLHandler {
 				}
 			}
 		} catch (IOException | NumberFormatException e) {
-			System.out.println("Error parsing xml. " + e + " error on line " + lineCount);
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Error parsing XML. " + e + " error on line " + lineCount);
+			//e.printStackTrace();
 		}
 
 		return airport;
