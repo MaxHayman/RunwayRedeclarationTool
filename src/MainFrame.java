@@ -555,7 +555,13 @@ public class MainFrame extends javax.swing.JFrame {
 		XMLHandler.saveXML(airport, true);
 	} 
 
-	private void exitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {                                             
+	private void exitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {  
+        int dialogResult = JOptionPane.showConfirmDialog (null, "Would you like to save before you exit?","Warning", JOptionPane.YES_NO_OPTION);
+
+        if(dialogResult == JOptionPane.YES_OPTION){ //The ISSUE is here
+
+        	XMLHandler.saveXML(airport, false);
+        }
 		EventManager.getEventManager().notify(EventManager.EventName.EXIT);
 		this.dispose();
 		new LoginFrame().setVisible(true);

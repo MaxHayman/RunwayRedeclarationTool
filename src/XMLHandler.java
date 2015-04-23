@@ -149,8 +149,8 @@ public class XMLHandler {
 		try {
 			br = new BufferedReader(new FileReader(f));
 		} catch (FileNotFoundException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Failed to open file: " + e1);
+			return null;
 		}
 		
 		Airport airport = new Airport();
@@ -189,6 +189,11 @@ public class XMLHandler {
 			//e.printStackTrace();
 		}
 
+		try {
+			br.close();
+		} catch (IOException e) {
+			JOptionPane.showMessageDialog(null, "Failed to close file: " + e);
+		}
 		return airport;
 	}
 	
