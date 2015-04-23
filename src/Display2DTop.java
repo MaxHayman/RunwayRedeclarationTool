@@ -33,10 +33,29 @@ public class Display2DTop extends Display {
 
 	int startx = 150;
 	int starty = 250;
+	
+	public void drawCacl(Graphics2D g2, Color color, int side, int depth, String type, int value, int displaced) {
+		int length = (int)(cameraZoom*((value * width) / mainFrame.runway.TODA));
+
+		displaced = (int)(((cameraZoom*(displaced * width) / mainFrame.runway.TODA))) ;
+		int scaleStart = (int)(cameraZoom*startx);
+		int scaleWidth = (int)(cameraZoom*width);
+		int start = (side == 0 ? (scaleStart + displaced) : (scaleStart + scaleWidth - length - displaced));
+		int starto = (int)(cameraZoom *(starty));
+		int scaleDepth = (int)(cameraZoom *(depth));
+		g2.setColor(color);
+		g2.fillRect(start, starto-scaleDepth, 3, scaleDepth);
+		g2.fillRect(start, starto-scaleDepth, length, 3);
+		g2.fillRect(start+length-3, starto-scaleDepth, 3, scaleDepth);
+		g2.drawString(type + ": " + value, start + (int)(length/2), starto+5-scaleDepth-10);
+	}
+	//drawCacl(g2, Color.yellow, calc, 100, "LDA", mainFrame.runway.nLDA, mainFrame.runway.displacedThreshold);
+	int width = 3000;
+	int height = 350;
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
-		int width = 3000;
-		int height = 350;
+		
+		
 
 
 		redrawImage();
@@ -53,74 +72,20 @@ public class Display2DTop extends Display {
 		if(mainFrame.runway == null)
 			return;
 		
-		//LDA
 		Obstacle o = mainFrame.runway.getObstacle();
+		float displacedThresholdRight = ((float)mainFrame.runway.displacedThreshold * width / (float)mainFrame.runway.TORA);
+		int calc = mainFrame.runway.calcType;
 		
-		float displacedThresholdRight = ((float)mainFrame.runway.TORA - (float)mainFrame.runway.LDA) *width / (float)mainFrame.runway.TORA;
-		float ldaPercRight = (float)mainFrame.runway.nLDA / (float)mainFrame.runway.TODA;
-		float ldaStartRight = 0;
-		if(mainFrame.runway.calcType == 0) {
-			System.out.println("lol");
-			ldaStartRight = (o == null || mainFrame.runway.obstacles.get(o) == null) ? displacedThresholdRight : 0;
-		} else {
-			System.out.println("lol1");
-			ldaStartRight = (o == null || mainFrame.runway.obstacles.get(o) == null) ? displacedThresholdRight : (width*((float)mainFrame.runway.obstacles.get(o) / (float)mainFrame.runway.LDA));
-
-		}
-		g2.setColor(Color.yellow);
-		g2.fillRect((int)(cameraZoom*(ldaStartRight+startx+10)), (int)(cameraZoom*(starty-200)), (int)(cameraZoom*(width-2)*ldaPercRight), (int)(cameraZoom*5));
-		g2.fillRect((int)(cameraZoom*(ldaStartRight+startx+10)), (int)(cameraZoom*(starty-200)), (int)(cameraZoom*5), (int)(cameraZoom*200));
-		g2.fillRect((int)(cameraZoom*(ldaStartRight+startx+(width-10)*ldaPercRight)), (int)(cameraZoom*(starty-200)), (int)(cameraZoom*5), (int)(cameraZoom*200));
-		g2.drawString("LDA: " + mainFrame.runway.nLDA, (int)(cameraZoom*(ldaStartRight+startx+(width/2)*ldaPercRight)), (cameraZoom*(starty-210)));
-
-		//ASDA
-		float asdaPercRight = (float)mainFrame.runway.nASDA / (float)mainFrame.runway.ASDA;
-		float asdaStartRight = 0;
-		if(mainFrame.runway.calcType == 0) {
-			asdaStartRight = (o == null || mainFrame.runway.obstacles.get(o) == null) ? 0 : 0;
-		} else {
-			asdaStartRight = (o == null || mainFrame.runway.obstacles.get(o) == null) ? 0 : (width*((float)mainFrame.runway.obstacles.get(o) / (float)mainFrame.runway.ASDA));
-
-		}
-		g2.setColor(Color.blue);
-		g2.fillRect((int)(cameraZoom*(asdaStartRight+startx+10)), (int)(cameraZoom*(starty-150)), (int)(cameraZoom*(width-20)*asdaPercRight), (int)(cameraZoom*5));
-		g2.fillRect((int)(cameraZoom*(asdaStartRight+startx+10)), (int)(cameraZoom*(starty-150)), (int)(cameraZoom*5), (int)(cameraZoom*150));
-		g2.fillRect((int)(cameraZoom*(asdaStartRight+startx+(width-10)*asdaPercRight)), (int)(cameraZoom*(starty-150)), (int)(cameraZoom*5), (int)(cameraZoom*150));
-		g2.drawString("ASDA: " + mainFrame.runway.nASDA, (int)(cameraZoom*(asdaStartRight+startx+(width/2)*asdaPercRight)), (cameraZoom*(starty-160)));
-
-		//TODA
-		float todaPercRight = (float)mainFrame.runway.nTODA / (float)mainFrame.runway.TODA;
-		float todaStartRight = 0;
-		if(mainFrame.runway.calcType == 0) {
-			todaStartRight = (o == null || mainFrame.runway.obstacles.get(o) == null) ? 0 : 0;
-		} else {
-			todaStartRight = (o == null || mainFrame.runway.obstacles.get(o) == null) ? 0 : (width*((float)mainFrame.runway.obstacles.get(o) / (float)mainFrame.runway.TODA));
-		}
-		g2.setColor(Color.red);
-		g2.fillRect((int)(cameraZoom*(todaStartRight+startx+10)), (int)(cameraZoom*(starty-100)), (int)(cameraZoom*(width-20)*todaPercRight), (int)(cameraZoom*5));
-		g2.fillRect((int)(cameraZoom*(todaStartRight+startx+10)), (int)(cameraZoom*(starty-100)), (int)(cameraZoom*5), (int)(cameraZoom*100));
-		g2.fillRect((int)(cameraZoom*(todaStartRight+startx+(width-10)*todaPercRight)), (int)(cameraZoom*(starty-100)), (int)(cameraZoom*5), (int)(cameraZoom*100));
-		g2.drawString("TODA: " + mainFrame.runway.nTODA, (int)(cameraZoom*(todaStartRight+startx+(width/2)*todaPercRight)), (cameraZoom*(starty-110)));
-
-		//TORA
-		float toraPercRight = (float)mainFrame.runway.nTORA / (float)mainFrame.runway.TORA;
-		float toraStartRight = 0;
-		if(mainFrame.runway.calcType == 0) {
-			toraStartRight = (o == null || mainFrame.runway.obstacles.get(o) == null) ? 0 : 0;
-		} else {
-			toraStartRight = (o == null || mainFrame.runway.obstacles.get(o) == null) ? 0 : (width*((float)mainFrame.runway.obstacles.get(o) / (float)mainFrame.runway.TORA));
-		}
-		g2.setColor(Color.orange);
-		g2.fillRect((int)(cameraZoom*(toraStartRight+startx+10)), (int)(cameraZoom*(starty-50)), (int)(cameraZoom*(width-20)*toraPercRight), (int)(cameraZoom*5));
-		g2.fillRect((int)(cameraZoom*(toraStartRight+startx+10)), (int)(cameraZoom*(starty-50)), (int)(cameraZoom*5), (int)(cameraZoom*50));
-		g2.fillRect((int)(cameraZoom*(toraStartRight+startx+(width-10)*toraPercRight)), (int)(cameraZoom*(starty-50)), (int)(cameraZoom*5), (int)(cameraZoom*50));
-		g2.drawString("TORA: " + mainFrame.runway.nTORA, (int)(cameraZoom*(toraStartRight+startx+(width/2)*toraPercRight)), (cameraZoom*(starty-60)));
+		drawCacl(g2, Color.yellow, calc, 400, "LDA", mainFrame.runway.nLDA, mainFrame.runway.displacedThreshold);
+		drawCacl(g2, Color.blue, calc, 300, "ASDA", mainFrame.runway.nASDA, mainFrame.runway.displacedThreshold);
+		drawCacl(g2, Color.red, calc, 200, "TODA", mainFrame.runway.nTODA, mainFrame.runway.displacedThreshold);
+		drawCacl(g2, Color.orange, calc, 100, "TORA", mainFrame.runway.nTORA, mainFrame.runway.displacedThreshold);
 
 		g2.setColor(Color.red);
-		//Obstacle o = mainFrame.runway.pair.runways[1].getObstacle();
+
 		if(o != null) {
-			float start = ((float)mainFrame.runway.obstacles.get(o) / (float)mainFrame.runway.LDA);
-			g2.fillRect((int)(cameraZoom*(startx+(width*start-25))), (int)(cameraZoom*(starty+height/2-10)), (int)(cameraZoom*(20)), (int)(cameraZoom*(20)));
+			float start = ((float)mainFrame.runway.obstacles.get(o) / (float)mainFrame.runway.TODA);
+			g2.fillRect((int)(cameraZoom*(startx+(width*start))), (int)(cameraZoom*(starty+height/2-20)), (int)(cameraZoom*(40)), (int)(cameraZoom*(40)));
 		}
 
 		g2.setColor(Color.white);
