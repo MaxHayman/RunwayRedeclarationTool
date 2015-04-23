@@ -1,5 +1,6 @@
 import javax.swing.DefaultListModel;
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import javax.swing.event.ChangeEvent;
 
 
@@ -12,7 +13,7 @@ public class AddObstacleFrame extends javax.swing.JFrame {
 	MainFrame mainFrame;
 	Obstacle o = null;
 	DefaultListModel<Obstacle> templateModel = new DefaultListModel<Obstacle>();
-	public javax.swing.JComboBox obstacleTemplateComboBox;
+	public javax.swing.JComboBox<Obstacle> obstacleTemplateComboBox;
 	
     public AddObstacleFrame(MainFrame mainFrame, Obstacle o) {
     	super(o == null ? "Add Obstacle" : "Edit Obstacle");
@@ -32,6 +33,7 @@ public class AddObstacleFrame extends javax.swing.JFrame {
         	distanceFromOtherThresholdSpinner.setValue(mainFrame.runway.pair.runways[1].obstacles.get(o));
         	obstacleHeightTextField.setText("" + o.height);
         }
+        
     }
 
     /**
@@ -52,7 +54,7 @@ public class AddObstacleFrame extends javax.swing.JFrame {
         distanceFromOtherThresholdSpinner = new javax.swing.JSpinner();
         distanceFromOtherThresholdLabel = new javax.swing.JLabel();
         saveButton = new javax.swing.JButton();
-        obstacleTemplateComboBox = new javax.swing.JComboBox();
+        obstacleTemplateComboBox = new javax.swing.JComboBox<Obstacle>();
         obstacleTempaltesLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -85,6 +87,12 @@ public class AddObstacleFrame extends javax.swing.JFrame {
         });
 
         obstacleTempaltesLabel.setText("Obstacle Templates");
+
+        obstacleTemplateComboBox.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				obstacleTemplateComboBoxActionPerformed(evt);
+			}
+		});
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -163,14 +171,9 @@ public class AddObstacleFrame extends javax.swing.JFrame {
     	logLine += distR + "m away from " + mainFrame.runway.pair.runways[1].orientation + mainFrame.runway.pair.runways[1].designation + ".";
     	EventManager.getEventManager().notify(EventManager.EventName.LOG, logLine);
     	
+    	mainFrame.obstacleTemplates.add(o);
+    	
         this.dispose();
-    }
-    
-    private void saveTemplateButtonActionPerformed(java.awt.event.ActionEvent evt) {
-    	Obstacle o = new Obstacle();
-    	o.height = Integer.parseInt(obstacleHeightTextField.getText());
-    	o.name = obstacleNameTextField.getText();
-    	mainFrame.obstacleTemplateModel.addElement(o);
     }
 
     private void distanceFromThresholdSpinnerStateChanged (ChangeEvent evt) {                                                      
@@ -187,6 +190,22 @@ public class AddObstacleFrame extends javax.swing.JFrame {
         }
     }
 
+    private void obstacleTemplateComboBoxActionPerformed(java.awt.event.ActionEvent evt) {
+    	Obstacle o = (Obstacle) obstacleTemplateComboBox.getSelectedItem();
+    	
+    	if(o == null) {
+    		JOptionPane.showMessageDialog(null, "Invalid template.");
+    		return;
+    	}
+    	
+    	if(o.height > 0)
+    		obstacleHeightTextField.setText("" + o.height);
+    	else
+    		obstacleHeightTextField.setText("");
+    		
+    	obstacleNameTextField.setText(o.name);
+    }
+    
     // Variables declaration - do not modify                     
     private javax.swing.JButton saveButton;
     private javax.swing.JLabel distanceFromOtherThresholdLabel;

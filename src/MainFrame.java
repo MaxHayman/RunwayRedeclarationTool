@@ -18,7 +18,9 @@ import javax.swing.JSeparator;
 import javax.swing.ListCellRenderer;
 import javax.swing.ListModel;
 import javax.swing.event.CaretEvent;
+
 import java.awt.event.FocusListener;
+
 import javax.swing.event.ChangeEvent;
 
 /**
@@ -33,7 +35,7 @@ public class MainFrame extends javax.swing.JFrame {
 	Airport airport;
 	Runway runway;
 	int calculationsType = 0;
-	public DefaultComboBoxModel<Obstacle> obstacleTemplateModel = new DefaultComboBoxModel<Obstacle>();
+	public List<Obstacle> obstacleTemplates = new ArrayList<Obstacle>();
 	public List<String> log = new ArrayList<String>();
 	int blastProtection = 300;
 
@@ -56,8 +58,8 @@ public class MainFrame extends javax.swing.JFrame {
 		}
 		setAirport(airport);
 
-		obstacleTemplateModel.addElement(new Obstacle("Plane", 20));
-		obstacleTemplateModel.addElement(new Obstacle ("Box", 1));
+		obstacleTemplates.add(new Obstacle("Plane", 20));
+		obstacleTemplates.add(new Obstacle ("Box", 1));
 
 		EventManager.getEventManager().addEventNotify(EventManager.EventName.UPDATE, this, "updateObstacles");
 		EventManager.getEventManager().addEventNotify(EventManager.EventName.LOG, this, "addLog");
@@ -428,7 +430,20 @@ public class MainFrame extends javax.swing.JFrame {
 		}
 
 		AddObstacleFrame frame = new AddObstacleFrame(this, null);
-		frame.obstacleTemplateComboBox.setModel(obstacleTemplateModel);
+		
+
+        Obstacle blank = new Obstacle("", 0) {
+        	public String toString() {
+        		return "Select a template...";
+        	}
+        };
+        
+        ((DefaultComboBoxModel<Obstacle>)frame.obstacleTemplateComboBox.getModel()).addElement(blank);
+        
+        for(Obstacle o : obstacleTemplates) {
+        	((DefaultComboBoxModel<Obstacle>)frame.obstacleTemplateComboBox.getModel()).addElement(o);
+        }
+	
 		frame.setVisible(true);
 	}  
 
@@ -467,7 +482,12 @@ public class MainFrame extends javax.swing.JFrame {
 	
 	private void modifyBlastProtectionActionPerformed(FocusEvent evt) {
 		try {
-			this.blastProtection = Integer.parseInt(blastProtectionAllowanceTextField.getText());
+			int tempBP = Integer.parseInt(blastProtectionAllowanceTextField.getText());
+			if(tempBP < 0) {
+				JOptionPane.showMessageDialog(null, "Invalid value for Blast Protection.");
+				return;
+			}
+			this.blastProtection = tempBP;
 			EventManager.getEventManager().notify(EventManager.EventName.LOG, "Blast Protection has been updated to " + this.blastProtection + "m.");
 			EventManager.getEventManager().notify(EventManager.EventName.UPDATE);
 		} catch (NumberFormatException e) {
