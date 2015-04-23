@@ -20,16 +20,16 @@ public class AddRunwayFrame extends javax.swing.JFrame {
 		if(pair != null) {
 			LtoraTextField.setText("" + pair.runways[0].TORA);
 			LtodaTextField.setText("" + pair.runways[0].TODA);
-			LldaTextField.setText("" + pair.runways[0].ASDA);
-			LasdaTextField.setText("" + pair.runways[0].LDA);
+			LldaTextField.setText("" + pair.runways[0].LDA);
+			LasdaTextField.setText("" + pair.runways[0].ASDA);
 			LdisplacedThresholdTextField.setText("" + pair.runways[0].displacedThreshold);
 			LdesignationTextField.setText("" + pair.runways[0].designation);
 			LorientationTextField.setText("" + pair.runways[0].orientation);
 
 			RtoraTextField.setText("" + pair.runways[1].TORA);
 			RtodaTextField.setText("" + pair.runways[1].TODA);
-			RldaTextField.setText("" + pair.runways[1].ASDA);
-			RasdaTextField.setText("" + pair.runways[1].LDA);
+			RldaTextField.setText("" + pair.runways[1].LDA);
+			RasdaTextField.setText("" + pair.runways[1].ASDA);
 			RdisplacedThresholdTextField.setText("" + pair.runways[1].displacedThreshold);
 			RdesignationTextField.setText("" + pair.runways[1].designation);
 			RorientationTextField.setText("" + pair.runways[1].orientation);
@@ -353,7 +353,7 @@ public class AddRunwayFrame extends javax.swing.JFrame {
 			pair.add(0, new Runway(Lorientation, Ldesignation, Ltora, Ltoda, Lasda, Llda));
 			pair.add(1, new Runway(Rorientation, Rdesignation, Rtora, Rtoda, Rasda, Rlda));
 			pair.runways[0].setDisplacedThreshold(Ldisplaced);
-			pair.runways[1].setDisplacedThreshold(Ldisplaced);
+			pair.runways[1].setDisplacedThreshold(Rdisplaced);
 			logLine += "added. ";
 		} else {
 			pair.runways[0].orientation = Lorientation;
