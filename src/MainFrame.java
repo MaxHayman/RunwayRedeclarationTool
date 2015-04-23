@@ -33,7 +33,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation(dim.width/8-this.getSize().width/2, dim.height/2-this.getSize().height/2);
-        
+        this.setResizable(false);
 		ButtonGroup group = new ButtonGroup();
 		group.add(takeOffAwayMenuItem);
 		group.add(takeOffTowardsMenuItem);
@@ -252,7 +252,7 @@ public class MainFrame extends javax.swing.JFrame {
 		});
 		editMenu.add(editRunwayMenuItem);
 
-		removeRunwayMenuItem.setText("Edit Airport");
+		removeRunwayMenuItem.setText("Remove Runway");
 		removeRunwayMenuItem.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				removeRunwayMenuItemActionPerformed(evt);
@@ -436,7 +436,14 @@ public class MainFrame extends javax.swing.JFrame {
 	}                                                  
 
 	private void removeRunwayMenuItemActionPerformed(java.awt.event.ActionEvent evt) {                                                    
-		// TODO add your handling code here:
+		if(runway == null) {
+			JOptionPane.showMessageDialog(null, "You must select a runway to be able to remove it.");
+		} else {
+			airport.runways.remove(runway.pair);
+			this.setAirport(airport);
+			this.runway = null;
+			EventManager.getEventManager().notify(EventManager.EventName.UPDATE);
+		}
 	}                                                   
 
 	private void topDownMenuItemActionPerformed(java.awt.event.ActionEvent evt) {                                             

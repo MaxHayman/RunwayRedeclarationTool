@@ -18,6 +18,7 @@ public class AddObstacleFrame extends javax.swing.JFrame {
     	super(o == null ? "Add Obstacle" : "Edit Obstacle");
 
         initComponents();
+        this.setResizable(false);
         this.mainFrame = mainFrame;
         
         distanceFromThresholdLabel.setText("Distance from " + mainFrame.runway.pair.runways[0].toString() + " threshold");

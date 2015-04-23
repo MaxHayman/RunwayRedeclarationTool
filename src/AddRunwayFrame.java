@@ -12,7 +12,7 @@ public class AddRunwayFrame extends javax.swing.JFrame {
 		super(pair == null ? "Add Runway" : "Edit Runway");
 
 		initComponents();
-
+		this.setResizable(false);
 		this.pair = pair;
 		this.mainFrame = mainFrame;
 		if(pair != null) {
