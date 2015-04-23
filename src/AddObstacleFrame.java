@@ -201,7 +201,8 @@ public class AddObstacleFrame extends javax.swing.JFrame {
     	logLine += distR + "m away from " + mainFrame.runway.pair.runways[1].orientation + mainFrame.runway.pair.runways[1].designation + ".";
     	EventManager.getEventManager().notify(EventManager.EventName.LOG, logLine);
     	
-    	mainFrame.obstacleTemplates.add(o);
+    	if(!mainFrame.obstacleTemplates.contains(o))
+    		mainFrame.obstacleTemplates.add(o);
     	
         this.dispose();
     }

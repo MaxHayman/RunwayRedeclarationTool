@@ -81,19 +81,19 @@ public class Display2DSide extends Display {
 		Graphics2D g2 = (Graphics2D) g ;
 
 		//Grass
-		g2.setColor(Color.blue.darker());
+		g2.setColor(skyColor);
 		g2.fillRect(0, 0, this.getWidth(), this.getHeight()/2);
-		g2.setColor(Color.green.darker());
+		g2.setColor(groundColor);
 		g2.fillRect(0, this.getHeight()/2, this.getWidth(), this.getHeight()/2);
 		
 		//Tarmac
-		g2.setColor(Color.BLACK);
+		g2.setColor(runwayColor);
 		g2.fillRect((int)(startx), this.getHeight()/2, (int)(width), (int)(5));
 
 		if(mainFrame.runway == null)
 			return;
 		
-		g2.setColor(Color.red);
+		g2.setColor(obstacleColor);
 		Obstacle o = mainFrame.runway.pair.runways[0].getObstacle();
 		if(o != null) {
 			int start = (mainFrame.runway.obstacles.get(o) * width) / mainFrame.runway.TODA ;
@@ -106,13 +106,13 @@ public class Display2DSide extends Display {
 		}
 		
 		int calc = mainFrame.runway.calcType;
-		drawCacl(g2, Color.yellow, calc, 100, "LDA", mainFrame.runway.nLDA, mainFrame.runway.displacedThreshold, 0);
-		drawCacl(g2, Color.BLUE, calc, 75, "ASDA", mainFrame.runway.nASDA, 0, mainFrame.runway.nASDA-mainFrame.runway.nTORA);
-		drawCacl(g2, Color.RED, calc, 50, "TODA", mainFrame.runway.nTODA, 0, mainFrame.runway.nTODA-mainFrame.runway.nTORA);
-		drawCacl(g2, Color.ORANGE, calc, 25, "TORA", mainFrame.runway.nTORA, 0, 0);
+		drawCacl(g2, ldaColor, calc, 100, "LDA", mainFrame.runway.nLDA, mainFrame.runway.displacedThreshold, 0);
+		drawCacl(g2, asdaColor, calc, 75, "ASDA", mainFrame.runway.nASDA, 0, mainFrame.runway.nASDA-mainFrame.runway.nTORA);
+		drawCacl(g2, todaColor, calc, 50, "TODA", mainFrame.runway.nTODA, 0, mainFrame.runway.nTODA-mainFrame.runway.nTORA);
+		drawCacl(g2, toraColor, calc, 25, "TORA", mainFrame.runway.nTORA, 0, 0);
 		
 
-		g2.setColor(Color.WHITE);
+		g2.setColor(lineColor);
 
 		Runway one = mainFrame.runway;
 		

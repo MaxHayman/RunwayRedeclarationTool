@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.KeyListener;
@@ -19,4 +20,14 @@ public abstract class Display extends JPanel implements KeyListener, MouseWheelL
 		this.mainFrame = mainFrame;
 		
 	}
+	
+	public Color skyColor = Color.blue.darker();
+	public Color groundColor = Color.green.darker();
+	public Color lineColor = Color.white;
+	public Color toraColor = Color.orange;
+	public Color todaColor = Color.red;
+	public Color asdaColor = Color.BLUE;
+	public Color ldaColor = Color.YELLOW;
+	public Color obstacleColor = Color.red;
+	public Color runwayColor = Color.black;
 }

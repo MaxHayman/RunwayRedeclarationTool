@@ -74,6 +74,10 @@ public class Frame2D extends JFrame implements ComponentListener {
 			JMenu saveMenuItem = new JMenu("Save as...");
 			menu.add(saveMenuItem);
 			
+			//JMenu colorMenuItem = new JMenu("Change Colours");
+			//colorMenuItem.addActionListener
+			//menu.add(colorMenuItem);
+			
 			menuItem = new JMenuItem("JPEG");
 			menuItem.addActionListener(new SaveListener("JPEG"));
 			saveMenuItem.add(menuItem);

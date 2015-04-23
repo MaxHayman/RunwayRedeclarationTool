@@ -57,11 +57,11 @@ public class Display2DTop extends Display {
 		Graphics2D g2 = (Graphics2D) g ;
 
 		//Grass
-		g2.setColor(Color.GREEN.darker());
+		g2.setColor(groundColor);
 		g2.fillRect(0, 0, this.getWidth(), this.getHeight());
 
 		//Tarmac
-		g2.setColor(Color.BLACK);
+		g2.setColor(runwayColor);
 		g2.fillRect((int)(cameraZoom*startx), (int)(cameraZoom*starty), (int)(cameraZoom*width), (int)(cameraZoom*height));
 
 		if(mainFrame.runway == null)
@@ -71,19 +71,19 @@ public class Display2DTop extends Display {
 		float displacedThresholdRight = ((float)mainFrame.runway.displacedThreshold * width / (float)mainFrame.runway.TORA);
 		int calc = mainFrame.runway.calcType;
 		
-		drawCacl(g2, Color.yellow, calc, 400, "LDA", mainFrame.runway.nLDA, mainFrame.runway.displacedThreshold, 0);
-		drawCacl(g2, Color.blue, calc, 300, "ASDA", mainFrame.runway.nASDA, 0, mainFrame.runway.nASDA-mainFrame.runway.nTORA);
-		drawCacl(g2, Color.red, calc, 200, "TODA", mainFrame.runway.nTODA, 0, mainFrame.runway.nTODA-mainFrame.runway.nTORA);
-		drawCacl(g2, Color.orange, calc, 100, "TORA", mainFrame.runway.nTORA, 0, 0);
+		drawCacl(g2, ldaColor, calc, 400, "LDA", mainFrame.runway.nLDA, mainFrame.runway.displacedThreshold, 0);
+		drawCacl(g2, asdaColor, calc, 300, "ASDA", mainFrame.runway.nASDA, 0, mainFrame.runway.nASDA-mainFrame.runway.nTORA);
+		drawCacl(g2, todaColor, calc, 200, "TODA", mainFrame.runway.nTODA, 0, mainFrame.runway.nTODA-mainFrame.runway.nTORA);
+		drawCacl(g2, toraColor, calc, 100, "TORA", mainFrame.runway.nTORA, 0, 0);
 
-		g2.setColor(Color.red);
+		g2.setColor(obstacleColor);
 
 		if(o != null) {
 			float start = ((float)mainFrame.runway.obstacles.get(o) / (float)mainFrame.runway.TODA);
 			g2.fillRect((int)(cameraZoom*(startx+(width*start))), (int)(cameraZoom*(starty+height/2-20)), (int)(cameraZoom*(40)), (int)(cameraZoom*(40)));
 		}
 
-		g2.setColor(Color.white);
+		g2.setColor(lineColor);
 		for(int i = 1; i < height-10; i++) {
 			if(i % 15 == 0) {
 				g2.fillRect((int)(cameraZoom*(startx+15+displacedThresholdRight)), (int)(cameraZoom*(starty+i)), (int)(cameraZoom*150), (int)(cameraZoom*4));
@@ -99,7 +99,7 @@ public class Display2DTop extends Display {
 		AffineTransform at = new AffineTransform();
 		at.rotate(Math.PI / 2);
 		g2.setTransform(at);
-		g2.setColor(Color.WHITE);
+		g2.setColor(lineColor);
 
 		Runway one = mainFrame.runway;
 		Runway two = mainFrame.runway.pair.runways[0] == mainFrame.runway ? mainFrame.runway.pair.runways[1] : mainFrame.runway.pair.runways[0];
