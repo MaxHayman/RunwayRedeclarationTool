@@ -2,6 +2,8 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +17,9 @@ import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.ListCellRenderer;
 import javax.swing.ListModel;
+import javax.swing.event.CaretEvent;
+import java.awt.event.FocusListener;
+import javax.swing.event.ChangeEvent;
 
 /**
  *
@@ -30,6 +35,7 @@ public class MainFrame extends javax.swing.JFrame {
 	int calculationsType = 0;
 	public DefaultComboBoxModel<Obstacle> obstacleTemplateModel = new DefaultComboBoxModel<Obstacle>();
 	public List<String> log = new ArrayList<String>();
+	int blastProtection = 300;
 
 	public MainFrame(Airport airport) {
 		super("Main");
@@ -93,9 +99,9 @@ public class MainFrame extends javax.swing.JFrame {
 		obstaclesList.setSelectedIndex(0);
 
 		if(calculationsType == 1 ) {
-			runway.calculate(0, 300);
+			runway.calculate(0, blastProtection);
 		} else {
-			runway.calculate(1, 300);
+			runway.calculate(1, blastProtection);
 		}
 		calculationsTable.getModel().setValueAt(runway.TORA, 0, 1);
 		calculationsTable.getModel().setValueAt(runway.TODA, 1, 1);
@@ -197,6 +203,16 @@ public class MainFrame extends javax.swing.JFrame {
 		});
 
 		blastProtectionAllowanceTextField.setText("300");
+		
+		blastProtectionAllowanceTextField.addFocusListener(new FocusListener() {
+			public void focusGained(FocusEvent e) {
+			}
+			public void focusLost(FocusEvent e) {
+				if (!e.isTemporary()) {
+					modifyBlastProtectionActionPerformed(e);
+				}
+			}
+        });
 
 		blastProtectionAllowanceLabel.setText("Blast Protection Allowance");
 
@@ -448,6 +464,16 @@ public class MainFrame extends javax.swing.JFrame {
 			new AddObstacleFrame(this, o).setVisible(true);
 		}
 	} 
+	
+	private void modifyBlastProtectionActionPerformed(FocusEvent evt) {
+		try {
+			this.blastProtection = Integer.parseInt(blastProtectionAllowanceTextField.getText());
+			EventManager.getEventManager().notify(EventManager.EventName.LOG, "Blast Protection has been updated to " + this.blastProtection + "m.");
+			EventManager.getEventManager().notify(EventManager.EventName.UPDATE);
+		} catch (NumberFormatException e) {
+			JOptionPane.showMessageDialog(null, "Invalid value for Blast Protection.");
+		}
+	}
 
 	private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) { 
 		if(jComboBox1.getSelectedItem() != null) {
