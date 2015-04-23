@@ -227,7 +227,7 @@ public class XMLHandler {
 		int LDA = Integer.parseInt(getValue(readLine(), "LDA"));
 		int displacedThreshold = Integer.parseInt(getValue(readLine(), "DisplacedThreshold"));
 		
-		Runway r = new Runway(orientation, designation, TODA, TORA, ASDA, LDA);
+		Runway r = new Runway(orientation, designation, TORA, TODA, ASDA, LDA);
 		r.setDisplacedThreshold(displacedThreshold);
 		
 		if(readLine().equals("<Obstacles>")) {

@@ -16,18 +16,18 @@ public class AddRunwayFrame extends javax.swing.JFrame {
 		this.pair = pair;
 		this.mainFrame = mainFrame;
 		if(pair != null) {
-			LtodaTextField.setText("" + pair.runways[0].TORA);
-			LtoraTextField.setText("" + pair.runways[0].TODA);
-			LasdaTextField.setText("" + pair.runways[0].ASDA);
-			LldaTextField.setText("" + pair.runways[0].LDA);
+			LtoraTextField.setText("" + pair.runways[0].TORA);
+			LtodaTextField.setText("" + pair.runways[0].TODA);
+			LldaTextField.setText("" + pair.runways[0].ASDA);
+			LasdaTextField.setText("" + pair.runways[0].LDA);
 			LdisplacedThresholdTextField.setText("" + pair.runways[0].displacedThreshold);
 			LdesignationTextField.setText("" + pair.runways[0].designation);
 			LorientationTextField.setText("" + pair.runways[0].orientation);
 
-			RtodaTextField.setText("" + pair.runways[1].TORA);
-			RtoraTextField.setText("" + pair.runways[1].TODA);
-			RasdaTextField.setText("" + pair.runways[1].ASDA);
-			RldaTextField.setText("" + pair.runways[1].LDA);
+			RtoraTextField.setText("" + pair.runways[1].TORA);
+			RtodaTextField.setText("" + pair.runways[1].TODA);
+			RldaTextField.setText("" + pair.runways[1].ASDA);
+			RasdaTextField.setText("" + pair.runways[1].LDA);
 			RdisplacedThresholdTextField.setText("" + pair.runways[1].displacedThreshold);
 			RdesignationTextField.setText("" + pair.runways[1].designation);
 			RorientationTextField.setText("" + pair.runways[1].orientation);
@@ -45,12 +45,12 @@ public class AddRunwayFrame extends javax.swing.JFrame {
 
 		LtodaTextField = new javax.swing.JTextField();
 		LtoraTextField = new javax.swing.JTextField();
-		LasdaTextField = new javax.swing.JTextField();
 		LldaTextField = new javax.swing.JTextField();
+		LasdaTextField = new javax.swing.JTextField();
 		RtodaTextField = new javax.swing.JTextField();
 		RtoraTextField = new javax.swing.JTextField();
-		RasdaTextField = new javax.swing.JTextField();
 		RldaTextField = new javax.swing.JTextField();
+		RasdaTextField = new javax.swing.JTextField();
 		LtodaLabel = new javax.swing.JLabel();
 		LtoraLabel = new javax.swing.JLabel();
 		LasdaLabel = new javax.swing.JLabel();
@@ -138,8 +138,8 @@ public class AddRunwayFrame extends javax.swing.JFrame {
 																						.addGap(18, 18, 18)
 																						.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
 																								.addComponent(LdisplacedThresholdTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-																								.addComponent(LasdaTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-																								.addComponent(LldaTextField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+																								.addComponent(LldaTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+																								.addComponent(LasdaTextField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
 																								.addComponent(LtodaTextField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
 																								.addComponent(LtoraTextField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)))))
 																								.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -160,9 +160,9 @@ public class AddRunwayFrame extends javax.swing.JFrame {
 																																		.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
 																																				.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
 																																						.addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-																																								.addComponent(RasdaTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-																																								.addComponent(RtodaTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
 																																								.addComponent(RldaTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+																																								.addComponent(RtodaTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+																																								.addComponent(RasdaTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
 																																								.addComponent(RtoraTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
 																																								.addComponent(RdisplacedThresholdTextField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
 																																								.addComponent(RdesignationTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -208,11 +208,11 @@ public class AddRunwayFrame extends javax.swing.JFrame {
 																										.addComponent(RtoraLabel))
 																										.addGap(11, 11, 11)
 																										.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-																												.addComponent(LldaTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+																												.addComponent(LasdaTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
 																												.addComponent(RasdaLabel))
 																												.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
 																												.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-																														.addComponent(LasdaTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+																														.addComponent(LldaTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
 																														.addComponent(RldaLabel)
 																														.addComponent(LldaLabel))
 																														.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -227,9 +227,9 @@ public class AddRunwayFrame extends javax.swing.JFrame {
 																																		.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
 																																		.addComponent(RtoraTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
 																																		.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-																																		.addComponent(RldaTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-																																		.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
 																																		.addComponent(RasdaTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+																																		.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+																																		.addComponent(RldaTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
 																																		.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
 																																		.addComponent(RdisplacedThresholdTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
 																																		.addGap(18, 18, 18)
@@ -262,6 +262,7 @@ public class AddRunwayFrame extends javax.swing.JFrame {
 		int Rtoda = Integer.parseInt(RtodaTextField.getText());
 		int Rasda = Integer.parseInt(RasdaTextField.getText());
 		int Rlda = Integer.parseInt(RldaTextField.getText());
+		System.out.println("lda" + Rlda);
 		int Rdisplaced = Integer.parseInt(LdisplacedThresholdTextField.getText());
 
 		if(pair == null) {
@@ -298,13 +299,13 @@ public class AddRunwayFrame extends javax.swing.JFrame {
 
 	// Variables declaration - do not modify                     
 	private javax.swing.JLabel LasdaLabel;
-	private javax.swing.JTextField LasdaTextField;
+	private javax.swing.JTextField LldaTextField;
 	private javax.swing.JLabel LdesignationLabel;
 	private javax.swing.JTextField LdesignationTextField;
 	private javax.swing.JLabel LdisplacedThresholdLabel;
 	private javax.swing.JTextField LdisplacedThresholdTextField;
 	private javax.swing.JLabel LldaLabel;
-	private javax.swing.JTextField LldaTextField;
+	private javax.swing.JTextField LasdaTextField;
 	private javax.swing.JLabel LorientationLabel;
 	private javax.swing.JTextField LorientationTextField;
 	private javax.swing.JLabel LtodaLabel;
@@ -312,13 +313,13 @@ public class AddRunwayFrame extends javax.swing.JFrame {
 	private javax.swing.JLabel LtoraLabel;
 	private javax.swing.JTextField LtoraTextField;
 	private javax.swing.JLabel RasdaLabel;
-	private javax.swing.JTextField RasdaTextField;
+	private javax.swing.JTextField RldaTextField;
 	private javax.swing.JLabel RdesignationLabel;
 	private javax.swing.JTextField RdesignationTextField;
 	private javax.swing.JLabel RdisplacedThresholdLabel;
 	private javax.swing.JTextField RdisplacedThresholdTextField;
 	private javax.swing.JLabel RldaLabel;
-	private javax.swing.JTextField RldaTextField;
+	private javax.swing.JTextField RasdaTextField;
 	private javax.swing.JTextField RorientationTextField;
 	private javax.swing.JLabel RtodaLabel;
 	private javax.swing.JTextField RtodaTextField;

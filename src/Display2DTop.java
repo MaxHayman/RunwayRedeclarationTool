@@ -34,13 +34,14 @@ public class Display2DTop extends Display {
 	int startx = 150;
 	int starty = 250;
 	
-	public void drawCacl(Graphics2D g2, Color color, int side, int depth, String type, int value, int displaced) {
+	public void drawCacl(Graphics2D g2, Color color, int side, int depth, String type, int value, int displaced, int displacedopp) {
 		int length = (int)(cameraZoom*((value * width) / mainFrame.runway.TODA));
 
 		displaced = (int)(((cameraZoom*(displaced * width) / mainFrame.runway.TODA))) ;
+		displacedopp = (int)(((cameraZoom*(displacedopp * width) / mainFrame.runway.TODA))) ;
 		int scaleStart = (int)(cameraZoom*startx);
 		int scaleWidth = (int)(cameraZoom*width);
-		int start = (side == 0 ? (scaleStart + displaced) : (scaleStart + scaleWidth - length - displaced));
+		int start = (side == 0 ? (scaleStart + displaced) : (scaleStart + scaleWidth - length + displacedopp));
 		int starto = (int)(cameraZoom *(starty));
 		int scaleDepth = (int)(cameraZoom *(depth));
 		g2.setColor(color);
@@ -76,10 +77,10 @@ public class Display2DTop extends Display {
 		float displacedThresholdRight = ((float)mainFrame.runway.displacedThreshold * width / (float)mainFrame.runway.TORA);
 		int calc = mainFrame.runway.calcType;
 		
-		drawCacl(g2, Color.yellow, calc, 400, "LDA", mainFrame.runway.nLDA, mainFrame.runway.displacedThreshold);
-		drawCacl(g2, Color.blue, calc, 300, "ASDA", mainFrame.runway.nASDA, mainFrame.runway.displacedThreshold);
-		drawCacl(g2, Color.red, calc, 200, "TODA", mainFrame.runway.nTODA, mainFrame.runway.displacedThreshold);
-		drawCacl(g2, Color.orange, calc, 100, "TORA", mainFrame.runway.nTORA, mainFrame.runway.displacedThreshold);
+		drawCacl(g2, Color.yellow, calc, 400, "LDA", mainFrame.runway.nLDA, mainFrame.runway.displacedThreshold, 0);
+		drawCacl(g2, Color.blue, calc, 300, "ASDA", mainFrame.runway.nASDA, 0, mainFrame.runway.nASDA-mainFrame.runway.nTORA);
+		drawCacl(g2, Color.red, calc, 200, "TODA", mainFrame.runway.nTODA, 0, mainFrame.runway.nTODA-mainFrame.runway.nTORA);
+		drawCacl(g2, Color.orange, calc, 100, "TORA", mainFrame.runway.nTORA, 0, 0);
 
 		g2.setColor(Color.red);
 

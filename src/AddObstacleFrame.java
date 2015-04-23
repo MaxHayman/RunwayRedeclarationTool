@@ -139,7 +139,7 @@ public class AddObstacleFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>                        
 
-    private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {       
+    private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {       
     	
     	if(o == null)
     		o = new Obstacle();
@@ -153,7 +153,7 @@ public class AddObstacleFrame extends javax.swing.JFrame {
         this.dispose();
     }
     
-    private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {
+    private void saveTemplateButtonActionPerformed(java.awt.event.ActionEvent evt) {
     	Obstacle o = new Obstacle();
     	o.height = Integer.parseInt(obstacleHeightTextField.getText());
     	o.name = obstacleNameTextField.getText();

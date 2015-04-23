@@ -37,10 +37,11 @@ public class Display2DSide extends Display {
 	
 	int width = 1000;
 	
-	public void drawCacl(Graphics2D g2, Color color, int side, int depth, String type, int value, int displaced) {
+	public void drawCacl(Graphics2D g2, Color color, int side, int depth, String type, int value, int displaced, int displacedopp) {
 		int length = (value * width) / mainFrame.runway.TODA ;
 		displaced = (displaced * width) / mainFrame.runway.TODA ;
-		int start = side == 0 ? startx + displaced : startx + width - length - displaced;
+		displacedopp = (displacedopp * width) / mainFrame.runway.TODA ;
+		int start = side == 0 ? startx + displaced : startx + width - length + displacedopp;
 		g2.setColor(color);
 		g2.fillRect(start, (int)(getHeight()/2)+5, 3, depth);
 		g2.fillRect(start, (int)(getHeight()/2)+5+depth, length, 3);
@@ -112,10 +113,10 @@ public class Display2DSide extends Display {
 		}
 		
 		int calc = mainFrame.runway.calcType;
-		drawCacl(g2, Color.yellow, calc, 100, "LDA", mainFrame.runway.nLDA, mainFrame.runway.displacedThreshold);
-		drawCacl(g2, Color.BLUE, calc, 75, "ASDA", mainFrame.runway.nASDA, 0);
-		drawCacl(g2, Color.RED, calc, 50, "TODA", mainFrame.runway.nTODA, 0);
-		drawCacl(g2, Color.ORANGE, calc, 25, "TORA", mainFrame.runway.nTORA, 0);
+		drawCacl(g2, Color.yellow, calc, 100, "LDA", mainFrame.runway.nLDA, mainFrame.runway.displacedThreshold, 0);
+		drawCacl(g2, Color.BLUE, calc, 75, "ASDA", mainFrame.runway.nASDA, 0, mainFrame.runway.nASDA-mainFrame.runway.nTORA);
+		drawCacl(g2, Color.RED, calc, 50, "TODA", mainFrame.runway.nTODA, 0, mainFrame.runway.nTODA-mainFrame.runway.nTORA);
+		drawCacl(g2, Color.ORANGE, calc, 25, "TORA", mainFrame.runway.nTORA, 0, 0);
 		
 
 		g2.setColor(Color.WHITE);
