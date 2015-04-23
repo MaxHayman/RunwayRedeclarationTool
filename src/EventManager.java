@@ -15,11 +15,15 @@ class Delegate {
 	
 	public void invoke(Object... args) {
 		try {
-			object.getClass().getMethod(method).invoke(object, args);
+			if(args.length > 0)
+				object.getClass().getMethod(method, new Class[]{String.class}).invoke(object, args);
+			else
+				object.getClass().getMethod(method).invoke(object, args);
 		} catch (IllegalAccessException | IllegalArgumentException
 				| InvocationTargetException | NoSuchMethodException
 				| SecurityException e) {
 			e.printStackTrace();
+			System.out.println("Error " + object + " " + method);
 		}
 	}
 
@@ -55,6 +59,7 @@ public class EventManager {
 	public enum EventName {
 	    UPDATE,
 	    EXIT,
+	    LOG,
 	}
 	
 	public Map<EventName, List<Delegate>> _Notify = new HashMap<EventName, List<Delegate>>();

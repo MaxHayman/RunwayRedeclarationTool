@@ -162,10 +162,14 @@ public class XMLHandler {
 						if(readLine().equals("<Runway>")) {
 							pair.add(0, readRunway(obs));
 							
+						} else {
+							throw new IOException("first runway was not found");
 						}
 						readLine();
 						if(readLine().equals("<Runway>")) {
 							pair.add(1, readRunway(obs));
+						} else {
+							throw new IOException("second runway was not found");
 						}
 						airport.runways.add(pair);
 							
@@ -180,16 +184,15 @@ public class XMLHandler {
 		return airport;
 	}
 	
-	public static String getValue(String line, String parameter) {
+	public static String getValue(String line, String parameter) throws IOException {
 		Pattern p = Pattern.compile("^[\\s]*<" + parameter + ">(.*)<" + parameter + "\\/>[\\s]*$");
 		Matcher m = p.matcher(line);
 		
 		if(m.find()) {
 			return m.group(1);
+		} else {
+			throw new IOException(parameter + " was not found");
 		}
-		
-		return null;
-
 	}
 	
 	public static SimpleEntry<Integer, Obstacle> readObstacleData() throws NumberFormatException, IOException {
@@ -218,6 +221,8 @@ public class XMLHandler {
 				}
 				readLine();
 			}
+		} else {
+			throw new IOException("obstacle list was not found");
 		}
 
 		return obs;
@@ -248,6 +253,8 @@ public class XMLHandler {
 				}
 				readLine();
 			}
+		} else {
+			throw new IOException("obstacle list was not found");
 		}
 		
 		return r;

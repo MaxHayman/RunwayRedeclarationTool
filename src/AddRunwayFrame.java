@@ -265,12 +265,15 @@ public class AddRunwayFrame extends javax.swing.JFrame {
 		System.out.println("lda" + Rlda);
 		int Rdisplaced = Integer.parseInt(LdisplacedThresholdTextField.getText());
 
+		String logLine = "Runways ";
+		
 		if(pair == null) {
 			pair = new RunwayPair();
 			pair.add(0, new Runway(Lorientation, Ldesignation, Ltora, Ltoda, Lasda, Llda));
 			pair.add(1, new Runway(Rorientation, Rdesignation, Rtora, Rtoda, Rasda, Rlda));
 			pair.runways[0].setDisplacedThreshold(Ldisplaced);
 			pair.runways[1].setDisplacedThreshold(Ldisplaced);
+			logLine += "added. ";
 		} else {
 			pair.runways[0].orientation = Lorientation;
 			pair.runways[0].designation = Ldesignation;
@@ -287,10 +290,15 @@ public class AddRunwayFrame extends javax.swing.JFrame {
 			pair.runways[1].LDA = Rlda;
 			pair.runways[1].ASDA = Rasda;
 			pair.runways[1].displacedThreshold = Rdisplaced;
+			logLine += "updated. ";
 		}
 
 		if(mainFrame.airport.runways.contains(pair))
 			mainFrame.airport.runways.remove(pair);
+		
+		logLine += ("\n" + Lorientation + Ldesignation + " TODA: " + Ltoda + " TORA: " + Ltora + " ASDA: " + Lasda + " LDA: " + Llda + " Displaced Threshold: " + Ldisplaced + ".");
+		logLine += ("\n" + Rorientation + Rdesignation + " TODA: " + Rtoda + " TORA: " + Rtora + " ASDA: " + Rasda + " LDA: " + Rlda + " Displaced Threshold: " + Rdisplaced + ".");
+		EventManager.getEventManager().notify(EventManager.EventName.LOG, logLine);
 		
 		mainFrame.airport.runways.add(pair);
 		mainFrame.setAirport(mainFrame.airport);

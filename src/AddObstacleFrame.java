@@ -142,15 +142,27 @@ public class AddObstacleFrame extends javax.swing.JFrame {
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {       
     	
-    	if(o == null)
+    	String logLine = "Obstacle ";
+    	if(o == null) {
     		o = new Obstacle();
+    		logLine += "created ";
+    	} else {
+    		logLine += "updated ";
+    	}
     	
     	o.height = Integer.parseInt(obstacleHeightTextField.getText());
     	o.name = obstacleNameTextField.getText();
-    	mainFrame.runway.pair.runways[0].obstacles.put(o, (Integer) distanceFromThresholdSpinner.getValue());
-    	mainFrame.runway.pair.runways[1].obstacles.put(o, (Integer) distanceFromOtherThresholdSpinner.getValue());
+    	int distL = (Integer)distanceFromThresholdSpinner.getValue();
+    	int distR = (Integer)distanceFromOtherThresholdSpinner.getValue();
+    	mainFrame.runway.pair.runways[0].obstacles.put(o, distL);
+    	mainFrame.runway.pair.runways[1].obstacles.put(o, distR);
     	//mainFrame.updateObstacles();
     	EventManager.getEventManager().notify(EventManager.EventName.UPDATE);
+    	
+    	logLine += o.name + ". " + distL + "m away from " + mainFrame.runway.pair.runways[0].orientation + mainFrame.runway.pair.runways[0].designation + ". ";
+    	logLine += distR + "m away from " + mainFrame.runway.pair.runways[1].orientation + mainFrame.runway.pair.runways[1].designation + ".";
+    	EventManager.getEventManager().notify(EventManager.EventName.LOG, logLine);
+    	
         this.dispose();
     }
     

@@ -2,6 +2,8 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.ButtonGroup;
 import javax.swing.ComboBoxModel;
@@ -27,34 +29,40 @@ public class MainFrame extends javax.swing.JFrame {
 	Runway runway;
 	int calculationsType = 0;
 	public DefaultComboBoxModel<Obstacle> obstacleTemplateModel = new DefaultComboBoxModel<Obstacle>();
+	public List<String> log = new ArrayList<String>();
 
 	public MainFrame(Airport airport) {
 		initComponents();
 
-        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-        this.setLocation(dim.width/8-this.getSize().width/2, dim.height/2-this.getSize().height/2);
-        this.setResizable(false);
+		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+		this.setLocation(dim.width/8-this.getSize().width/2, dim.height/2-this.getSize().height/2);
+		this.setResizable(false);
 		ButtonGroup group = new ButtonGroup();
 		group.add(takeOffAwayMenuItem);
 		group.add(takeOffTowardsMenuItem);
 
 		this.airport = airport;
-		
+
 		if(airport.runways.size() > 0) {
 			this.runway = airport.runways.get(0).runways[0];
 			setRunway(runway);
 		}
 		setAirport(airport);
-		
+
 		obstacleTemplateModel.addElement(new Obstacle("Plane", 20));
-        obstacleTemplateModel.addElement(new Obstacle ("Box", 1));
+		obstacleTemplateModel.addElement(new Obstacle ("Box", 1));
 
 		EventManager.getEventManager().addEventNotify(EventManager.EventName.UPDATE, this, "updateObstacles");
+		EventManager.getEventManager().addEventNotify(EventManager.EventName.LOG, this, "addLog");
+	}
+
+	public void addLog(String line) {
+		log.add(line);
 	}
 
 	public void setRunway(Runway runway) {
 		this.runway = runway;
-		
+
 		calculationsType = this.runway.calcType = this.runway.bestOption();
 
 		if(this.runway.calcType == 0) {
@@ -66,7 +74,7 @@ public class MainFrame extends javax.swing.JFrame {
 			takeOffTowardsMenuItem.setSelected(true);
 			calcualtionsTypeLabel.setText("Take Off Towards, Landing Towards");
 		}
-		
+
 		updateObstacles();
 	}
 
@@ -218,21 +226,21 @@ public class MainFrame extends javax.swing.JFrame {
 		fileMenu.setText("File");
 
 		saveMenuItem.setText("Save");
-        saveMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-            	saveMenuItemActionPerformed(evt);
-            }
-        });
-        fileMenu.add(saveMenuItem);
-        
-        saveAsMenuItem.setText("Save As...");
-        saveAsMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-            	saveAsMenuItemActionPerformed(evt);
-            }
-        });
-        fileMenu.add(saveAsMenuItem);
-	       
+		saveMenuItem.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				saveMenuItemActionPerformed(evt);
+			}
+		});
+		fileMenu.add(saveMenuItem);
+
+		saveAsMenuItem.setText("Save As...");
+		saveAsMenuItem.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				saveAsMenuItemActionPerformed(evt);
+			}
+		});
+		fileMenu.add(saveAsMenuItem);
+
 		exitMenuItem.setText("Exit");
 		exitMenuItem.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -387,7 +395,7 @@ public class MainFrame extends javax.swing.JFrame {
 			JOptionPane.showMessageDialog(null, "You must select a runway to be able to add obstacles to it.");
 			return;
 		}
-		
+
 		AddObstacleFrame frame = new AddObstacleFrame(this, null);
 		frame.obstacleTemplateComboBox.setModel(obstacleTemplateModel);
 		frame.setVisible(true);
@@ -398,7 +406,7 @@ public class MainFrame extends javax.swing.JFrame {
 			JOptionPane.showMessageDialog(null, "You must select a runway to be able to remove obstacles from it.");
 			return;
 		}
-		
+
 		Obstacle o = obstaclesList.getSelectedValue();
 
 		if(o == null) {
@@ -415,7 +423,7 @@ public class MainFrame extends javax.swing.JFrame {
 			JOptionPane.showMessageDialog(null, "You must select a runway to be able to modify obstacles to it.");
 			return;
 		}
-		
+
 		Obstacle o = obstaclesList.getSelectedValue();
 
 		if(o == null) {
@@ -465,20 +473,21 @@ public class MainFrame extends javax.swing.JFrame {
 
 	private void calculationsMenuItemActionPerformed(java.awt.event.ActionEvent evt) {
 		new CalculationsFrame(this);
+		new LogFrame(log).setVisible(true);;
 	}
 
-    private void saveMenuItemActionPerformed(java.awt.event.ActionEvent evt) {                                             
-        XMLHandler.saveXML(airport, false);
-    } 
-    
-    private void saveAsMenuItemActionPerformed(java.awt.event.ActionEvent evt) {                                             
-        XMLHandler.saveXML(airport, true);
-    } 
-	
+	private void saveMenuItemActionPerformed(java.awt.event.ActionEvent evt) {                                             
+		XMLHandler.saveXML(airport, false);
+	} 
+
+	private void saveAsMenuItemActionPerformed(java.awt.event.ActionEvent evt) {                                             
+		XMLHandler.saveXML(airport, true);
+	} 
+
 	private void exitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {                                             
 		EventManager.getEventManager().notify(EventManager.EventName.EXIT);
 		this.dispose();
-		 new LoginFrame().setVisible(true);
+		new LoginFrame().setVisible(true);
 	}                                            
 
 	private void changeCalculationsItemActionPerformed(java.awt.event.ActionEvent evt) { 
