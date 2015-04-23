@@ -27,6 +27,7 @@ public class Frame2D extends JFrame implements ComponentListener {
 		this.addComponentListener(this);
 		
 		EventManager.getEventManager().addEventNotify(EventManager.EventName.UPDATE, this, "updateDisplay");
+		EventManager.getEventManager().addEventNotify(EventManager.EventName.EXIT, this, "dispose");
 
 		this.setJMenuBar(new DisplayMenuBar(this));
 	}

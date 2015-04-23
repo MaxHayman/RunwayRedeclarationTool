@@ -456,7 +456,9 @@ public class MainFrame extends javax.swing.JFrame {
     } 
 	
 	private void exitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {                                             
-		// TODO add your handling code here:
+		EventManager.getEventManager().notify(EventManager.EventName.EXIT);
+		this.dispose();
+		 new LoginFrame().setVisible(true);
 	}                                            
 
 	private void changeCalculationsItemActionPerformed(java.awt.event.ActionEvent evt) { 

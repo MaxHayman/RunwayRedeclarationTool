@@ -54,6 +54,7 @@ public class EventManager {
 	
 	public enum EventName {
 	    UPDATE,
+	    EXIT,
 	}
 	
 	public Map<EventName, List<Delegate>> _Notify = new HashMap<EventName, List<Delegate>>();
