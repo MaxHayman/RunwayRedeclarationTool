@@ -77,25 +77,25 @@ public class AddRunwayFrame extends javax.swing.JFrame {
 
 		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-		LtodaLabel.setText("TODA");
+		LtodaLabel.setText("TODA (m)");
 
-		LtoraLabel.setText("TORA");
+		LtoraLabel.setText("TORA (m)");
 
-		LasdaLabel.setText("ASDA");
+		LasdaLabel.setText("ASDA (m)");
 
-		LldaLabel.setText("LDA");
+		LldaLabel.setText("LDA (m)");
 
-		RtodaLabel.setText("TODA");
+		RtodaLabel.setText("TODA (m)");
 
-		RtoraLabel.setText("TORA");
+		RtoraLabel.setText("TORA (m)");
 
-		RasdaLabel.setText("ASDA");
+		RasdaLabel.setText("ASDA (m)");
 
-		RldaLabel.setText("LDA");
+		RldaLabel.setText("LDA (m)");
 
-		LdisplacedThresholdLabel.setText("Displaced Threshold");
+		LdisplacedThresholdLabel.setText("Displaced Threshold (m)");
 
-		RdisplacedThresholdLabel.setText("Displaced Threshold");
+		RdisplacedThresholdLabel.setText("Displaced Threshold (m)");
 
 		saveButton.setText("Save");
 		saveButton.addActionListener(new java.awt.event.ActionListener() {

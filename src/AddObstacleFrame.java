@@ -25,9 +25,9 @@ public class AddObstacleFrame extends javax.swing.JFrame {
         this.setResizable(false);
         this.mainFrame = mainFrame;
         
-        distanceFromThresholdLabel.setText("Distance from " + mainFrame.runway.pair.runways[0].toString() + " threshold");
+        distanceFromThresholdLabel.setText("Distance from " + mainFrame.runway.pair.runways[0].toString() + " threshold (m)");
         
-        distanceFromOtherThresholdLabel.setText("Distance from " + mainFrame.runway.pair.runways[1].toString() + " threshold");
+        distanceFromOtherThresholdLabel.setText("Distance from " + mainFrame.runway.pair.runways[1].toString() + " threshold (m)");
 
         if(o != null) {
         	this.o = o;
@@ -64,7 +64,7 @@ public class AddObstacleFrame extends javax.swing.JFrame {
 
         obstacleNameLabel.setText(" Name");
 
-        obstacleHeightLabel.setText("Height");
+        obstacleHeightLabel.setText("Height (m)");
 
         distanceFromThresholdSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
@@ -72,7 +72,7 @@ public class AddObstacleFrame extends javax.swing.JFrame {
 			}
         });
 
-        distanceFromThresholdLabel.setText("Distance from 09L threshold");
+        distanceFromThresholdLabel.setText("Distance from 09L threshold (m)");
 
         distanceFromOtherThresholdSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
@@ -80,7 +80,7 @@ public class AddObstacleFrame extends javax.swing.JFrame {
 			}
         });
 
-        distanceFromOtherThresholdLabel.setText("Distance from 27R threshold");
+        distanceFromOtherThresholdLabel.setText("Distance from 27R threshold (m)");
 
         saveButton.setText(buttonName);
         saveButton.addActionListener(new java.awt.event.ActionListener() {
