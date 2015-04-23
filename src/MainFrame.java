@@ -146,6 +146,7 @@ public class MainFrame extends javax.swing.JFrame {
 		topDownMenuItem = new javax.swing.JMenuItem();
 		sideMenuItem = new javax.swing.JMenuItem();
 		calculationsMenuItem = new javax.swing.JMenuItem();
+		logMenuItem = new javax.swing.JMenuItem();
 		calculationsMenu = new javax.swing.JMenu();
 		takeOffAwayMenuItem = new javax.swing.JRadioButtonMenuItem();
 		takeOffTowardsMenuItem = new javax.swing.JRadioButtonMenuItem();
@@ -310,6 +311,14 @@ public class MainFrame extends javax.swing.JFrame {
 			}
 		});
 		viewMenu.add(calculationsMenuItem);
+		
+		logMenuItem.setText("Logs");
+		logMenuItem.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				logMenuItemActionPerformed(evt);
+			}
+		});
+		viewMenu.add(logMenuItem);
 
 		menuBar.add(viewMenu);
 
@@ -420,6 +429,7 @@ public class MainFrame extends javax.swing.JFrame {
 		} else {
 			runway.pair.removeObstacle(obstaclesList.getSelectedValue());
 			updateObstacles();
+			EventManager.getEventManager().notify(EventManager.EventName.LOG, "Removed obstacle " + o);
 			EventManager.getEventManager().notify(EventManager.EventName.UPDATE);
 		}
 	} 
@@ -464,7 +474,13 @@ public class MainFrame extends javax.swing.JFrame {
 		} else {
 			airport.runways.remove(runway.pair);
 			this.setAirport(airport);
-			this.runway = null;
+			
+			if(airport.runways.size() > 0)
+				this.runway = airport.runways.get(0).runways[0];
+			else
+				this.runway = null;
+			
+			EventManager.getEventManager().notify(EventManager.EventName.LOG, "Removed runway " + runway.pair.runways[0].orientation + runway.pair.runways[0].designation + "/" + runway.pair.runways[1].orientation + runway.pair.runways[1].designation);
 			EventManager.getEventManager().notify(EventManager.EventName.UPDATE);
 		}
 	}                                                   
@@ -479,6 +495,9 @@ public class MainFrame extends javax.swing.JFrame {
 
 	private void calculationsMenuItemActionPerformed(java.awt.event.ActionEvent evt) {
 		new CalculationsFrame(this).setVisible(true);
+	}
+	
+	private void logMenuItemActionPerformed(java.awt.event.ActionEvent evt) {
 		new LogFrame(log).setVisible(true);
 	}
 
@@ -539,6 +558,7 @@ public class MainFrame extends javax.swing.JFrame {
 	private javax.swing.JLabel titleLabel;
 	private javax.swing.JMenuItem topDownMenuItem;
 	private javax.swing.JMenuItem calculationsMenuItem;
+	private javax.swing.JMenuItem logMenuItem;
 	private javax.swing.JMenu viewMenu;
 	// End of variables declaration       
 

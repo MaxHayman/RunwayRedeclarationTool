@@ -27,6 +27,10 @@ public class XMLHandler {
 		{
 			File workingDirectory = new File(System.getProperty("user.dir") + "/airports");
 	
+			if (!workingDirectory.exists()) {
+				workingDirectory.mkdir();
+			}
+			
 			JFileChooser chooser = new JFileChooser();
 			chooser.setCurrentDirectory(workingDirectory);
 		    FileNameExtensionFilter filter = new FileNameExtensionFilter(
@@ -118,6 +122,10 @@ public class XMLHandler {
 		while (!foundFile){
 			File workingDirectory = new File(System.getProperty("user.dir") + "/airports");
 	
+			if (!workingDirectory.exists()) {
+				workingDirectory.mkdir();
+			}
+			
 			JFileChooser chooser = new JFileChooser();
 			chooser.setCurrentDirectory(workingDirectory);
 		    FileNameExtensionFilter filter = new FileNameExtensionFilter(

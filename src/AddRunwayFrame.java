@@ -263,7 +263,7 @@ public class AddRunwayFrame extends javax.swing.JFrame {
 		int Rasda = Integer.parseInt(RasdaTextField.getText());
 		int Rlda = Integer.parseInt(RldaTextField.getText());
 		System.out.println("lda" + Rlda);
-		int Rdisplaced = Integer.parseInt(LdisplacedThresholdTextField.getText());
+		int Rdisplaced = Integer.parseInt(RdisplacedThresholdTextField.getText());
 
 		String logLine = "Runways ";
 		

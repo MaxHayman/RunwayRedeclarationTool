@@ -32,6 +32,10 @@ public class LoginFrame extends javax.swing.JFrame {
         
         File workingDirectory = new File(System.getProperty("user.dir") + "/airports");
 
+		if (!workingDirectory.exists()) {
+			workingDirectory.mkdir();
+		}
+		
 		FilenameFilter filter = new FilenameFilter() {
 			public boolean accept(File dir, String name) {
 				String lowercaseName = name.toLowerCase();
