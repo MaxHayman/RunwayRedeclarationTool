@@ -14,10 +14,13 @@ public class AddObstacleFrame extends javax.swing.JFrame {
 	Obstacle o = null;
 	DefaultListModel<Obstacle> templateModel = new DefaultListModel<Obstacle>();
 	public javax.swing.JComboBox<Obstacle> obstacleTemplateComboBox;
+	String buttonName;
 	
     public AddObstacleFrame(MainFrame mainFrame, Obstacle o) {
     	super(o == null ? "Add Obstacle" : "Edit Obstacle");
 
+    	buttonName = (o == null ? "Add" : "Apply");
+    	
         initComponents();
         this.setResizable(false);
         this.mainFrame = mainFrame;
@@ -79,7 +82,7 @@ public class AddObstacleFrame extends javax.swing.JFrame {
 
         distanceFromOtherThresholdLabel.setText("Distance from 27R threshold");
 
-        saveButton.setText("Add");
+        saveButton.setText(buttonName);
         saveButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 saveButtonActionPerformed(evt);
@@ -201,8 +204,16 @@ public class AddObstacleFrame extends javax.swing.JFrame {
     	logLine += distR + "m away from " + mainFrame.runway.pair.runways[1].orientation + mainFrame.runway.pair.runways[1].designation + ".";
     	EventManager.getEventManager().notify(EventManager.EventName.LOG, logLine);
     	
-    	if(!mainFrame.obstacleTemplates.contains(o))
+    	//make sure the obstacle isn't already there before adding it
+    	boolean present = false;
+    	for(Obstacle b : mainFrame.obstacleTemplates) {
+    		if((b.height == o.height) && (b.name.equals(o.name))) {
+    			present = true;
+    		}
+    	}
+    	if(!present) {
     		mainFrame.obstacleTemplates.add(o);
+    	}
     	
         this.dispose();
     }
