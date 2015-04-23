@@ -549,7 +549,7 @@ public class MainFrame extends javax.swing.JFrame {
 			calculationsType = 1;
 			calcualtionsTypeLabel.setText("Take Off Towards, Landing Towards");
 		}
-		updateObstacles();
+		EventManager.getEventManager().notify(EventManager.EventName.UPDATE);
 	}                                                   
 
 	// Variables declaration - do not modify                     
