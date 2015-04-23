@@ -22,7 +22,7 @@ public class LoginFrame extends javax.swing.JFrame {
      * Creates new form LoginFrame
      */
     public LoginFrame() {
-    	super("Runway Redeclration Tool");
+    	super("Runway Redeclaration Tool");
         initComponents();
         
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
