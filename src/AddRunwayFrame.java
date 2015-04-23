@@ -1,3 +1,5 @@
+import javax.swing.JOptionPane;
+
 
 /**
  *
@@ -243,27 +245,106 @@ public class AddRunwayFrame extends javax.swing.JFrame {
 	private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {                                           
 
 		String Lorientation = LorientationTextField.getText();
+		if(Lorientation.length() > 2) {
+			JOptionPane.showMessageDialog(null, "Invalid value for Orientation of the left runway.");
+    		return;
+		}
+		
 		while(Lorientation.length() < 2) {
 			Lorientation = "0" + Lorientation;
 		}
 		String Ldesignation = LdesignationTextField.getText();
-		int Ltora = Integer.parseInt(LtoraTextField.getText());
-		int Ltoda = Integer.parseInt(LtodaTextField.getText());
-		int Lasda = Integer.parseInt(LasdaTextField.getText());
-		int Llda = Integer.parseInt(LldaTextField.getText());
-		int Ldisplaced = Integer.parseInt(LdisplacedThresholdTextField.getText());
+		if(Ldesignation.length() != 1) {
+			JOptionPane.showMessageDialog(null, "Invalid value for Designation of the left runway.");
+    		return;
+		}
+		int Ltora = 0;
+		try {
+			Ltora = Integer.parseInt(LtoraTextField.getText());
+		} catch (NumberFormatException e) {
+    		JOptionPane.showMessageDialog(null, "Invalid value for TORA of the left runway.");
+    		return;
+    	}
+		int Ltoda = 0;
+		try {
+			Ltoda = Integer.parseInt(LtodaTextField.getText());
+		} catch (NumberFormatException e) {
+    		JOptionPane.showMessageDialog(null, "Invalid value for TODA of the left runway.");
+    		return;
+    	}
+		int Lasda = 0;
+		try {
+			Lasda = Integer.parseInt(LasdaTextField.getText());
+		} catch (NumberFormatException e) {
+    		JOptionPane.showMessageDialog(null, "Invalid value for ASDA of the left runway.");
+    		return;
+    	}
+		int Llda = 0;
+		try {
+			Llda = Integer.parseInt(LldaTextField.getText());
+		} catch (NumberFormatException e) {
+    		JOptionPane.showMessageDialog(null, "Invalid value for LDA of the left runway.");
+    		return;
+    	}
+
+		int Ldisplaced = 0;
+		try {
+			Ldisplaced = Integer.parseInt(LdisplacedThresholdTextField.getText());
+		} catch (NumberFormatException e) {
+    		JOptionPane.showMessageDialog(null, "Invalid value for displaced threshold of the left runway.");
+    		return;
+    	}
+	
 
 		String Rorientation = RorientationTextField.getText();
+		if(Rorientation.length() > 2) {
+			JOptionPane.showMessageDialog(null, "Invalid value for Orientation of the right runway.");
+    		return;
+		}
 		while(Rorientation.length() < 2) {
-			Rorientation = "0" + Lorientation;
+			Rorientation = "0" + Rorientation;
 		}
 		String Rdesignation = RdesignationTextField.getText();
-		int Rtora = Integer.parseInt(RtoraTextField.getText());
-		int Rtoda = Integer.parseInt(RtodaTextField.getText());
-		int Rasda = Integer.parseInt(RasdaTextField.getText());
-		int Rlda = Integer.parseInt(RldaTextField.getText());
-		System.out.println("lda" + Rlda);
-		int Rdisplaced = Integer.parseInt(RdisplacedThresholdTextField.getText());
+		if(Rdesignation.length() != 1) {
+			JOptionPane.showMessageDialog(null, "Invalid value for Designation of the right runway.");
+    		return;
+		}
+		int Rtora = 0;
+		try {
+			Rtora = Integer.parseInt(RtoraTextField.getText());
+		} catch (NumberFormatException e) {
+    		JOptionPane.showMessageDialog(null, "Invalid value for TORA of the right runway.");
+    		return;
+    	}
+		int Rtoda = 0;
+		try {
+			Rtoda = Integer.parseInt(RtodaTextField.getText());
+		} catch (NumberFormatException e) {
+    		JOptionPane.showMessageDialog(null, "Invalid value for TODA of the right runway.");
+    		return;
+    	}
+		int Rasda = 0;
+		try {
+			Rasda = Integer.parseInt(RasdaTextField.getText());
+		} catch (NumberFormatException e) {
+    		JOptionPane.showMessageDialog(null, "Invalid value for ASDA of the right runway.");
+    		return;
+    	}
+		int Rlda = 0;
+		try {
+			Rlda = Integer.parseInt(RldaTextField.getText());
+		} catch (NumberFormatException e) {
+    		JOptionPane.showMessageDialog(null, "Invalid value for LDA of the right runway.");
+    		return;
+    	}
+
+		int Rdisplaced = 0;
+		try {
+			Rdisplaced = Integer.parseInt(RdisplacedThresholdTextField.getText());
+		} catch (NumberFormatException e) {
+    		JOptionPane.showMessageDialog(null, "Invalid value for displaced threshold of the right runway.");
+    		return;
+    	}
 
 		String logLine = "Runways ";
 		

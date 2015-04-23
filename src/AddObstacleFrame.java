@@ -158,10 +158,40 @@ public class AddObstacleFrame extends javax.swing.JFrame {
     		logLine += "updated ";
     	}
     	
-    	o.height = Integer.parseInt(obstacleHeightTextField.getText());
+    	try {
+    		int height = Integer.parseInt(obstacleHeightTextField.getText());
+    		if(height < 1) {
+    			throw new NumberFormatException();
+    		}
+    		o.height = height;
+    	} catch (NumberFormatException e) {
+    		JOptionPane.showMessageDialog(null, "Invalid value for Obstacle height.");
+    		return;
+    	}
+    	
+    	if(obstacleNameTextField.getText().length() < 1) {
+    		JOptionPane.showMessageDialog(null, "Invalid value for Obstacle name.");
+    		return;
+    	}
+    	
     	o.name = obstacleNameTextField.getText();
-    	int distL = (Integer)distanceFromThresholdSpinner.getValue();
-    	int distR = (Integer)distanceFromOtherThresholdSpinner.getValue();
+    	
+    	int distL = 0;
+    	try {
+    		distL = Integer.parseInt(distanceFromThresholdSpinner.getValue().toString());
+    	} catch (NumberFormatException e) {
+    		JOptionPane.showMessageDialog(null, "Invalid value for Distance from threshold.");
+    		return;
+    	}
+    	
+    	int distR = 0;
+    	try {
+    		distR = Integer.parseInt(distanceFromOtherThresholdSpinner.getValue().toString());
+    	} catch (NumberFormatException e) {
+    		JOptionPane.showMessageDialog(null, "Invalid value for Distance from threshold.");
+    		return;
+    	}
+
     	mainFrame.runway.pair.runways[0].obstacles.put(o, distL);
     	mainFrame.runway.pair.runways[1].obstacles.put(o, distR);
     	//mainFrame.updateObstacles();
