@@ -123,6 +123,7 @@ public class MainFrame extends javax.swing.JFrame {
 		fileMenu = new javax.swing.JMenu();
 		exitMenuItem = new javax.swing.JMenuItem();
 		saveMenuItem = new javax.swing.JMenuItem();
+		saveAsMenuItem = new javax.swing.JMenuItem();
 		editMenu = new javax.swing.JMenu();
 		editRunwayMenuItem = new javax.swing.JMenuItem();
 		addRunwayMenuItem = new javax.swing.JMenuItem();
@@ -223,6 +224,14 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
         fileMenu.add(saveMenuItem);
+        
+        saveAsMenuItem.setText("Save As...");
+        saveAsMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            	saveAsMenuItemActionPerformed(evt);
+            }
+        });
+        fileMenu.add(saveAsMenuItem);
 	       
 		exitMenuItem.setText("Exit");
 		exitMenuItem.addActionListener(new java.awt.event.ActionListener() {
@@ -459,7 +468,11 @@ public class MainFrame extends javax.swing.JFrame {
 	}
 
     private void saveMenuItemActionPerformed(java.awt.event.ActionEvent evt) {                                             
-        XMLHandler.saveXML(airport);
+        XMLHandler.saveXML(airport, false);
+    } 
+    
+    private void saveAsMenuItemActionPerformed(java.awt.event.ActionEvent evt) {                                             
+        XMLHandler.saveXML(airport, true);
     } 
 	
 	private void exitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {                                             
@@ -493,6 +506,7 @@ public class MainFrame extends javax.swing.JFrame {
 	private javax.swing.JMenuItem editRunwayMenuItem;
 	private javax.swing.JMenuItem exitMenuItem;
 	private javax.swing.JMenuItem saveMenuItem;
+	private javax.swing.JMenuItem saveAsMenuItem;
 	private javax.swing.JMenu fileMenu;
 	private javax.swing.JComboBox<Runway> jComboBox1;
 	private javax.swing.JLabel jLabel4;

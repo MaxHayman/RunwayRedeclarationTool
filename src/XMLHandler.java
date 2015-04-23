@@ -20,9 +20,10 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class XMLHandler {
 
-	public static void saveXML(Airport airport) {
+	public static void saveXML(Airport airport, boolean ask) {
 		File f = null;
 
+		if(airport.fileName.equals("") || ask)
 		{
 			File workingDirectory = new File(System.getProperty("user.dir") + "/airports");
 	
@@ -42,8 +43,12 @@ public class XMLHandler {
 		    	name += ".xml";
 		    
 		    f = new File(name);
-		    
-		} 
+		    airport.fileName = name;
+		}
+		else
+		{
+			f = new File(airport.fileName);
+		}
 		
 		PrintWriter out = null;
 		try {
@@ -102,8 +107,6 @@ public class XMLHandler {
 	static int lineCount = 0;
 	
 	public static Airport loadXML(File file) {
-		Airport airport = new Airport();
-
 		File f = file;
 		
 		boolean foundFile = false;
@@ -142,6 +145,9 @@ public class XMLHandler {
 			e1.printStackTrace();
 		}
 		
+		Airport airport = new Airport();
+		airport.fileName = f.getAbsolutePath();
+				
 		String line;
 		RunwayPair pair = null;
 
