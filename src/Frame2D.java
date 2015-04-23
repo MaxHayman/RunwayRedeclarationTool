@@ -1,3 +1,5 @@
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 
@@ -13,16 +15,21 @@ public class Frame2D extends JFrame implements ComponentListener {
 	public Frame2D (MainFrame mainFrame, Display.View view) {
 		super("Runway Redeclaration Tool");
 		
-		if(view == Display.View.TOP_VIEW)
+		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+		if(view == Display.View.TOP_VIEW) {
 			display = new Display2DTop(mainFrame);
-		else if (view == Display.View.SIDE_VIEW)
+		    this.setLocation(dim.width/2-this.getSize().width/2, 0);
+		}
+		else if (view == Display.View.SIDE_VIEW) {
 			display = new Display2DSide(mainFrame);
-		
+			this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
+		}
+			
+
 		//view:
 		this.setContentPane(display);
 		this.addKeyListener(display);
 		this.setVisible(true);
-		this.setLocationRelativeTo(null);
 		this.setSize(720, 450);
 		this.addComponentListener(this);
 		

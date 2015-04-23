@@ -17,9 +17,6 @@ public class Display2DTop extends Display {
 	public Display2DTop(MainFrame mainFrame) {
 		super(mainFrame);
 
-	    Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-	    this.setLocation(dim.width/2-this.getSize().width/2, dim.height/4-this.getSize().height/2);
-	        
 		this.setVisible(true);
 		this.addMouseWheelListener(this);
 	}

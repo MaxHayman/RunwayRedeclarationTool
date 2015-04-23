@@ -32,6 +32,7 @@ public class MainFrame extends javax.swing.JFrame {
 	public List<String> log = new ArrayList<String>();
 
 	public MainFrame(Airport airport) {
+		super("Main");
 		initComponents();
 
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
@@ -54,6 +55,11 @@ public class MainFrame extends javax.swing.JFrame {
 
 		EventManager.getEventManager().addEventNotify(EventManager.EventName.UPDATE, this, "updateObstacles");
 		EventManager.getEventManager().addEventNotify(EventManager.EventName.LOG, this, "addLog");
+		
+		String[] names = airport.fileName.split("\\\\");
+        String name = names[names.length-1].replace(".xml", "");
+		String logLine = "Successfully " + (airport.fileName.equals("") ? "created " : ("loaded " + name)) + " airport.";
+		EventManager.getEventManager().notify(EventManager.EventName.LOG, logLine);
 	}
 
 	public void addLog(String line) {
@@ -472,8 +478,8 @@ public class MainFrame extends javax.swing.JFrame {
 	}
 
 	private void calculationsMenuItemActionPerformed(java.awt.event.ActionEvent evt) {
-		new CalculationsFrame(this);
-		new LogFrame(log).setVisible(true);;
+		new CalculationsFrame(this).setVisible(true);
+		new LogFrame(log).setVisible(true);
 	}
 
 	private void saveMenuItemActionPerformed(java.awt.event.ActionEvent evt) {                                             
